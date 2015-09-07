@@ -61,6 +61,8 @@ Plugin 'tpope/vim-repeat'
 
 Plugin 'svermeulen/vim-easyclip'
 
+Plugin 'suan/vim-instant-markdown'
+
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -94,6 +96,14 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 "
 "
+"
+"
+
+" PLUGIN CONFIGS
+" -----------------------------------------------------------------
+
+let g:CommandTTraverseSCM = 'pwd'
+
 " MAPPINGS
 " -----------------------------------------------------------------
 
