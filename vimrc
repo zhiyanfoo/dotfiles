@@ -7,15 +7,15 @@ set cmdheight=2
 set ruler
 set wildmode=longest,list,full
 set wildmenu
-
+set ignorecase
+set smartcase
 "set t_Co=256
 
-set background=dark
-colorscheme molokai
 if has('gui_running')
+    set background=dark
     colorscheme solarized
-else
-    colorscheme molokai
+" else
+"     colorscheme molokai
 endif
 " enables buffers to be switched without saving
 set hidden
@@ -25,10 +25,10 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 
-set guifont=Monaco:h11
+"system clipboard
+set clipboard=unnamed
 
-"supress Conque's warning messages
-let g:ConqueTerm_StartMessages = 0
+set guifont=Monaco:h11
 
 "keep undo history after file closes
 set undofile
@@ -51,17 +51,22 @@ Plugin 'tpope/vim-commentary'
 
 Plugin 'wesQ3/vim-windowswap'
 
-Plugin 'kwbdi.vim'
-
-Plugin 'wincent/command-t'
-
-Plugin 'dermusikman/sonicpi.vim'
-
 Plugin 'tpope/vim-repeat'
 
 Plugin 'svermeulen/vim-easyclip'
 
-Plugin 'suan/vim-instant-markdown'
+"keep window on buffer delete
+Plugin 'kwbdi.vim'
+
+Plugin 'terryma/vim-multiple-cursors'
+
+if has('gui_running')
+    Plugin 'wincent/command-t'
+
+    Plugin 'dermusikman/sonicpi.vim'
+
+    Plugin 'suan/vim-instant-markdown'
+endif
 
 
 " The following are examples of different formats supported.
@@ -102,7 +107,10 @@ filetype plugin indent on    " required
 " PLUGIN CONFIGS
 " -----------------------------------------------------------------
 
-let g:CommandTTraverseSCM = 'pwd'
+if has('gui_running')
+    let g:CommandTTraverseSCM = 'pwd'
+    let g:CommandTFileScanner = 'git'
+endif
 
 " MAPPINGS
 " -----------------------------------------------------------------
@@ -115,7 +123,7 @@ nnoremap - O<esc>
 "undo undo
 nnoremap <S-U> <C-R>
 
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 "x doesn't override default register
@@ -126,7 +134,7 @@ nnoremap H ^
 nnoremap L $
 
 vnoremap H ^
-vnoremap L $
+vnoremap L $h
 
 vnoremap // y/<C-R>"<CR>
 
@@ -148,12 +156,12 @@ nnoremap <leader>h <C-W><C-H>
 "change dir to dir of current file
 nnoremap <leader>cdd :cd<space>%:p:h<cr>
 
-"create new Conque bash shell vsp
-nnoremap <leader>vt :ConqueTermVSplit bash<cr>
-nnoremap <leader>ht :ConqueTermSplit bash<cr>
+" search selected test using //
+vnoremap // y/<C-R>"<CR>
 
+" swap visually selected text with last cut
+vnoremap <C-X> <Esc>`.``gvP``P
 
-if has('gui_running')
-else
-    nnoremap <leader>z <C-Z>
-endif
+nnoremap <leader>ft :CommandTFlush<CR>
+
+nnoremap cp "_dwhp
