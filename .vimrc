@@ -9,14 +9,15 @@ set wildmode=longest,list,full
 set wildmenu
 set ignorecase
 set smartcase
-"set t_Co=256
+" set t_Co=256
 
-if has('gui_running')
-    set background=dark
-    colorscheme solarized
+" if has('gui_running')
+"     set background=dark
+"     colorscheme solarized
 " else
-"     colorscheme molokai
-endif
+"     set background=light
+" "     colorscheme molokai
+" endif
 " enables buffers to be switched without saving
 set hidden
 syntax on
@@ -27,8 +28,6 @@ set expandtab
 
 "system clipboard
 set clipboard=unnamed
-
-set guifont=Monaco:h11
 
 "keep undo history after file closes
 set undofile
@@ -45,7 +44,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'Valloric/YouCompleteMe'
+if exists("g:more_features_checker")
+    Plugin 'Valloric/YouCompleteMe'
+endif
 
 Plugin 'tpope/vim-commentary'
 
@@ -55,18 +56,16 @@ Plugin 'tpope/vim-repeat'
 
 Plugin 'svermeulen/vim-easyclip'
 
+Plugin 'christoomey/vim-tmux-navigator'
+
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
 
 Plugin 'terryma/vim-multiple-cursors'
 
-if has('gui_running')
-    Plugin 'wincent/command-t'
+Plugin 'wincent/command-t'
 
-    Plugin 'dermusikman/sonicpi.vim'
-
-    Plugin 'suan/vim-instant-markdown'
-endif
+Plugin 'suan/vim-instant-markdown'
 
 
 " The following are examples of different formats supported.
@@ -126,10 +125,6 @@ nnoremap <S-U> <C-R>
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-"x doesn't override default register
-"nnoremap x "_x
-"vnoremap x "_x
-
 nnoremap H ^
 nnoremap L $
 
@@ -148,10 +143,35 @@ noremap <leader>b :bprevious<cr>
 nnoremap <leader>ht ihttp://
 
 "panel switching
-nnoremap <leader>j <C-W><C-J>
-nnoremap <leader>k <C-W><C-K>
-nnoremap <leader>l <C-W><C-L>
-nnoremap <leader>h <C-W><C-H>
+" nnoremap <esc>j <C-W><C-J>
+" nnoremap <esc>k <C-W><C-K>
+" nnoremap <esc>l <C-W><C-L>
+" nnoremap <esc>h <C-W><C-H>
+
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    silent! execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      call system("tmux select-pane -" . a:tmuxdir)
+      redraw!
+    endif
+  endfunction
+
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+  nnoremap <silent> <esc>h :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <esc>j :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <esc>k :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <esc>l :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  map <esc>h <C-w>h
+  map <esc>j <C-w>j
+  map <esc>k <C-w>k
+  map <esc>l <C-w>l
+endif
 
 "change dir to dir of current file
 nnoremap <leader>cdd :cd<space>%:p:h<cr>
@@ -159,9 +179,8 @@ nnoremap <leader>cdd :cd<space>%:p:h<cr>
 " search selected test using //
 vnoremap // y/<C-R>"<CR>
 
-" swap visually selected text with last cut
-vnoremap <C-X> <Esc>`.``gvP``P
-
 nnoremap <leader>ft :CommandTFlush<CR>
 
 nnoremap cp "_dwhp
+
+nnoremap <leader>pi :PluginInstall<CR>
