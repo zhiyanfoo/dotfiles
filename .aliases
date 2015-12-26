@@ -1,11 +1,11 @@
 ####### General
-alias sl=ls
+alias sl='ls'
 alias ls='ls -G'        # Compact view, show colors
+alias s='ls -G'
+alias l='ls -G'
 alias la='ls -AF'       # Compact view, show hidden
 alias ll='ls -al'
-alias l='ls -G'
 alias l1='ls -1'
-alias s='ls -G'
 
 alias _="sudo"
 
@@ -18,6 +18,12 @@ alias c="clear"
 
 alias less='less -R'
 alias grep='grep --color=auto'
+
+####### Vim
+
+alias vim="vi --cmd \"let g:more_features_checker='yes'\""
+alias svim="vi -i NONE -n"
+
 ####### Git
 # cite 'about-alias'
 # about-alias 'common git abbreviations'

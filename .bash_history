@@ -1,24 +1,3 @@
-git config --global push.default simple
-gs
-ls
-cd ..
-ls
-cd ..
-ls
-gs
-gs
-gss
-git st
-python
-ls
-cd validation_set.tsv 
-ls
-open keyword_marker_asst.py 
-ls
-open training_set.tsv 
-ls
-ls
-cd ..
 ls
 ls
 ks
@@ -498,3 +477,24 @@ vi .tmux.conf
 vi .tmux.conf 
 vi .vimrc
 killall tmux; tmux
+ls
+vim 
+tmux
+tmux
+cat .zshrc
+zsh
+ls
+cd Courses/
+ls
+cd caltech_machine_learning/
+ls
+source bin/activate
+pip
+deactivate
+ls
+vim
+exit
+ls
+vim 
+exit
+exit

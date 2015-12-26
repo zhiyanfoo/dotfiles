@@ -9,6 +9,7 @@ set wildmode=longest,list,full
 set wildmenu
 set ignorecase
 set smartcase
+set term=xterm-256color
 " set t_Co=256
 
 " if has('gui_running')
@@ -25,6 +26,7 @@ set softtabstop=4
 set shiftwidth=4 
 set tabstop=4
 set expandtab
+set mouse=a
 
 "system clipboard
 set clipboard=unnamed
@@ -66,6 +68,8 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'wincent/command-t'
 
 Plugin 'suan/vim-instant-markdown'
+
+Plugin 'jamessan/vim-gnupg'
 
 
 " The following are examples of different formats supported.
@@ -131,8 +135,6 @@ nnoremap L $
 vnoremap H ^
 vnoremap L $h
 
-vnoremap // y/<C-R>"<CR>
-
 "move around line wrap without skipping lines
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -142,36 +144,11 @@ noremap <leader>b :bprevious<cr>
 
 nnoremap <leader>ht ihttp://
 
-"panel switching
-" nnoremap <esc>j <C-W><C-J>
-" nnoremap <esc>k <C-W><C-K>
-" nnoremap <esc>l <C-W><C-L>
-" nnoremap <esc>h <C-W><C-H>
-
-if exists('$TMUX')
-  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-    let previous_winnr = winnr()
-    silent! execute "wincmd " . a:wincmd
-    if previous_winnr == winnr()
-      call system("tmux select-pane -" . a:tmuxdir)
-      redraw!
-    endif
-  endfunction
-
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
-
-  nnoremap <silent> <esc>h :call TmuxOrSplitSwitch('h', 'L')<cr>
-  nnoremap <silent> <esc>j :call TmuxOrSplitSwitch('j', 'D')<cr>
-  nnoremap <silent> <esc>k :call TmuxOrSplitSwitch('k', 'U')<cr>
-  nnoremap <silent> <esc>l :call TmuxOrSplitSwitch('l', 'R')<cr>
-else
-  map <esc>h <C-w>h
-  map <esc>j <C-w>j
-  map <esc>k <C-w>k
-  map <esc>l <C-w>l
-endif
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-H> :TmuxNavigatePrevious<cr>
 
 "change dir to dir of current file
 nnoremap <leader>cdd :cd<space>%:p:h<cr>
