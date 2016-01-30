@@ -1,32 +1,3 @@
-ls
-ls
-ks
-ls
-cd data/
-ls
-cd Projects/
-ls
-cd collabration_ideas/
-ls
-gs
-gia
-vim .gitignore 
-ls
-ls
-source bin/activate
-ls
-pip list
-ls
-cd QAtools/
-ls
-cd data
-ls
-touch keyword_marker_asst.py
-ls
-open keyword_marker_asst.py 
-ls
-open keyword_marker_asst.py 
-ls
 less training_set.tsv 
 ls
 gs
@@ -498,3 +469,35 @@ ls
 vim 
 exit
 exit
+ls
+cd Projects/test_vagrant/
+ls
+touch me
+vagrant init
+ls
+vi Vagrantfile 
+vagrant ssh
+vagrant up
+ls
+vi Vagrantfile 
+vagrant up
+vi Vagrantfile 
+vagrant up
+ls
+vagrant ssh
+ls
+la
+vagrant destroy
+brew cask install skype
+ls
+la
+ls
+cd Downloads/foss/
+s
+ls
+diff -u nutty-pancake.txt nutty-pancake-almond.txt > pbcopy
+v
+diff -u nutty-pancake.txt nutty-pancake-almond.txt
+/usr/local/Cellar/macvim/7.4-89/bin/mvim ; exit;
+/usr/local/Cellar/macvim/7.4-89/bin/mvim ; exit;
+vi

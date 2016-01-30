@@ -1,3 +1,7 @@
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 source .aliases
+
+export HISTSIZE=100000
+
+source /usr/local/etc/profile.d/z.sh

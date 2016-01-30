@@ -3,7 +3,7 @@ filetype off
 set autoindent
 set showcmd
 set number
-set cmdheight=2
+set cmdheight=1
 set ruler
 set wildmode=longest,list,full
 set wildmenu
@@ -52,6 +52,8 @@ endif
 
 Plugin 'tpope/vim-commentary'
 
+Plugin 'tpope/vim-abolish'
+
 Plugin 'wesQ3/vim-windowswap'
 
 Plugin 'tpope/vim-repeat'
@@ -71,6 +73,10 @@ Plugin 'suan/vim-instant-markdown'
 
 Plugin 'jamessan/vim-gnupg'
 
+" gives you ability to diff swp files during recovery
+Plugin 'chrisbra/Recover.vim'
+
+Plugin 'jpalardy/vim-slime'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -115,11 +121,15 @@ if has('gui_running')
     let g:CommandTFileScanner = 'git'
 endif
 
+let g:slime_target = "tmux"
 " MAPPINGS
 " -----------------------------------------------------------------
 
 
 let mapleader = " "
+
+" save
+nnoremap <leader>w :w<cr>
 
 nnoremap - O<esc>
 
@@ -161,3 +171,81 @@ nnoremap <leader>ft :CommandTFlush<CR>
 nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
+
+function! ToggleNumberMapping()
+    let s:switch_number = exists('s:switch_number') ? !s:switch_number: 1
+    if s:switch_number
+       " echom 'switch'
+       call SwitchMapping()
+    else
+       " echom 'invert'
+       call InvertSwitchMapping()
+    endif
+endfunction
+
+function! SwitchMapping()
+    " echom 'called switch mapping'
+    " map each number to its shift-key character
+    noremap! 1 !
+    noremap! 2 @
+    noremap! 3 #
+    noremap! 4 $
+    noremap! 5 %
+    noremap! 6 ^
+    noremap! 7 &
+    noremap! 8 *
+    noremap! 9 (
+    noremap! 0 )
+    noremap! - _
+    " and then the opposite
+    noremap! ! 1
+    noremap! @ 2
+    noremap! # 3
+    noremap! $ 4
+    noremap! % 5
+    noremap! ^ 6
+    noremap! & 7
+    noremap! * 8
+    noremap! ( 9
+    noremap! ) 0
+    noremap! _ -
+endfunction
+
+function! InvertSwitchMapping()
+    " echom 'called invert switch mapping'
+    noremap! 1 1
+    noremap! 2 2
+    noremap! 3 3
+    noremap! 4 4
+    noremap! 5 5
+    noremap! 6 6
+    noremap! 7 7
+    noremap! 8 8
+    noremap! 9 9
+    noremap! 0 0
+    noremap! - -
+    " and then the opposite
+    noremap! ! !
+    noremap! @ @
+    noremap! # #
+    noremap! $ $
+    noremap! % %
+    noremap! ^ ^
+    noremap! & &
+    noremap! * *
+    noremap! ( (
+    noremap! ) )
+    noremap! _ _
+endfunction
+ 
+call ToggleNumberMapping()
+
+nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
+
+nnoremap r cw
+
+noremap! ; :
+noremap! : ;
+noremap ; :
+noremap : ;
+
