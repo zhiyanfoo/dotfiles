@@ -31,10 +31,6 @@ set mouse=a
 "system clipboard
 set clipboard=unnamed
 
-"keep undo history after file closes
-set undofile
-set undodir=/home/zhiyan/.vimundo/
-
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
 "set the runtime path to include Vundle and initialize
@@ -122,6 +118,7 @@ if has('gui_running')
 endif
 
 let g:slime_target = "tmux"
+let g:slime_python_ipython = 1
 " MAPPINGS
 " -----------------------------------------------------------------
 
@@ -238,13 +235,12 @@ function! InvertSwitchMapping()
     noremap! _ _
 endfunction
  
-call ToggleNumberMapping()
-
 nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
-
-nnoremap r cw
 
 noremap! ; :
 noremap! : ;
 noremap ; :
 noremap : ;
+
+" print variable name
+nnoremap <leader>vp ^Vypiprint('<esc>$a')<esc>
