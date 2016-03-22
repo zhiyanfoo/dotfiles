@@ -1,3 +1,5 @@
+" BASIC CONFIG
+" -----------------------------------------------------------------
 set nocompatible
 filetype off                  
 set autoindent
@@ -9,17 +11,15 @@ set wildmode=longest,list,full
 set wildmenu
 set ignorecase
 set smartcase
-set term=xterm-256color
 " set t_Co=256
 
-" if has('gui_running')
-"     set background=dark
-"     colorscheme solarized
-" else
-"     set background=light
-" "     colorscheme molokai
-" endif
-" enables buffers to be switched without saving
+if has('gui_running')
+    set background=light
+    colorscheme solarized
+else
+    set term=xterm-256color
+endif
+
 set hidden
 syntax on
 set softtabstop=4
@@ -33,6 +33,8 @@ set clipboard=unnamed
 
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
+
+
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -44,6 +46,10 @@ Plugin 'gmarik/Vundle.vim'
 
 if exists("g:more_features_checker")
     Plugin 'Valloric/YouCompleteMe'
+endif
+
+if has('gui_running')
+    Plugin 'junegunn/goyo.vim'
 endif
 
 Plugin 'tpope/vim-commentary'
@@ -58,12 +64,12 @@ Plugin 'svermeulen/vim-easyclip'
 
 Plugin 'christoomey/vim-tmux-navigator'
 
+Plugin 'vim-scripts/UnconditionalPaste'
+
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
 
 Plugin 'terryma/vim-multiple-cursors'
-
-Plugin 'wincent/command-t'
 
 Plugin 'suan/vim-instant-markdown'
 
@@ -112,13 +118,18 @@ filetype plugin indent on    " required
 " PLUGIN CONFIGS
 " -----------------------------------------------------------------
 
-if has('gui_running')
-    let g:CommandTTraverseSCM = 'pwd'
-    let g:CommandTFileScanner = 'git'
-endif
-
 let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
+
+" MODES
+" -----------------------------------------------------------------
+
+func! WordProcessorMode() 
+    setlocal spell spelllang=en_us 
+    set vb t_vb=
+endfu 
+com! WP call WordProcessorMode()
+
 " MAPPINGS
 " -----------------------------------------------------------------
 
@@ -237,10 +248,14 @@ endfunction
  
 nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
 
-noremap! ; :
-noremap! : ;
+" noremap! ; :
+" noremap! : ;
 noremap ; :
 noremap : ;
 
 " print variable name
-nnoremap <leader>vp ^Vypiprint('<esc>$a')<esc>
+nnoremap <leader>pn ^Vypiprint('<esc>$a')<esc>kdd
+
+nnoremap <leader>pp ^Vypiprint(<esc>$a)<esc>kdd
+
+nnoremap <leader>" i""""""<esc>
