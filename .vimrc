@@ -46,6 +46,21 @@ Plugin 'gmarik/Vundle.vim'
 
 if exists("g:more_features_checker")
     Plugin 'Valloric/YouCompleteMe'
+    " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
+    " let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+    " let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+    let g:ycm_key_list_select_completion   = ['<tab>', '<Down>']
+
+    " Plugin 'ervandew/supertab'
+    " let g:SuperTabDefaultCompletionType    = '<C-n>'
+    " let g:SuperTabCrMapping                = 0
+
+    Plugin 'SirVer/ultisnips'
+    let g:UltiSnipsExpandTrigger="<C-j>"
+    let g:UltiSnipsJumpForwardTrigger="<C-j>"
+    " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+    let g:UltiSnipsEditSplit="vertical"
 endif
 
 if has('gui_running')
