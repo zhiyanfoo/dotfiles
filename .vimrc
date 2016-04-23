@@ -11,6 +11,8 @@ set wildmode=longest,list,full
 set wildmenu
 set ignorecase
 set smartcase
+set splitbelow
+set splitright
 " set t_Co=256
 
 if has('gui_running')
@@ -87,6 +89,8 @@ Plugin 'kwbdi.vim'
 Plugin 'terryma/vim-multiple-cursors'
 
 Plugin 'suan/vim-instant-markdown'
+"You first need to have node.js with npm installed.
+"    [sudo] npm -g install instant-markdown-d
 
 Plugin 'jamessan/vim-gnupg'
 
@@ -272,5 +276,7 @@ noremap : ;
 nnoremap <leader>pn ^Vypiprint('<esc>$a')<esc>kdd
 
 nnoremap <leader>pp ^Vypiprint(<esc>$a)<esc>kdd
+
+nnoremap <leader>fd ^dwx$x
 
 nnoremap <leader>" i""""""<esc>
