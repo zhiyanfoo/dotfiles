@@ -502,3 +502,10 @@ diff -u nutty-pancake.txt nutty-pancake-almond.txt
 /usr/local/Cellar/macvim/7.4-89/bin/mvim ; exit;
 vi
 /Users/zhiyan/Courses/18-100b-fall-2010/18-100b-fall-2010/remove ; exit;
+ls
+ls
+c
+ls
+ls -a
+cat .iterm
+/Users/zhiyan/Projects/complex-sets/dist/build/complex-sets/complex-sets ; exit;

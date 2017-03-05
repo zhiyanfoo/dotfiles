@@ -1,6 +1,7 @@
 setopt menucomplete
 
-source .commonprofile
+source ~/.commonprofile
+source ~/.functions
 
 # fzf installed line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -15,3 +16,4 @@ setopt HIST_IGNORE_ALL_DUPS
 export SAVEHIST=100000
 export HISTFILE=/Users/zhiyan/.zsh_history
 
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

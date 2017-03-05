@@ -1,7 +1,6 @@
 " BASIC CONFIG
 " -----------------------------------------------------------------
 set nocompatible
-filetype off                  
 set autoindent
 set showcmd
 set number
@@ -13,11 +12,17 @@ set ignorecase
 set smartcase
 set splitbelow
 set splitright
+set textwidth=79
 " set t_Co=256
+"
 
+" keeps lines at the bottom always
+set scrolloff=5
 if has('gui_running')
     set background=light
     colorscheme solarized
+    autocmd InsertEnter * set formatoptions+=a
+    autocmd InsertLeave * set formatoptions-=a
 else
     set term=xterm-256color
 endif
@@ -36,7 +41,7 @@ set clipboard=unnamed
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
-
+filetype off                  
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -70,34 +75,25 @@ if has('gui_running')
 endif
 
 Plugin 'tpope/vim-commentary'
-
 Plugin 'tpope/vim-abolish'
-
 Plugin 'wesQ3/vim-windowswap'
-
 Plugin 'tpope/vim-repeat'
-
 Plugin 'svermeulen/vim-easyclip'
-
 Plugin 'christoomey/vim-tmux-navigator'
-
 Plugin 'vim-scripts/UnconditionalPaste'
-
+" underline text for numpy doc for example
+Plugin 'drmikehenry/vim-extline'
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
-
 Plugin 'terryma/vim-multiple-cursors'
-
-Plugin 'suan/vim-instant-markdown'
+" Plugin 'suan/vim-instant-markdown'
 "You first need to have node.js with npm installed.
 "    [sudo] npm -g install instant-markdown-d
-
 Plugin 'jamessan/vim-gnupg'
-
 " gives you ability to diff swp files during recovery
 Plugin 'chrisbra/Recover.vim'
-
 Plugin 'jpalardy/vim-slime'
+Plugin 'tpope/vim-surround'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -133,6 +129,7 @@ filetype plugin indent on    " required
 "
 "
 "
+filetype on
 
 " PLUGIN CONFIGS
 " -----------------------------------------------------------------
@@ -176,8 +173,8 @@ vnoremap L $h
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
-noremap <leader>n :bnext<cr>
-noremap <leader>b :bprevious<cr>
+noremap <leader>nn :bnext<cr>
+noremap <leader>bb :bprevious<cr>
 
 nnoremap <leader>ht ihttp://
 
@@ -199,72 +196,22 @@ nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
 
-function! ToggleNumberMapping()
-    let s:switch_number = exists('s:switch_number') ? !s:switch_number: 1
-    if s:switch_number
-       " echom 'switch'
-       call SwitchMapping()
-    else
-       " echom 'invert'
-       call InvertSwitchMapping()
-    endif
-endfunction
+" function! ToggleNumberMapping()
+"     let s:switch_number = exists('s:switch_number') ? !s:switch_number: 1
+"     if s:switch_number
+"        " echom 'switch'
+"        call SwitchMapping()
+"     else
+"        " echom 'invert'
+"        call InvertSwitchMapping()
+"     endif
+" endfunction
 
-function! SwitchMapping()
-    " echom 'called switch mapping'
-    " map each number to its shift-key character
-    noremap! 1 !
-    noremap! 2 @
-    noremap! 3 #
-    noremap! 4 $
-    noremap! 5 %
-    noremap! 6 ^
-    noremap! 7 &
-    noremap! 8 *
-    noremap! 9 (
-    noremap! 0 )
-    noremap! - _
-    " and then the opposite
-    noremap! ! 1
-    noremap! @ 2
-    noremap! # 3
-    noremap! $ 4
-    noremap! % 5
-    noremap! ^ 6
-    noremap! & 7
-    noremap! * 8
-    noremap! ( 9
-    noremap! ) 0
-    noremap! _ -
-endfunction
+" function! SwitchMapping()
+"     " echom 'called switch mapping'
+"     " map each number to its shift-key character
+" endfunction
 
-function! InvertSwitchMapping()
-    " echom 'called invert switch mapping'
-    noremap! 1 1
-    noremap! 2 2
-    noremap! 3 3
-    noremap! 4 4
-    noremap! 5 5
-    noremap! 6 6
-    noremap! 7 7
-    noremap! 8 8
-    noremap! 9 9
-    noremap! 0 0
-    noremap! - -
-    " and then the opposite
-    noremap! ! !
-    noremap! @ @
-    noremap! # #
-    noremap! $ $
-    noremap! % %
-    noremap! ^ ^
-    noremap! & &
-    noremap! * *
-    noremap! ( (
-    noremap! ) )
-    noremap! _ _
-endfunction
- 
 nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
 
 " noremap! ; :
@@ -280,3 +227,10 @@ nnoremap <leader>pp ^Vypiprint(<esc>$a)<esc>kdd
 nnoremap <leader>fd ^dwx$x
 
 nnoremap <leader>" i""""""<esc>
+
+" set spell
+nnoremap <leader>sp :set spell spelllang=en<cr>
+nnoremap <leader>spn :set nospell<cr>
+
+" generate pdf `:hardcopy > myfile.ps`  then `ps2pdf your_ps_file.ps`
+

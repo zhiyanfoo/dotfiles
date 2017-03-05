@@ -19,6 +19,8 @@ alias c="clear"
 alias less='less -R'
 alias grep='grep --color=auto'
 
+alias ghost='\gs'
+
 ####### Vim
 
 alias vi="/usr/local/bin/mvim -v"
@@ -38,8 +40,8 @@ alias gus='git reset HEAD'
 alias gm="git merge"
 # alias g='git'
 # alias get='git'
-alias gst='git status'
 alias gs='git status'
+alias gst='git status'
 alias gss='git status -s'
 # alias gsu='git submodule update --init --recursive'
 alias gl='git pull'
@@ -82,4 +84,11 @@ alias gnew="git log HEAD@{1}..HEAD@{0}"
 # Add uncommitted and unstaged changes to the last commit
 alias gcaa="git commit -a --amend -C HEAD"
 
+# GITIGNORE
 alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
+alias igpy='cat /Users/zhiyan/Tools/gitignore/Python.gitignore >> .gitignore'
+alias ighs='cat /Users/zhiyan/Tools/gitignore/Haskell.gitignore >> .gitignore'
+alias igmac='cat /Users/zhiyan/Tools/gitignore/Global/macOS.gitignore >> .gitignore'
+alias igvim='cat /Users/zhiyan/Tools/gitignore/Global/Vim.gitignore >> .gitignore'
+alias igde='igmac; igvim'
+
