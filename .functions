@@ -1,0 +1,29 @@
+function trash() { mv $@ ~/.Trash; }
+
+function latexme() { 
+    latex $1; 
+    NAME=`echo "$1" | cut -f 1 -d '.'`;
+    PDFNAME=$NAME".pdf"
+    echo $NAME;
+    dvipdf $NAME".dvi" > $PDFNAME ;
+    }
+
+function texmath() {
+    touch $1
+    echo '\\documentclass[12pt]{article}' >> $1
+    echo '\\usepackage{mathtools}' >> $1
+    echo '\\begin{document}' >> $1
+    \echo '\\end{document}' >> $1
+
+}
+
+function texessay() {
+    touch $1
+    echo '\\documentclass[12pt]{article}' >> $1
+    echo '\\begin{document}' >> $1
+    \echo '\\end{document}' >> $1
+}
+
+function gitrmbunch() {
+    git ls-files | grep $1 | xargs git rm
+}

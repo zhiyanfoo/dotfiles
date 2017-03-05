@@ -70,10 +70,6 @@ if exists("g:more_features_checker")
     let g:UltiSnipsEditSplit="vertical"
 endif
 
-if has('gui_running')
-    Plugin 'junegunn/goyo.vim'
-endif
-
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 Plugin 'wesQ3/vim-windowswap'
@@ -214,8 +210,6 @@ nnoremap <leader>pi :PluginInstall<CR>
 
 nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
 
-" noremap! ; :
-" noremap! : ;
 noremap ; :
 noremap : ;
 
