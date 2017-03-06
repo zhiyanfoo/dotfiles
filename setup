@@ -74,12 +74,13 @@ git clone "https://github.com/zhiyanfoo/dotfiles" ~/dotfiles
 ln -s ~/dotfiles/.aliases ~/.aliases
 ln -s ~/dotfiles/.bash_profile ~/.bash_profile
 ln -s ~/dotfiles/.commonprofile ~/.commonprofile
+ln -s ~/dotfiles/.functions ~/.functions
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.zshrc.conf ~/.zshrc
 
 ###############################################################################
-# vim  plugins                                                                #
+# vim plugins                                                                 #
 ###############################################################################
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -89,6 +90,26 @@ vim +PluginInstall +qall
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
 vim +PluginInstall +qall
+
+###############################################################################
+# Snippets                                                                    #
+###############################################################################
+
+mkdir ~/.utils
+
+git clone "https://github.com/zhiyanfoo/vim-snippets" ~/.utils/vim-snippets
+mkdir -p .vim/UltiSnips
+
+ln -s ~/.utils/vim-snippets/python.snippets ~/.vim/UltiSnips
+ln -s ~/.utils/vim-snippets/snippets.snippets ~/.vim/UltiSnips
+ln -s ~/.utils/vim-snippets/tex.snippets ~/.vim/UltiSnips
+ln -s ~/.utils/vim-snippets/texmath.snippets ~/.vim/UltiSnips
+ln -s ~/.utils/vim-snippets/bib.snippets ~/.vim/UltiSnips
+
+
+###############################################################################
+# Apps                                                                        #
+###############################################################################
 
 brew cask install --appdir="~/Applications" iterm2
 brew cask install --appdir="/Applications" firefox
