@@ -77,7 +77,7 @@ ln -s ~/dotfiles/.commonprofile ~/.commonprofile
 ln -s ~/dotfiles/.functions ~/.functions
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/.vimrc ~/.vimrc
-ln -s ~/dotfiles/.zshrc.conf ~/.zshrc
+ln -s ~/dotfiles/.zshrc ~/.zshrc
 
 ###############################################################################
 # vim plugins                                                                 #
