@@ -10,31 +10,30 @@ osascript -e 'tell application "System Preferences" to quit'
 # Ask for the administrator password upfront
 sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+# Keep-alive: update existing `sudo` time stamp until setup has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
 
 ###############################################################################
 # Mac system preferences                                                      #
 ###############################################################################
 
 # Disable the 'Are you sure you want to open this application?' dialog
-defaults write com.apple.LaunchServices LSQuarantine -bool false;ok
+defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false;ok
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1;ok
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10;ok
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Reveal IP, hostname, OS, etc. when clicking clock in login window
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName;ok
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
 ###############################################################################
 # Brew                                                                        #
@@ -49,6 +48,7 @@ brew upgrade --all
 brew install zsh
 brew install git
 brew install tmux 
+brew install reattach-to-user-namespace
 brew install mvim
 ln -s /usr/local/bin/mvim vim
 # for the youcompleteme vim plugin
@@ -68,10 +68,17 @@ git config --global user.email "zhiyanfoo@gmail.com"
 git config --global credential.helper osxkeychain
 
 ###############################################################################
+# ruby version manager                                                        #
+###############################################################################
+
+\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+
+###############################################################################
 # dotfiles                                                                    #
 ###############################################################################
 git clone "https://github.com/zhiyanfoo/dotfiles" ~/dotfiles
 ln -s ~/dotfiles/.aliases ~/.aliases
+rm ~/.bash_profile
 ln -s ~/dotfiles/.bash_profile ~/.bash_profile
 ln -s ~/dotfiles/.commonprofile ~/.commonprofile
 ln -s ~/dotfiles/.functions ~/.functions
@@ -83,34 +90,35 @@ ln -s ~/dotfiles/.zshrc ~/.zshrc
 # vim plugins                                                                 #
 ###############################################################################
 
+# Needs fixing vimrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-vim +PluginInstall +qall
+/usr/local/bin/mvim -v --cmd +PluginInstall +qall
 
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
-vim +PluginInstall +qall
+/usr/local/bin/mvim -v +PluginInstall +qall
 
 ###############################################################################
 # Snippets                                                                    #
 ###############################################################################
 
-mkdir ~/.utils
+mkdir -p ~/.utils
+mkdir -p ~/.vim/UltiSnips
 
 git clone "https://github.com/zhiyanfoo/vim-snippets" ~/.utils/vim-snippets
-mkdir -p .vim/UltiSnips
 
-ln -s ~/.utils/vim-snippets/python.snippets ~/.vim/UltiSnips
-ln -s ~/.utils/vim-snippets/snippets.snippets ~/.vim/UltiSnips
-ln -s ~/.utils/vim-snippets/tex.snippets ~/.vim/UltiSnips
-ln -s ~/.utils/vim-snippets/texmath.snippets ~/.vim/UltiSnips
-ln -s ~/.utils/vim-snippets/bib.snippets ~/.vim/UltiSnips
-
+ln -s ~/.utils/vim-snippets/UltiSnips/python.snippets ~/.vim/UltiSnips/python.snippets
+ln -s ~/.utils/vim-snippets/UltiSnips/snippets.snippets ~/.vim/UltiSnips/snippets.snippets 
+ln -s ~/.utils/vim-snippets/UltiSnips/tex.snippets ~/.vim/UltiSnips/tex.snippets
+ln -s ~/.utils/vim-snippets/UltiSnips/texmath.snippets ~/.vim/UltiSnips/texmath.snippets
+ln -s ~/.utils/vim-snippets/UltiSnips/bib.snippets ~/.vim/UltiSnips/bib.snippets 
 
 ###############################################################################
 # Apps                                                                        #
 ###############################################################################
 
+# preferences for iterm need to be changed manually, profile -> colors and
+# profile -> general -> command -> /usr/local/bin/zsh
 brew cask install --appdir="~/Applications" iterm2
 brew cask install --appdir="/Applications" firefox
 brew cask install --appdir="/Applications" skim
