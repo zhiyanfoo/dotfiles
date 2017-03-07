@@ -27,3 +27,9 @@ function texessay() {
 function gitrmbunch() {
     git ls-files | grep $1 | xargs git rm
 }
+
+
+function jcr() { 
+    javac $1; 
+    java $(basename $1 .java);
+    }
