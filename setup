@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# practically everything here is copied from somewhere else
+
 # exit script if any command fails
 set -e
 
@@ -108,6 +110,7 @@ mkdir -p ~/.vim/UltiSnips
 git clone "https://github.com/zhiyanfoo/vim-snippets" ~/.utils/vim-snippets
 
 ln -s ~/.utils/vim-snippets/UltiSnips/python.snippets ~/.vim/UltiSnips/python.snippets
+ln -s ~/.utils/vim-snippets/UltiSnips/java.snippets ~/.vim/UltiSnips/java.snippets
 ln -s ~/.utils/vim-snippets/UltiSnips/snippets.snippets ~/.vim/UltiSnips/snippets.snippets 
 ln -s ~/.utils/vim-snippets/UltiSnips/tex.snippets ~/.vim/UltiSnips/tex.snippets
 ln -s ~/.utils/vim-snippets/UltiSnips/texmath.snippets ~/.vim/UltiSnips/texmath.snippets
