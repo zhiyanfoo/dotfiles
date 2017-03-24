@@ -58,8 +58,20 @@ brew install gnupg2
 brew install fzf
 brew install z
 brew install python
-brew install python3
+brew install virtualenv
 
+###############################################################################
+# pip                                                                         #
+###############################################################################
+
+pip install virtualenvwrapper
+
+VENV_WRAPPER=/usr/local/bin/virtualenvwrapper.sh
+ 
+if [ -f "$VENV_WRAPPER" ]
+then
+    source $VENV_WRAPPER
+fi
 ###############################################################################
 # Git setup                                                                   #
 ###############################################################################

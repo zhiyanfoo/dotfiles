@@ -14,7 +14,16 @@ source ~/.functions
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 export SAVEHIST=100000
-export HISTFILE=/Users/zhiyan/.zsh_history
+export HISTFILE=~/.zsh_history
+
+VENV_WRAPPER=/usr/local/bin/virtualenvwrapper.sh
+
+plugins=(git brew python virtualenvwrapper)
+
+if [ -f "$VENV_WRAPPER" ]
+then
+    source $VENV_WRAPPER
+fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 PATH=/Users/fzhiyan/Library/Haskell/bin:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/fzhiyan/Library/Haskell/bin:/usr/local/sbin:/Users/fzhiyan/.rvm/bin:/Users/fzhiyan/src/BUILD-infrastructure/newproject
