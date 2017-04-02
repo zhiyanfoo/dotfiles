@@ -145,11 +145,7 @@ com! WP call WordProcessorMode()
 " MAPPINGS
 " -----------------------------------------------------------------
 
-
 let mapleader = " "
-
-" save
-nnoremap <leader>w :w<cr>
 
 nnoremap - O<esc>
 
@@ -186,41 +182,14 @@ nnoremap <leader>cdd :cd<space>%:p:h<cr>
 " search selected test using //
 vnoremap // y/<C-R>"<CR>
 
-nnoremap <leader>ft :CommandTFlush<CR>
-
 nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
-
-" function! ToggleNumberMapping()
-"     let s:switch_number = exists('s:switch_number') ? !s:switch_number: 1
-"     if s:switch_number
-"        " echom 'switch'
-"        call SwitchMapping()
-"     else
-"        " echom 'invert'
-"        call InvertSwitchMapping()
-"     endif
-" endfunction
-
-" function! SwitchMapping()
-"     " echom 'called switch mapping'
-"     " map each number to its shift-key character
-" endfunction
 
 nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
 
 noremap ; :
 noremap : ;
-
-" print variable name
-nnoremap <leader>pn ^Vypiprint('<esc>$a')<esc>kdd
-
-nnoremap <leader>pp ^Vypiprint(<esc>$a)<esc>kdd
-
-nnoremap <leader>fd ^dwx$x
-
-nnoremap <leader>" i""""""<esc>
 
 " set spell
 nnoremap <leader>sp :set spell spelllang=en<cr>
