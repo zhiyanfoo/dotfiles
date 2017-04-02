@@ -6,3 +6,7 @@ source ~/.aliases
 export HISTSIZE=100000
 
 source /usr/local/etc/profile.d/z.sh
+
+if [ "$USER" = "fzhiyan" ]; then
+    source ~/.quant_profile
+fi

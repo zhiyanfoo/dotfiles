@@ -12,20 +12,10 @@ set ignorecase
 set smartcase
 set splitbelow
 set splitright
-set textwidth=79
 " set t_Co=256
-"
 
 " keeps lines at the bottom always
 set scrolloff=5
-if has('gui_running')
-    set background=light
-    colorscheme solarized
-    autocmd InsertEnter * set formatoptions+=a
-    autocmd InsertLeave * set formatoptions-=a
-else
-    set term=xterm-256color
-endif
 
 set hidden
 syntax on
@@ -51,29 +41,27 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-if exists("g:more_features_checker")
-    Plugin 'Valloric/YouCompleteMe'
-    " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
-    " let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-    " let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
-    let g:ycm_key_list_select_completion   = ['<tab>', '<Down>']
+Plugin 'Valloric/YouCompleteMe'
+" YouCompleteMe and UltiSnips compatibility, with the helper of supertab
+" let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+let g:ycm_key_list_select_completion   = ['<tab>', '<Down>']
 
-    " Plugin 'ervandew/supertab'
-    " let g:SuperTabDefaultCompletionType    = '<C-n>'
-    " let g:SuperTabCrMapping                = 0
+" Plugin 'ervandew/supertab'
+" let g:SuperTabDefaultCompletionType    = '<C-n>'
+" let g:SuperTabCrMapping                = 0
 
-    Plugin 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger="<C-j>"
-    let g:UltiSnipsJumpForwardTrigger="<C-j>"
-    " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+Plugin 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-    let g:UltiSnipsEditSplit="vertical"
-endif
+let g:UltiSnipsEditSplit="vertical"
 
 Plugin 'tpope/vim-commentary'
-" Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-abolish'
 Plugin 'wesQ3/vim-windowswap'
-" Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-repeat'
 Plugin 'svermeulen/vim-easyclip'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-scripts/UnconditionalPaste'
@@ -82,13 +70,15 @@ Plugin 'drmikehenry/vim-extline'
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
 Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'suan/vim-instant-markdown'
+"You first need to have node.js with npm installed.
+"    [sudo] npm -g install instant-markdown-d
 " gives you ability to diff swp files during recovery
 Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'tpope/vim-surround'
-
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -150,9 +140,6 @@ nnoremap - O<esc>
 "undo undo
 nnoremap <S-U> <C-R>
 
-nnoremap <leader>ev :edit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
 nnoremap H ^
 nnoremap L $
 
@@ -184,18 +171,10 @@ nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
 
-noremap ; :
-noremap : ;
+nnoremap <leader>" i""""""<esc>
 
 " set spell
 nnoremap <leader>sp :set spell spelllang=en<cr>
 nnoremap <leader>spn :set nospell<cr>
 
 " generate pdf `:hardcopy > myfile.ps`  then `ps2pdf your_ps_file.ps`
-
-" fzf mappings
-
-nnoremap <silent> <c-p> :Files<cr>
-nnoremap <silent> <c-m> :Buffers<cr>
-nnoremap <silent> <c-]> :GFiles?<cr>
-let g:fzf_layout = { 'down': '~25%' }
