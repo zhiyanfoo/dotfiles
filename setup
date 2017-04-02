@@ -59,6 +59,7 @@ brew install fzf
 brew install z
 brew install python
 brew install virtualenv
+brew install ranger
 
 ###############################################################################
 # pip                                                                         #
