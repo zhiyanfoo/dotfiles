@@ -91,7 +91,8 @@ Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'tpope/vim-surround'
 
-Plugin 'scrooloose/nerdtree'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -187,29 +188,9 @@ nnoremap <leader>cdd :cd<space>%:p:h<cr>
 " search selected test using //
 vnoremap // y/<C-R>"<CR>
 
-nnoremap <leader>ft :CommandTFlush<CR>
-
 nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
-
-" function! ToggleNumberMapping()
-"     let s:switch_number = exists('s:switch_number') ? !s:switch_number: 1
-"     if s:switch_number
-"        " echom 'switch'
-"        call SwitchMapping()
-"     else
-"        " echom 'invert'
-"        call InvertSwitchMapping()
-"     endif
-" endfunction
-
-" function! SwitchMapping()
-"     " echom 'called switch mapping'
-"     " map each number to its shift-key character
-" endfunction
-
-nnoremap <silent> <leader>a :call<space>ToggleNumberMapping()<cr>
 
 noremap ; :
 noremap : ;
@@ -229,3 +210,9 @@ nnoremap <leader>spn :set nospell<cr>
 
 " generate pdf `:hardcopy > myfile.ps`  then `ps2pdf your_ps_file.ps`
 
+" fzf mappings
+
+nnoremap <silent> <c-p> :Files<cr>
+nnoremap <silent> <c-m> :Buffers<cr>
+nnoremap <silent> <c-]> :GFiles?<cr>
+let g:fzf_layout = { 'down': '~25%' }
