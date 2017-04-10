@@ -133,7 +133,7 @@ com! WP call WordProcessorMode()
 " MAPPINGS
 " -----------------------------------------------------------------
 
-let mapleader = " "
+let mapleader = ","
 
 nnoremap - O<esc>
 
@@ -170,8 +170,6 @@ vnoremap // y/<C-R>"<CR>
 nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
-
-nnoremap <leader>" i""""""<esc>
 
 " set spell
 nnoremap <leader>sp :set spell spelllang=en<cr>

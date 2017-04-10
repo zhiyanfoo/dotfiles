@@ -14,7 +14,6 @@ set splitbelow
 set splitright
 set textwidth=79
 " set t_Co=256
-"
 
 " keeps lines at the bottom always
 set scrolloff=5
@@ -113,7 +112,7 @@ Plugin 'junegunn/fzf.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+filetype plugin on
 "
 " Brief help
 " :PluginList       - lists configured plugins
@@ -148,7 +147,7 @@ com! WP call WordProcessorMode()
 " -----------------------------------------------------------------
 
 
-let mapleader = " "
+let mapleader = ","
 
 " save
 nnoremap <leader>w :w<cr>
@@ -191,9 +190,6 @@ vnoremap // y/<C-R>"<CR>
 nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
-
-noremap ; :
-noremap : ;
 
 " print variable name
 nnoremap <leader>pn ^Vypiprint('<esc>$a')<esc>kdd
