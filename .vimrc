@@ -73,7 +73,8 @@ endif
 Plugin 'tpope/vim-commentary'
 " Plugin 'tpope/vim-abolish'
 Plugin 'wesQ3/vim-windowswap'
-" Plugin 'tpope/vim-repeat'
+" required from vim-easyclip
+Plugin 'tpope/vim-repeat'
 Plugin 'svermeulen/vim-easyclip'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-scripts/UnconditionalPaste'
@@ -184,9 +185,6 @@ nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
 
-noremap ; :
-noremap : ;
-
 " set spell
 nnoremap <leader>sp :set spell spelllang=en<cr>
 nnoremap <leader>spn :set nospell<cr>
@@ -199,3 +197,6 @@ nnoremap <silent> <c-p> :Files<cr>
 nnoremap <silent> <c-m> :Buffers<cr>
 nnoremap <silent> <c-]> :GFiles?<cr>
 let g:fzf_layout = { 'down': '~25%' }
+
+" remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
+" :nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
