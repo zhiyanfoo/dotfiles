@@ -8,7 +8,6 @@ set cmdheight=1
 set ruler
 set wildmode=longest,list,full
 set wildmenu
-set ignorecase
 set smartcase
 set splitbelow
 set splitright
@@ -90,8 +89,10 @@ Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'tpope/vim-surround'
 
+Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -209,6 +210,16 @@ nnoremap <leader>spn :set nospell<cr>
 " fzf mappings
 
 nnoremap <silent> <c-p> :Files<cr>
+nnoremap <silent> <c-g> :Tags<cr>
+nnoremap <silent> <s-m> :BLines<cr>
 nnoremap <silent> <c-m> :Buffers<cr>
-nnoremap <silent> <c-]> :GFiles?<cr>
-let g:fzf_layout = { 'down': '~25%' }
+let g:fzf_layout = { 'down': '~35%' }
+
+" delate trailing whitespace
+:nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+
+" remap mark key as it is used by easyclip
+nnoremap gm m
+
+" copy all
+nnoremap <leader>aa :%y+<cr>

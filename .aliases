@@ -7,6 +7,9 @@ alias la='ls -AF'       # Compact view, show hidden
 alias ll='ls -al'
 alias l1='ls -1'
 
+alias check='autopep8 --diff'
+alias refactor='autopep8 --in-place'
+
 alias _="sudo"
 
 alias ..='cd ..'         # Go up one directory
@@ -94,3 +97,4 @@ alias igmac='cat /Users/zhiyan/Tools/gitignore/Global/macOS.gitignore >> .gitign
 alias igvim='cat /Users/zhiyan/Tools/gitignore/Global/Vim.gitignore >> .gitignore'
 alias igde='igmac; igvim'
 
+alias rp=realpath

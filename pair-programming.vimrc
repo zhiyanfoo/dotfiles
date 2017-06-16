@@ -62,7 +62,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'tpope/vim-repeat'
-Plugin 'svermeulen/vim-easyclip'
+" Plugin 'svermeulen/vim-easyclip'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-scripts/UnconditionalPaste'
 " underline text for numpy doc for example
