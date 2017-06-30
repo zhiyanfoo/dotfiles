@@ -144,7 +144,7 @@ com! WP call WordProcessorMode()
 " MAPPINGS
 " -----------------------------------------------------------------
 
-let mapleader = " "
+let mapleader = ","
 
 nnoremap - O<esc>
 
@@ -196,7 +196,7 @@ nnoremap <leader>spn :set nospell<cr>
 nnoremap <silent> <c-p> :Files<cr>
 nnoremap <silent> <c-m> :Buffers<cr>
 nnoremap <silent> <c-]> :GFiles?<cr>
-let g:fzf_layout = { 'down': '~25%' }
+let g:fzf_layout = { 'down': '~40%' }
 
 " remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
 " :nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
