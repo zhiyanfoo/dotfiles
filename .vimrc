@@ -198,4 +198,4 @@ nnoremap <silent> <c-]> :GFiles?<cr>
 let g:fzf_layout = { 'down': '~40%' }
 
 " remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
-" :nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+:nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
