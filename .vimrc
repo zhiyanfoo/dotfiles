@@ -8,7 +8,6 @@ set cmdheight=1
 set ruler
 set wildmode=longest,list,full
 set wildmenu
-set ignorecase
 set smartcase
 set splitbelow
 set splitright

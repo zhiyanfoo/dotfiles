@@ -28,6 +28,9 @@ alias vim="/usr/local/bin/mvim -v --cmd \"let g:more_features_checker='yes'\""
 alias svim="/usr/local/bin/mvim -v -i NONE -n"
 alias vimp="/usr/local/bin/mvim -v -u ~/dotfiles/pair-programming.vimrc"
 
+# PYTHON INTERPRETER
+
+alias bpy3="source ~/src/bpython/bin/activate; bpython"
 
 ####### Git
 # cite 'about-alias'
