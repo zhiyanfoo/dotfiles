@@ -1,5 +1,3 @@
-setopt menucomplete
-
 source ~/.commonprofile
 source ~/.functions
 
