@@ -126,6 +126,13 @@ git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
 ./~/tools/z-snippets/create_symlinks.sh
 
 ###############################################################################
+# ZEN PYTHON ENVIROMENT MANAGER                                               #
+###############################################################################
+
+git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
+./~/tools/zen/installation.sh
+
+###############################################################################
 # Apps                                                                        #
 ###############################################################################
 
