@@ -91,14 +91,16 @@ git config --global credential.helper osxkeychain
 # dotfiles                                                                    #
 ###############################################################################
 git clone "https://github.com/zhiyanfoo/dotfiles" ~/dotfiles
-ln -s ~/dotfiles/.aliases ~/.aliases
+ln -s ~/dotfiles/aliases ~/.aliases
 rm ~/.bash_profile
-ln -s ~/dotfiles/.bash_profile ~/.bash_profile
-ln -s ~/dotfiles/.commonprofile ~/.commonprofile
-ln -s ~/dotfiles/.functions ~/.functions
-ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/.vimrc ~/.vimrc
-ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/bash_profile ~/.bash_profile
+ln -s ~/dotfiles/commonprofile ~/.commonprofile
+ln -s ~/dotfiles/functions ~/.functions
+ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/vimrc ~/.vimrc
+ln -s ~/dotfiles/zshrc ~/.zshrc
+ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
+
 
 ###############################################################################
 # vim plugins                                                                 #
@@ -116,27 +118,27 @@ cd ~/.vim/bundle/YouCompleteMe
 # Snippets                                                                    #
 ###############################################################################
 
-mkdir -p ~/.utils
 mkdir -p ~/.vim/UltiSnips
+mkdir -p ~/tools
 
-git clone "https://github.com/zhiyanfoo/vim-snippets" ~/.utils/vim-snippets
-
-ln -s ~/.utils/vim-snippets/UltiSnips/python.snippets ~/.vim/UltiSnips/python.snippets
-ln -s ~/.utils/vim-snippets/UltiSnips/java.snippets ~/.vim/UltiSnips/java.snippets
-ln -s ~/.utils/vim-snippets/UltiSnips/snippets.snippets ~/.vim/UltiSnips/snippets.snippets 
-ln -s ~/.utils/vim-snippets/UltiSnips/tex.snippets ~/.vim/UltiSnips/tex.snippets
-ln -s ~/.utils/vim-snippets/UltiSnips/texmath.snippets ~/.vim/UltiSnips/texmath.snippets
-ln -s ~/.utils/vim-snippets/UltiSnips/bib.snippets ~/.vim/UltiSnips/bib.snippets 
+git clone "https://github.com/honza/vim-snippets" ~/tools/vim-snippets
+git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
+./~/tools/z-snippets/create_symlinks.sh
 
 ###############################################################################
 # Apps                                                                        #
 ###############################################################################
 
-# preferences for iterm need to be changed manually, profile -> colors and
-# profile -> general -> command -> /usr/local/bin/zsh
 brew cask install --appdir="~/Applications" iterm2
 brew cask install --appdir="/Applications" firefox
 brew cask install --appdir="/Applications" skim
 brew cask install --appdir="/Applications" vlc
 brew cask install --appdir="/Applications" google-chrome
 brew cask install --appdir="/Applications" vagrant
+
+###############################################################################
+# Manual                                                                      #
+###############################################################################
+
+# preferences for iterm need to be changed manually, profile -> colors and
+# profile -> general -> command -> /usr/local/bin/zsh

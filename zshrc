@@ -14,7 +14,7 @@ setopt HIST_IGNORE_ALL_DUPS
 export SAVEHIST=100000
 export HISTFILE=~/.zsh_history
 
-VENV_WRAPPER=/usr/local/bin/virtualenvwrapper.sh
+VENV_WRAPPER=/usr/local/bin/virtualenvwrapper_lazy.sh
 
 plugins=(git brew python virtualenvwrapper)
 

@@ -22,7 +22,7 @@ if has('gui_running')
     colorscheme solarized
     autocmd InsertEnter * set formatoptions+=a
     autocmd InsertLeave * set formatoptions-=a
-else
+elseif !has('nvim')
     set term=xterm-256color
 endif
 
