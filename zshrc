@@ -25,3 +25,12 @@ fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$PATH:$HOME/Courses/nand2tetris2/tools"
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' matcher-list '' '' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+zstyle :compinstall filename '/Users/zhiyan/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
