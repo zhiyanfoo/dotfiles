@@ -4,10 +4,13 @@ source ~/.functions
 # fzf installed line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
 # If not running interactively, do not do anything
 # Start tmux at login
 [[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux
+[[ -z "$TMUX" ]] && exec tmux -2
+
+export TERM="screen-256color"
 
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
@@ -34,3 +37,6 @@ zstyle :compinstall filename '/Users/zhiyan/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+#
+export VISUAL=nvim
+export EDITOR="$VISUAL"

@@ -14,7 +14,8 @@ set splitright
 set textwidth=79
 " set t_Co=256
 "
-
+" So crontabs can be edited with crontab -e
+autocmd filetype crontab setlocal nobackup nowritebackup
 " keeps lines at the bottom always
 set scrolloff=5
 if has('gui_running')
