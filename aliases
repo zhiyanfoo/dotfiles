@@ -23,11 +23,11 @@ alias ghost='\gs'
 
 ####### Vim
 
-alias vi="/usr/local/bin/mvim -v"
-alias vim="/usr/local/bin/mvim -v --cmd \"let g:more_features_checker='yes'\""
-alias svim="/usr/local/bin/mvim -v -i NONE -n"
-alias vimp="/usr/local/bin/mvim -v -u ~/dotfiles/pair-programming.vimrc"
-alias nvimp="/usr/local/bin/nvim --cmd \"let g:more_features_checker='yes'\""
+alias vi="/usr/local/bin/nvim"
+alias vim="/usr/local/bin/nvim --cmd \"let g:more_features_checker='yes'\""
+alias svim="/usr/local/bin/nvim -i NONE -n"
+alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
+alias mvim="mvim -v"
 
 # PYTHON INTERPRETER
 
@@ -92,9 +92,9 @@ alias gcaa="git commit -a --amend -C HEAD"
 
 # GITIGNORE
 alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
-alias igpy='cat /Users/zhiyan/Tools/gitignore/Python.gitignore >> .gitignore'
-alias ighs='cat /Users/zhiyan/Tools/gitignore/Haskell.gitignore >> .gitignore'
-alias igmac='cat /Users/zhiyan/Tools/gitignore/Global/macOS.gitignore >> .gitignore'
-alias igvim='cat /Users/zhiyan/Tools/gitignore/Global/Vim.gitignore >> .gitignore'
+alias igpy='cat /Users/zhiyan/tools/gitignore/Python.gitignore >> .gitignore'
+alias ighs='cat /Users/zhiyan/tools/gitignore/Haskell.gitignore >> .gitignore'
+alias igmac='cat /Users/zhiyan/tools/gitignore/Global/macOS.gitignore >> .gitignore'
+alias igvim='cat /Users/zhiyan/tools/gitignore/Global/Vim.gitignore >> .gitignore'
 alias igde='igmac; igvim'
 
