@@ -29,6 +29,10 @@ alias svim="/usr/local/bin/nvim -i NONE -n"
 alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
 alias mvim="mvim -v"
 
+####### Zen
+
+alias zen="source /usr/local/bin/zen"
+
 ####### Git
 # cite 'about-alias'
 # about-alias 'common git abbreviations'
