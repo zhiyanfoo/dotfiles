@@ -12,8 +12,7 @@ set smartcase
 set splitbelow
 set splitright
 set textwidth=79
-" set t_Co=256
-"
+
 " So crontabs can be edited with crontab -e
 autocmd filetype crontab setlocal nobackup nowritebackup
 " keeps lines at the bottom always
@@ -90,6 +89,12 @@ Plugin 'tpope/vim-surround'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+
+if has('nvim')
+    Plugin 'neovimhaskell/haskell-vim'
+endif
+
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -153,6 +158,9 @@ nnoremap <S-U> <C-R>
 
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" shared vimrc
+nnoremap <leader>evs :edit ~/.vimrc<cr>
 
 nnoremap H ^
 nnoremap L $

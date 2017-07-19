@@ -1,9 +1,9 @@
 ####### General
+alias ls='ls -G'        #show colors
 alias sl='ls'
-alias ls='ls -G'        # Compact view, show colors
-alias s='ls -G'
-alias l='ls -G'
-alias la='ls -AF'       # Compact view, show hidden
+alias s='ls'
+alias l='ls'
+alias la='ls -A'       # Compact view, show hidden
 alias ll='ls -al'
 alias l1='ls -1'
 
@@ -28,10 +28,6 @@ alias vim="/usr/local/bin/nvim --cmd \"let g:more_features_checker='yes'\""
 alias svim="/usr/local/bin/nvim -i NONE -n"
 alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
 alias mvim="mvim -v"
-
-# PYTHON INTERPRETER
-
-alias bpy3="source ~/src/bpython/bin/activate; bpython"
 
 ####### Git
 # cite 'about-alias'
@@ -92,9 +88,5 @@ alias gcaa="git commit -a --amend -C HEAD"
 
 # GITIGNORE
 alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
-alias igpy='cat /Users/zhiyan/tools/gitignore/Python.gitignore >> .gitignore'
-alias ighs='cat /Users/zhiyan/tools/gitignore/Haskell.gitignore >> .gitignore'
-alias igmac='cat /Users/zhiyan/tools/gitignore/Global/macOS.gitignore >> .gitignore'
-alias igvim='cat /Users/zhiyan/tools/gitignore/Global/Vim.gitignore >> .gitignore'
-alias igde='igmac; igvim'
-
+alias igpy='cat /Users/$HOME/tools/gitignore/Python.gitignore >> .gitignore'
+alias ighs='cat /Users/$HOME/tools/gitignore/Haskell.gitignore >> .gitignore'

@@ -30,12 +30,26 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-# Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+# Disable the sound effects on boot
+sudo nvram SystemAudioVolume=" "
+# add sound effect back
+# sudo nvram -d SystemAudioVolume
+
+# Disable Dashboard
+# defaults write com.apple.dashboard mcx-disabled -bool true
+
+# Don’t show Dashboard as a Space
+# defaults write com.apple.dock dashboard-in-overlay -bool true
+
+# (Use karabiner instead) Set a blazingly fast keyboard repeat rate 
+# defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+# defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
 # Reveal IP, hostname, OS, etc. when clicking clock in login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+# Prevent Time Machine from prompting to use new hard drives as backup volume
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 ###############################################################################
 # Brew                                                                        #
@@ -51,16 +65,22 @@ brew install zsh
 brew install git
 brew install tmux 
 brew install reattach-to-user-namespace
-brew install mvim
+brew install python
+brew install python3
 brew install neovim
 # for the youcompleteme vim plugin
 brew install cmake
 brew install gnupg2
 brew install fzf
 brew install z
-brew install python
 brew install virtualenv
 brew install ranger
+brew install universal-ctags
+brew install rename
+brew install youtube-dl
+brew install unrar
+brew install coreutils
+brew install findutils
 
 ###############################################################################
 # pip                                                                         #
@@ -101,6 +121,8 @@ ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
+mkdir -p .config/nvim/
+ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
 
 
 ###############################################################################
@@ -127,13 +149,6 @@ git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
 ./~/tools/z-snippets/create_symlinks.sh
 
 ###############################################################################
-# ZEN PYTHON ENVIROMENT MANAGER                                               #
-###############################################################################
-
-git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
-./~/tools/zen/installation.sh
-
-###############################################################################
 # Apps                                                                        #
 ###############################################################################
 
@@ -144,6 +159,23 @@ brew cask install --appdir="/Applications" vlc
 brew cask install --appdir="/Applications" google-chrome
 brew cask install --appdir="/Applications" vagrant
 brew cask install --appdir="/Applications" spotify
+brew cask install --appdir="/Applications" karabiner
+brew cask install --appdir="/Applications" shiftit
+brew cask install --appdir="/Applications" transmission
+
+###############################################################################
+# ZEN PYTHON ENVIROMENT MANAGER                                               #
+###############################################################################
+
+git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
+./~/tools/zen/installation.sh
+
+zen create zhiyan
+zen use zhiyan
+pip3 install neovim
+pip3 install ipython
+pip3 install bpython
+
 
 ###############################################################################
 # Manual                                                                      #
@@ -151,3 +183,6 @@ brew cask install --appdir="/Applications" spotify
 
 # preferences for iterm need to be changed manually, profile -> colors and
 # profile -> general -> command -> /usr/local/bin/zsh
+
+# Haskell, takes a long time
+# curl -sSL https://get.haskellstack.org/ | sh
