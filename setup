@@ -11,7 +11,6 @@ osascript -e 'tell application "System Preferences" to quit'
 
 # Ask for the administrator password upfront
 sudo -v
-
 # Keep-alive: update existing `sudo` time stamp until setup has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
@@ -73,7 +72,8 @@ brew install cmake
 brew install gnupg2
 brew install fzf
 brew install z
-brew install virtualenv
+brew tap universal-ctags/universal-ctags
+brew install --HEAD universal-ctags
 brew install ranger
 brew install universal-ctags
 brew install rename
@@ -83,17 +83,22 @@ brew install coreutils
 brew install findutils
 
 ###############################################################################
-# pip                                                                         #
+# Apps                                                                        #
 ###############################################################################
 
-pip install virtualenvwrapper
+brew cask install --appdir="~/Applications" iterm2
+brew cask install --appdir="/Applications" firefox
+brew cask install --appdir="/Applications" skim
+brew cask install --appdir="/Applications" vlc
+brew cask install --appdir="/Applications" google-chrome
+brew cask install --appdir="/Applications" vagrant
+brew cask install --appdir="/Applications" spotify
+brew cask install --appdir="/Applications" karabiner
+brew cask install --appdir="/Applications" shiftit
+brew cask install --appdir="/Applications" transmission
 
-VENV_WRAPPER=/usr/local/bin/virtualenvwrapper.sh
- 
-if [ -f "$VENV_WRAPPER" ]
-then
-    source $VENV_WRAPPER
-fi
+
+
 ###############################################################################
 # Git setup                                                                   #
 ###############################################################################
@@ -111,6 +116,7 @@ git config --global credential.helper osxkeychain
 ###############################################################################
 # dotfiles                                                                    #
 ###############################################################################
+
 git clone "https://github.com/zhiyanfoo/dotfiles" ~/dotfiles
 ln -s ~/dotfiles/aliases ~/.aliases
 rm ~/.bash_profile
@@ -121,8 +127,21 @@ ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
-mkdir -p .config/nvim/
+mkdir -p ~/.config/nvim/
 ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
+
+###############################################################################
+# ZEN PYTHON ENVIROMENT MANAGER                                               #
+###############################################################################
+
+git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
+./~/tools/zen/installation.sh
+
+zen create zhiyan
+zen use zhiyan
+pip3 install neovim
+pip3 install ipython
+pip3 install bpython
 
 
 ###############################################################################
@@ -131,7 +150,6 @@ ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
 
 # Needs fixing vimrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-/usr/local/bin/mvim -v --cmd +PluginInstall +qall
 
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
@@ -147,35 +165,6 @@ mkdir -p ~/tools
 git clone "https://github.com/honza/vim-snippets" ~/tools/vim-snippets
 git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
 ./~/tools/z-snippets/create_symlinks.sh
-
-###############################################################################
-# Apps                                                                        #
-###############################################################################
-
-brew cask install --appdir="~/Applications" iterm2
-brew cask install --appdir="/Applications" firefox
-brew cask install --appdir="/Applications" skim
-brew cask install --appdir="/Applications" vlc
-brew cask install --appdir="/Applications" google-chrome
-brew cask install --appdir="/Applications" vagrant
-brew cask install --appdir="/Applications" spotify
-brew cask install --appdir="/Applications" karabiner
-brew cask install --appdir="/Applications" shiftit
-brew cask install --appdir="/Applications" transmission
-
-###############################################################################
-# ZEN PYTHON ENVIROMENT MANAGER                                               #
-###############################################################################
-
-git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
-./~/tools/zen/installation.sh
-
-zen create zhiyan
-zen use zhiyan
-pip3 install neovim
-pip3 install ipython
-pip3 install bpython
-
 
 ###############################################################################
 # Manual                                                                      #

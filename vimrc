@@ -203,7 +203,6 @@ nnoremap <leader>spn :set nospell<cr>
 
 nnoremap <silent> <c-p> :Files<cr>
 nnoremap <silent> <c-m> :Buffers<cr>
-nnoremap <silent> <c-]> :GFiles?<cr>
 let g:fzf_layout = { 'down': '~40%' }
 
 " remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
