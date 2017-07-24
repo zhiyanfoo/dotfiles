@@ -1,0 +1,3 @@
+#compdef sourcedot
+
+_arguments "1: :(aliases bash_profile commonprofile functions tmux.conf zshrc)"

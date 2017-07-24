@@ -1,0 +1,3 @@
+#compdef editdot
+
+_arguments "1: :(README.md aliases autocommit.sh bash_profile commonprofile functions nvim_init.vim pair-programming.vimrc setup tmux.conf vimrc zshrc)"

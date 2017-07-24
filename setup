@@ -71,16 +71,17 @@ brew install neovim
 brew install cmake
 brew install gnupg2
 brew install fzf
+/usr/local/opt/fzf/install
 brew install z
 brew tap universal-ctags/universal-ctags
 brew install --HEAD universal-ctags
 brew install ranger
-brew install universal-ctags
 brew install rename
 brew install youtube-dl
 brew install unrar
 brew install coreutils
-brew install findutils
+brew install pass
+brew install exercism
 
 ###############################################################################
 # Apps                                                                        #
@@ -96,8 +97,6 @@ brew cask install --appdir="/Applications" spotify
 brew cask install --appdir="/Applications" karabiner
 brew cask install --appdir="/Applications" shiftit
 brew cask install --appdir="/Applications" transmission
-
-
 
 ###############################################################################
 # Git setup                                                                   #
@@ -129,6 +128,10 @@ ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
 mkdir -p ~/.config/nvim/
 ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
+ln -s ~/dotfiles/zsh-completion ~/.zsh-completion
+
+# let nvim find ftplugins
+ln -s 
 
 ###############################################################################
 # ZEN PYTHON ENVIROMENT MANAGER                                               #
@@ -137,23 +140,28 @@ ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
 git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
 ./~/tools/zen/installation.sh
 
-zen create zhiyan
-zen use zhiyan
-pip3 install neovim
-pip3 install ipython
-pip3 install bpython
+source /usr/local/bin/zen create repl
+source /usr/local/bin/zen use repl
+/usr/local/bin/pip3 install ipython
+/usr/local/bin/pip3 install bpython
+
+source /usr/local/bin/zen create neovim
+source /usr/local/bin/zen use neovim
+/usr/local/bin/pip3 install neovim
+deactivate
 
 
 ###############################################################################
 # vim plugins                                                                 #
 ###############################################################################
 
-# Needs fixing vimrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+source .aliases
+vim -c 'PluginInstall'
 
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
-/usr/local/bin/mvim -v +PluginInstall +qall
 
 ###############################################################################
 # Snippets                                                                    #
@@ -167,11 +175,15 @@ git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
 ./~/tools/z-snippets/create_symlinks.sh
 
 ###############################################################################
-# Manual                                                                      #
+# Colorscheme                                                                 #
 ###############################################################################
 
-# preferences for iterm need to be changed manually, profile -> colors and
-# profile -> general -> command -> /usr/local/bin/zsh
+# Load into iterm manually
+git clone "https://github.com/altercation/solarized" ~/tools/solarized
+
+###############################################################################
+# Manual                                                                      #
+###############################################################################
 
 # Haskell, takes a long time
 # curl -sSL https://get.haskellstack.org/ | sh

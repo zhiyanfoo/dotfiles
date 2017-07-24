@@ -4,7 +4,6 @@ source ~/.functions
 # fzf installed line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
 # If not running interactively, do not do anything
 # Start tmux at login
 [[ $- != *i* ]] && return
@@ -28,6 +27,12 @@ fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$PATH:$HOME/Courses/nand2tetris2/tools"
+
+# COMPLETION SETTINGS
+# add custom completion scripts
+fpath=(~/.zsh-completion $fpath) 
+
+zstyle ':completion:*' menu select=2
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
@@ -40,3 +45,7 @@ compinit
 export PATH="/Users/zhiyan/.local/bin:$PATH"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  . ~/.config/exercism/exercism_completion.zsh
+fi

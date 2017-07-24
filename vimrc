@@ -1,7 +1,7 @@
 " BASIC CONFIG
 " -----------------------------------------------------------------
 set nocompatible
-set autoindent
+" set autoindent
 set showcmd
 set number
 set cmdheight=1
@@ -86,6 +86,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-sleuth'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -94,6 +95,7 @@ if has('nvim')
     Plugin 'neovimhaskell/haskell-vim'
 endif
 
+Plugin 'maxbrunsfeld/vim-emacs-bindings'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -129,7 +131,7 @@ filetype plugin indent on    " required
 "
 "
 "
-filetype on
+filetype plugin indent on
 
 " PLUGIN CONFIGS
 " -----------------------------------------------------------------
@@ -173,7 +175,7 @@ nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
 noremap <leader>nn :bnext<cr>
-noremap <leader>bb :bprevious<cr>
+noremap <leader>pp :bprevious<cr>
 
 nnoremap <leader>ht ihttp://
 
@@ -193,6 +195,8 @@ nnoremap cp "_dwhp
 
 nnoremap <leader>pi :PluginInstall<CR>
 
+nnoremap <leader>hh :noh<cr>
+
 " set spell
 nnoremap <leader>sp :set spell spelllang=en<cr>
 nnoremap <leader>spn :set nospell<cr>
@@ -207,3 +211,5 @@ let g:fzf_layout = { 'down': '~40%' }
 
 " remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
 :nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+
+:nnoremap q: <Nop>

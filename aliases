@@ -33,6 +33,10 @@ alias mvim="mvim -v"
 
 alias zen="source /usr/local/bin/zen"
 
+####### tmux
+
+alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
+
 ####### Git
 # cite 'about-alias'
 # about-alias 'common git abbreviations'

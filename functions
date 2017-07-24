@@ -33,3 +33,11 @@ function jcr() {
     javac $1; 
     java $(basename $1 .java);
     }
+
+function editdot {
+    vim "$HOME/dotfiles/$1"
+}
+
+function sourcedot {
+    source "$HOME/dotfiles/$1"
+}
