@@ -10,8 +10,7 @@ set -e
 osascript -e 'tell application "System Preferences" to quit'
 
 # Ask for the administrator password upfront
-sudo -v
-# Keep-alive: update existing `sudo` time stamp until setup has finished
+sudo -v # Keep-alive: update existing `sudo` time stamp until setup has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
@@ -126,6 +125,8 @@ ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
+git config --global core.excludesfile ~/.gitignore_global
+
 mkdir -p ~/.config/nvim/
 ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
 ln -s ~/dotfiles/zsh-completion ~/.zsh-completion
