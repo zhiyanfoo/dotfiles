@@ -213,3 +213,6 @@ let g:fzf_layout = { 'down': '~40%' }
 :nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 :nnoremap q: <Nop>
+
+" remove automatic insertion of comments after a comment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o

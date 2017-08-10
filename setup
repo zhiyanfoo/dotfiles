@@ -131,7 +131,9 @@ ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
 ln -s ~/dotfiles/zsh-completion ~/.zsh-completion
 
 # let nvim find ftplugins
-ln -s 
+mkdir -p ~/.nvim/after
+ln -s ~/dotfiles/ftplugin ~/.config/nvim/after/ftplugin
+
 
 ###############################################################################
 # ZEN PYTHON ENVIROMENT MANAGER                                               #
