@@ -97,6 +97,8 @@ brew cask install --appdir="/Applications" karabiner
 brew cask install --appdir="/Applications" shiftit
 brew cask install --appdir="/Applications" transmission
 
+defaults write -app Skim SKAutoReloadFileUpdate -boolean true 
+
 ###############################################################################
 # Git setup                                                                   #
 ###############################################################################

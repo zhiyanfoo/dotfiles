@@ -1,3 +1,6 @@
+" NOTICE. VIM SLEUTH INSTALLED. WILL TRY TO AUTOMATICALLY DETECT INDENTATION
+" SETTINGS, AKA SHIFTWIDTH, TABSTOP AND OVERWRITE DEFAULT SETTINGS.
+
 " BASIC CONFIG
 " -----------------------------------------------------------------
 set nocompatible
@@ -12,6 +15,7 @@ set smartcase
 set splitbelow
 set splitright
 set textwidth=79
+set backspace=indent,eol,start
 
 " So crontabs can be edited with crontab -e
 autocmd filetype crontab setlocal nobackup nowritebackup
@@ -56,6 +60,11 @@ if exists("g:more_features_checker")
     " let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
     " let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
     let g:ycm_key_list_select_completion   = ['<tab>', '<Down>']
+    let g:ycm_confirm_extra_conf = 0
+    let g:ycm_global_ycm_extra_conf = ''
+    let g:ycm_show_diagnostics_ui = 0
+
+
 
     " Plugin 'ervandew/supertab'
     " let g:SuperTabDefaultCompletionType    = '<C-n>'
@@ -97,6 +106,12 @@ endif
 
 Plugin 'maxbrunsfeld/vim-emacs-bindings'
 
+"idris mode
+Plugin 'idris-hackers/idris-vim'
+
+" nnoremap <buffer> <silent> <LocalLeader>dd 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
+
+" nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -131,6 +146,7 @@ filetype plugin indent on    " required
 "
 "
 "
+filetype on
 filetype plugin indent on
 
 " PLUGIN CONFIGS
@@ -201,6 +217,7 @@ nnoremap <leader>hh :noh<cr>
 nnoremap <leader>sp :set spell spelllang=en<cr>
 nnoremap <leader>spn :set nospell<cr>
 
+" printing
 " generate pdf `:hardcopy > myfile.ps`  then `ps2pdf your_ps_file.ps`
 
 " fzf mappings
@@ -210,9 +227,16 @@ nnoremap <silent> <c-m> :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }
 
 " remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
-:nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
-:nnoremap q: <Nop>
+nnoremap q: <Nop>
 
 " remove automatic insertion of comments after a comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+
+if has("autocmd")
+  au BufReadPost *.rkt,*.rktl set filetype=racket
+  au filetype racket set lisp
+  au filetype racket set autoindent
+endif
