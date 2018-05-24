@@ -1,5 +1,4 @@
-" NOTICE. VIM SLEUTH INSTALLED. WILL TRY TO AUTOMATICALLY DETECT INDENTATION
-" SETTINGS, AKA SHIFTWIDTH, TABSTOP AND OVERWRITE DEFAULT SETTINGS.
+" NOTICE WILL REMOVE TRAILING WHITESPACE ON CERTAIN FILES WHEN SAVED
 
 " BASIC CONFIG
 " -----------------------------------------------------------------
@@ -16,8 +15,11 @@ set splitbelow
 set splitright
 set textwidth=79
 set backspace=indent,eol,start
+set foldmethod=indent
+set foldlevel=99
 
 " So crontabs can be edited with crontab -e
+
 autocmd filetype crontab setlocal nobackup nowritebackup
 " keeps lines at the bottom always
 set scrolloff=5
@@ -33,7 +35,7 @@ endif
 set hidden
 syntax on
 set softtabstop=4
-set shiftwidth=4 
+set shiftwidth=4
 set tabstop=4
 set expandtab
 set mouse=a
@@ -44,7 +46,7 @@ set clipboard=unnamed
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
-filetype off                  
+filetype off
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -95,7 +97,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-sleuth'
+Plugin 'vim-javascript'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -105,12 +107,17 @@ if has('nvim')
 endif
 
 Plugin 'maxbrunsfeld/vim-emacs-bindings'
+Plugin 'Vimjas/vim-python-pep8-indent'
 
 "idris mode
 Plugin 'idris-hackers/idris-vim'
-
+Plugin 'mitsuhiko/vim-jinja'
+Plugin 'universal-ctags/ctags'
 " nnoremap <buffer> <silent> <LocalLeader>dd 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
 
+" both lh-vim-lib and local_vimrc belong together.
+Plugin 'LucHermitte/lh-vim-lib'
+Plugin 'LucHermitte/local_vimrc'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -158,10 +165,10 @@ let g:slime_python_ipython = 1
 " MODES
 " -----------------------------------------------------------------
 
-func! WordProcessorMode() 
-    setlocal spell spelllang=en_us 
+func! WordProcessorMode()
+    setlocal spell spelllang=en_us
     set vb t_vb=
-endfu 
+endfu
 com! WP call WordProcessorMode()
 
 " MAPPINGS
@@ -230,6 +237,8 @@ let g:fzf_layout = { 'down': '~40%' }
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 nnoremap q: <Nop>
+nnoremap <F1> <Nop>
+
 
 " remove automatic insertion of comments after a comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -240,3 +249,8 @@ if has("autocmd")
   au filetype racket set lisp
   au filetype racket set autoindent
 endif
+
+autocmd FileType c,cpp,java,php,python autocmd BufWritePre <buffer> %s/\s\+$//e
+
+set exrc
+set secure

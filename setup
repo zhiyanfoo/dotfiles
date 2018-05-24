@@ -59,6 +59,9 @@ brew doctor
 brew update
 brew upgrade --all
 
+brew install fd # required for zshrc's fzf customization
+brew install ripgrep
+brew install ag
 brew install zsh
 brew install git
 brew install tmux 

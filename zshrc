@@ -8,6 +8,7 @@ source ~/.functions
 # Start tmux at login
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux -2
+export FZF_DEFAULT_COMMAND=$'fd --type f --exclude \'*.pyc\''
 
 export TERM="screen-256color"
 
@@ -50,3 +51,6 @@ export EDITOR="$VISUAL"
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
 fi
+
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
