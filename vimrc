@@ -13,7 +13,7 @@ set wildmenu
 set smartcase
 set splitbelow
 set splitright
-set textwidth=79
+set textwidth=96
 set backspace=indent,eol,start
 set foldmethod=indent
 set foldlevel=99
@@ -97,10 +97,10 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-javascript'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'neoclide/vim-jsx-improve'
 
 if has('nvim')
     Plugin 'neovimhaskell/haskell-vim'
@@ -118,6 +118,8 @@ Plugin 'universal-ctags/ctags'
 " both lh-vim-lib and local_vimrc belong together.
 Plugin 'LucHermitte/lh-vim-lib'
 Plugin 'LucHermitte/local_vimrc'
+
+Plugin 'nvie/vim-flake8'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -250,7 +252,12 @@ if has("autocmd")
   au filetype racket set autoindent
 endif
 
-autocmd FileType c,cpp,java,php,python autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,javascript autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" search file contents with command Ag
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+nnoremap <c-a> :Ag<cr>
+nnoremap <c-s> :BLines<cr>
 
 set exrc
 set secure

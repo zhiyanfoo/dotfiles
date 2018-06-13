@@ -29,6 +29,7 @@ fi
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$PATH:$HOME/Courses/nand2tetris2/tools"
 export PATH="$PATH:/Users/zhiyan/tools/scmindent"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 
 # COMPLETION SETTINGS
 # add custom completion scripts
@@ -54,3 +55,8 @@ fi
 
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+# GOT IT SPECIFIC
+export PUSHER_CHANNEL_NAMESPACE="zhiyanfoo"
+ export HTTPLIB_CA_CERTS_PATH="$HOME/.config/cacert.pem"
+# END GOT IT

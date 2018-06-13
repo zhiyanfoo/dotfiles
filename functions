@@ -41,3 +41,7 @@ function editdot {
 function sourcedot {
     source "$HOME/dotfiles/$1"
 }
+
+function test_api {
+    ENVIRONMENT=test py.test $1
+}

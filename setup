@@ -96,7 +96,6 @@ brew cask install --appdir="/Applications" vlc
 brew cask install --appdir="/Applications" google-chrome
 brew cask install --appdir="/Applications" vagrant
 brew cask install --appdir="/Applications" spotify
-brew cask install --appdir="/Applications" karabiner
 brew cask install --appdir="/Applications" shiftit
 brew cask install --appdir="/Applications" transmission
 
@@ -188,10 +187,3 @@ git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
 
 # Load into iterm manually
 git clone "https://github.com/altercation/solarized" ~/tools/solarized
-
-###############################################################################
-# Manual                                                                      #
-###############################################################################
-
-# Haskell, takes a long time
-# curl -sSL https://get.haskellstack.org/ | sh
