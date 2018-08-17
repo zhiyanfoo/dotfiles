@@ -21,6 +21,11 @@ alias grep='grep --color=auto'
 
 alias ghost='\gs'
 
+
+####### Ctags
+
+# alias pytags=$'ctags -R --extras=+f --fields=+l --languages=python --python-kinds=-iv -f ./tags $(python -c "import os, sys; print(\' \'.join(str(d) for d in sys.path if os.path.isdir(d))  + \' ./\')")'
+
 ####### Vim
 
 alias vi="/usr/local/bin/nvim"
@@ -28,6 +33,7 @@ alias vim="/usr/local/bin/nvim --cmd \"let g:more_features_checker='yes'\""
 alias svim="/usr/local/bin/nvim -i NONE -n"
 alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
 alias mvim="mvim -v"
+alias view='/usr/local/bin/nvim -R'
 
 ####### Zen
 
@@ -37,6 +43,10 @@ alias zen2="source /usr/local/bin/zen2"
 ####### tmux
 
 alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
+
+
+#####
+alias git='hub'
 
 ####### Git
 # cite 'about-alias'

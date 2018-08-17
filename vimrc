@@ -257,7 +257,9 @@ autocmd FileType c,cpp,java,php,python,javascript autocmd BufWritePre <buffer> %
 " search file contents with command Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <c-a> :Ag<cr>
-nnoremap <c-s> :BLines<cr>
+nnoremap <c-s> :Tags<cr>
+
+imap jk <esc>
 
 set exrc
 set secure

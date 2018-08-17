@@ -43,5 +43,11 @@ function sourcedot {
 }
 
 function test_api {
-    ENVIRONMENT=test py.test $1
+    ENVIRONMENT=test py.test "$@" --log ERROR
+}
+
+
+
+function pytags {
+    ctags -R --extras=+f --fields=+l --languages=python --python-kinds=-iv -f ./tags $(python -c "import os, sys; print(' '.join(str(d) for d in sys.path if os.path.isdir(d))  + ' ./')")
 }

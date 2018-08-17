@@ -43,9 +43,6 @@ sudo nvram SystemAudioVolume=" "
 # defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 # defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
-# Reveal IP, hostname, OS, etc. when clicking clock in login window
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
-
 # Prevent Time Machine from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
@@ -84,6 +81,7 @@ brew install unrar
 brew install coreutils
 brew install pass
 brew install exercism
+brew install hub
 
 ###############################################################################
 # Apps                                                                        #
