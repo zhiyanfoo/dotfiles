@@ -22,6 +22,10 @@ alias grep='grep --color=auto'
 alias ghost='\gs'
 
 
+# c++
+alias g++14='g++ -std=c++14 -Wall'
+# alias g++14db ='g++ -std=c++14 -Wall -g'
+
 ####### Ctags
 
 # alias pytags=$'ctags -R --extras=+f --fields=+l --languages=python --python-kinds=-iv -f ./tags $(python -c "import os, sys; print(\' \'.join(str(d) for d in sys.path if os.path.isdir(d))  + \' ./\')")'
