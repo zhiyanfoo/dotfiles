@@ -56,6 +56,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'rust-lang/rust.vim'
+
 if exists("g:more_features_checker")
     Plugin 'Valloric/YouCompleteMe'
     " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
@@ -120,6 +122,8 @@ Plugin 'LucHermitte/lh-vim-lib'
 Plugin 'LucHermitte/local_vimrc'
 
 Plugin 'nvie/vim-flake8'
+
+Plugin 'editorconfig/editorconfig-vim'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.

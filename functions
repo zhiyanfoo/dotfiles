@@ -1,5 +1,3 @@
-function trash() { mv $@ ~/.Trash; }
-
 function latexme() { 
     latex $1; 
     NAME=`echo "$1" | cut -f 1 -d '.'`;
@@ -32,7 +30,14 @@ function gitrmbunch() {
 function jcr() { 
     javac $1; 
     java $(basename $1 .java);
-    }
+}
+
+function gcr() {
+    if g++ -std=c++14 -Wall "$@" -o out; then
+        ./out
+    fi
+}
+
 
 function editdot {
     vim "$HOME/dotfiles/$1"
@@ -45,7 +50,6 @@ function sourcedot {
 function test_api {
     ENVIRONMENT=test py.test "$@" --log ERROR
 }
-
 
 
 function pytags {

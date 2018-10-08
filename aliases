@@ -1,4 +1,6 @@
 ####### General
+
+alias rm='trash -F'
 alias ls='ls -G'        #show colors
 alias sl='ls'
 alias s='ls'
@@ -24,7 +26,7 @@ alias ghost='\gs'
 
 # c++
 alias g++14='g++ -std=c++14 -Wall'
-# alias g++14db ='g++ -std=c++14 -Wall -g'
+alias g++14db='g++ -std=c++14 -Wall -g'
 
 ####### Ctags
 
@@ -38,6 +40,8 @@ alias svim="/usr/local/bin/nvim -i NONE -n"
 alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
 alias mvim="mvim -v"
 alias view='/usr/local/bin/nvim -R'
+
+alias remove_all_swaps="rm $HOME/.local/share/nvim/swap/* "
 
 ####### Zen
 

@@ -82,6 +82,7 @@ brew install coreutils
 brew install pass
 brew install exercism
 brew install hub
+brew install trash
 
 ###############################################################################
 # Apps                                                                        #
