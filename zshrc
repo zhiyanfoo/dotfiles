@@ -62,10 +62,6 @@ fi
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
-# GOT IT SPECIFIC
-export PUSHER_CHANNEL_NAMESPACE="zhiyanfoo"
-export HTTPLIB_CA_CERTS_PATH="$HOME/.config/cacert.pem"
-# END GOT IT
-
 source ~/.rvm/scripts/rvm
 source ~/.secrets/secrets.sh
+export PROMPT="🔥 "

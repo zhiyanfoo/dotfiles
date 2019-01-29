@@ -1,6 +1,5 @@
 ####### General
 
-alias rm='trash -F'
 alias ls='ls -G'        #show colors
 alias sl='ls'
 alias s='ls'
@@ -23,10 +22,19 @@ alias grep='grep --color=auto'
 
 alias ghost='\gs'
 
+alias snc="rsync -avzh --exclude '*.d' --exclude '*.o' --exclude vm --exclude out -e 'ssh -i ~/.ssh/id_student_server_rsa' /Users/zhiyan/courses/cs246e/vm/src/ z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/cs246e/vm/src/"
+
+alias sm="snc; student \"make vm -C cs246e/vm/src;\""
+
 
 # c++
 alias g++14='g++ -std=c++14 -Wall'
-alias g++14db='g++ -std=c++14 -Wall -g'
+alias g++14db='g++ -g -std=c++14 -Wall'
+
+# rust
+
+alias cr="cargo run"
+alias rf="~/tools/rustfmt/target/release/rustfmt"
 
 ####### Ctags
 
@@ -42,6 +50,10 @@ alias mvim="mvim -v"
 alias view='/usr/local/bin/nvim -R'
 
 alias remove_all_swaps="rm $HOME/.local/share/nvim/swap/* "
+
+####### SSH
+
+alias student="ssh -i ~/.ssh/id_student_server_rsa -Y z2foo@linux.student.cs.uwaterloo.ca"
 
 ####### Zen
 

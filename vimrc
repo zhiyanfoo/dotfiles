@@ -18,6 +18,8 @@ set backspace=indent,eol,start
 set foldmethod=indent
 set foldlevel=99
 
+set undodir=~/.config/nvim/undodir
+set undofile
 " So crontabs can be edited with crontab -e
 
 autocmd filetype crontab setlocal nobackup nowritebackup
@@ -124,6 +126,7 @@ Plugin 'LucHermitte/local_vimrc'
 Plugin 'nvie/vim-flake8'
 
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'leafgarland/typescript-vim'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -167,6 +170,8 @@ filetype plugin indent on
 
 let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
+let g:typescript_indent_disable = 1
+
 
 " MODES
 " -----------------------------------------------------------------
@@ -182,6 +187,8 @@ com! WP call WordProcessorMode()
 
 let mapleader = ","
 
+let g:rust_clip_command = 'pbcopy'
+let g:rustfmt_autosave = 0
 nnoremap - O<esc>
 
 "undo undo
