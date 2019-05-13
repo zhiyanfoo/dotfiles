@@ -8,7 +8,8 @@ source ~/.functions
 # Start tmux at login
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux -2
-export FZF_DEFAULT_COMMAND=$'fd --type f --exclude \'*.pyc\''
+
+export FZF_DEFAULT_COMMAND=$'fd --type f --exclude \'*.pyc\' --exclude node_modules --exclude bin --exclude include --exclude lib --exclude share'
 
 export TERM="screen-256color"
 
@@ -63,5 +64,8 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.in
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 source ~/.rvm/scripts/rvm
-source ~/.secrets/secrets.sh
+source ~/.secrets/secrets
+export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_setter_gitlab"
 export PROMPT="🔥 "
+export URL_SHORTENER_SECRETS_PATH="$HOME/setter/us-secrets"
+export URL_SHORTENER_PATH="$HOME/setter/url-shortener-v2"
