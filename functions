@@ -1,3 +1,7 @@
+function skim() {
+    open -a Skim $1
+}
+
 function latexme() { 
     latex $1; 
     NAME=`echo "$1" | cut -f 1 -d '.'`;

@@ -294,9 +294,6 @@ nnoremap <c-s> :Tags<cr>
 
 imap jk <esc>
 
-set exrc
-set secure
-
 let g:ultisnips_javascript = {
      \ 'keyword-spacing': 'always',
      \ 'semi': 'never',
@@ -318,9 +315,3 @@ function! s:check_back_space() abort "{{{
 let col = col('.') - 1
 return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
-
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
