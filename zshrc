@@ -32,6 +32,8 @@ export PATH="$PATH:$HOME/Courses/nand2tetris2/tools"
 export PATH="$PATH:/Users/zhiyan/tools/scmindent"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 
+# zsh autocomplete uses the variable fpath
+# add custom to ~/.zsh-completion
 # COMPLETION SETTINGS
 # add custom completion scripts
 fpath=(~/.zsh-completion $fpath) 
@@ -51,6 +53,7 @@ bashcompinit
 
 source /Users/zhiyan/tools/zen/completions/zen_bash_completion
 source /Users/zhiyan/tools/zen/completions/zen2_bash_completion
+source /Users/zhiyan/.zsh-completion/_az
 
 export PATH="/Users/zhiyan/.local/bin:$PATH"
 export VISUAL=nvim

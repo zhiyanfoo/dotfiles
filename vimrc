@@ -78,7 +78,7 @@ Plugin 'vim-scripts/UnconditionalPaste'
 Plugin 'drmikehenry/vim-extline'
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
-Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'terryma/vim-multiple-cursors'
 " gives you ability to diff swp files during recovery
 Plugin 'chrisbra/Recover.vim'
 Plugin 'jpalardy/vim-slime'
@@ -107,7 +107,7 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'shougo/deoplete.nvim'
 
-Plugin 'goerz/jupytext.vim'
+" Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
