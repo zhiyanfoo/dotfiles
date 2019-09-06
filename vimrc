@@ -162,7 +162,7 @@ filetype plugin indent on    " required
 "
 "
 "
-filetype on
+filetype off
 filetype plugin indent on
 
 " PLUGIN CONFIGS

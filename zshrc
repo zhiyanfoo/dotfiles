@@ -48,8 +48,8 @@ compinit
 autoload bashcompinit
 bashcompinit
 
-source /Users/zhiyan/tools/zen/completions/zen_bash_completion
-source /Users/zhiyan/tools/zen/completions/zen2_bash_completion
+source $HOME/tools/zen/completions/zen_bash_completion
+source $HOME/tools/zen/completions/zen2_bash_completion
 
 export PATH="/Users/zhiyan/.local/bin:$PATH"
 export VISUAL=nvim

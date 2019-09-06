@@ -3,5 +3,4 @@
 __pycache__/
 _vimrc_local.vim
 tags
-
 api_key.rs
