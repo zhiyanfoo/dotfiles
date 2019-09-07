@@ -82,7 +82,6 @@ brew install coreutils
 brew install pass
 brew install exercism
 brew install hub
-brew install trash
 
 ###############################################################################
 # Apps                                                                        #
@@ -166,8 +165,8 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 source .aliases
 vim -c 'PluginInstall'
 
-cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer
+# cd ~/.vim/bundle/YouCompleteMe
+# ./install.py --clang-completer
 
 ###############################################################################
 # Snippets                                                                    #
