@@ -82,7 +82,6 @@ brew install coreutils
 brew install pass
 brew install exercism
 brew install hub
-brew install trash
 brew install aws-cli
 brew install wget
 brew install tig
@@ -132,7 +131,7 @@ ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
-git config --global core.excludesfile ~/.gitignore_global
+git config --global core.excludesfile ~/.global_gitignore 
 
 mkdir -p ~/.config/nvim/
 ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
@@ -170,8 +169,8 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 source .aliases
 vim -c 'PluginInstall'
 
-cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer
+# cd ~/.vim/bundle/YouCompleteMe
+# ./install.py --clang-completer
 
 ###############################################################################
 # Snippets                                                                    #
@@ -196,3 +195,4 @@ git clone "https://github.com/altercation/solarized" ~/tools/solarized
 ###############################################################################
 
 mkdir ~/.secrets
+touch ~/..secrets/secrets

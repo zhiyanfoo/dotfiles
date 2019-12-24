@@ -7,5 +7,3 @@ source ~/.aliases
 export HISTSIZE=100000
 
 source /usr/local/etc/profile.d/z.sh
-export GOPATH=$HOME/tools/go; export PATH=/usr/local/go/bin:$GOPATH/bin:$PATH # ADDED BY TULIP
-export PATH=$HOME/tulip/mulch/bin:$PATH # FOR TULIP

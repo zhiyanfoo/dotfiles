@@ -60,32 +60,14 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'rust-lang/rust.vim'
 
-if exists("g:more_features_checker")
-    Plugin 'Valloric/YouCompleteMe'
-    " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
-    " let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-    " let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
-    let g:ycm_key_list_select_completion   = ['<tab>', '<Down>']
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_global_ycm_extra_conf = ''
-    let g:ycm_show_diagnostics_ui = 0
-
-
-
-    " Plugin 'ervandew/supertab'
-    " let g:SuperTabDefaultCompletionType    = '<C-n>'
-    " let g:SuperTabCrMapping                = 0
-
-    Plugin 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger="<C-j>"
-    let g:UltiSnipsJumpForwardTrigger="<C-j>"
-    " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-    let g:UltiSnipsEditSplit="vertical"
+if !has('nvim')
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plugin 'autozimu/LanguageClient-neovim'
+
 Plugin 'tpope/vim-commentary'
-" Plugin 'tpope/vim-abolish'
 Plugin 'wesQ3/vim-windowswap'
 " required from vim-easyclip
 Plugin 'tpope/vim-repeat'
@@ -99,16 +81,15 @@ Plugin 'kwbdi.vim'
 Plugin 'terryma/vim-multiple-cursors'
 " gives you ability to diff swp files during recovery
 Plugin 'chrisbra/Recover.vim'
-Plugin 'jpalardy/vim-slime'
-Plugin 'tpope/vim-surround'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'neoclide/vim-jsx-improve'
+Plugin 'jason0x43/vim-js-indent'
 
-if has('nvim')
-    Plugin 'neovimhaskell/haskell-vim'
-endif
+" if has('nvim')
+"     Plugin 'neovimhaskell/haskell-vim'
+" endif
 
 Plugin 'maxbrunsfeld/vim-emacs-bindings'
 Plugin 'Vimjas/vim-python-pep8-indent'
@@ -116,17 +97,18 @@ Plugin 'Vimjas/vim-python-pep8-indent'
 "idris mode
 Plugin 'idris-hackers/idris-vim'
 Plugin 'mitsuhiko/vim-jinja'
-Plugin 'universal-ctags/ctags'
 " nnoremap <buffer> <silent> <LocalLeader>dd 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
 
-" both lh-vim-lib and local_vimrc belong together.
-Plugin 'LucHermitte/lh-vim-lib'
-Plugin 'LucHermitte/local_vimrc'
-
 Plugin 'nvie/vim-flake8'
+Plugin 'prettier/vim-prettier'
 
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'shougo/deoplete.nvim'
+Plugin 'ruby-formatter/rufo-vim'
+Plugin 'psf/black'
+
+" Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -171,6 +153,55 @@ filetype plugin indent on
 let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 let g:typescript_indent_disable = 1
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+" Language Server
+" -----------------------------------------------------------------
+
+" Minimal LSP configuration for JavaScript
+let g:LanguageClient_serverCommands = {}
+if executable('javascript-typescript-stdio')
+  let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands['typescript'] = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands['javascript.jsx'] = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands['typescript.tsx'] = ['javascript-typescript-stdio']
+
+  " Use LanguageServer for omnifunc completion
+  autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
+  autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
+else
+  echo "javascript-typescript-stdio not installed!\n"
+endif
+
+if executable('go-langserver')
+  let g:LanguageClient_serverCommands.go= ['go-langserver']
+  autocmd FileType go setlocal omnifunc=LanguageClient#complete
+else
+  echo "go-langserver not installed!\n"
+endif
+
+
+" if executable('hie-wrapper')
+"   let g:LanguageClient_serverCommands.haskell = ['hie-wrapper']
+"   " Use LanguageServer for omnifunc completion
+"   autocmd FileType haskell setlocal omnifunc=LanguageClient#complete
+" else
+"   echo "hie-wrapper not installed!\n"
+" endif
+
+
+" go to definition
+nnoremap <silent> <c-]> :call LanguageClient#textDocument_definition()<CR>
+" type info under cursor
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" rename variable under cursor
+nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+nnoremap <silent> <leader>lb :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
+nnoremap <silent> <leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 
 
 " MODES
@@ -263,20 +294,35 @@ if has("autocmd")
   au filetype racket set autoindent
 endif
 
-autocmd FileType c,cpp,java,php,python,javascript autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,javascript,typescript autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " search file contents with command Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <c-a> :Ag<cr>
 nnoremap <c-s> :Tags<cr>
 
-imap jk <esc>
-
-set exrc
-set secure
+inoremap jk <esc>
 
 let g:ultisnips_javascript = {
      \ 'keyword-spacing': 'always',
      \ 'semi': 'never',
      \ 'space-before-function-paren': 'always',
      \ }
+
+
+let g:LanguageClient_diagnosticsSignsMax=0
+let g:LanguageClient_diagnosticsEnable=0
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+xmap <c-c> <esc>

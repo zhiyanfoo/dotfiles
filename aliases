@@ -57,16 +57,16 @@ alias student="ssh -i ~/.ssh/id_student_server_rsa -Y z2foo@linux.student.cs.uwa
 
 ####### Zen
 
-alias zen="source /usr/local/bin/zen"
-alias zen2="source /usr/local/bin/zen2"
+alias zen="source /usr/local/bin/zen.sh"
+alias zen2="source /usr/local/bin/zen2.sh"
 
 ####### tmux
 
-alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
+# alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
 
 
 #####
-alias git='hub'
+# alias git='hub'
 
 ####### Git
 # cite 'about-alias'
@@ -100,7 +100,7 @@ alias gcam='git commit -v -a -m'
 # alias gcm='git commit -v -m'
 # alias gci='git commit --interactive'
 alias gb='git branch'
-# alias gba='git branch -a'
+alias gba='git branch -a'
 # alias gbt='git branch --track'
 # alias gcount='git shortlog -sn'
 # # alias gcp='git cherry-pick'
@@ -129,3 +129,19 @@ alias gcaa="git commit -a --amend -C HEAD"
 alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
 alias igpy='cat /Users/$HOME/tools/gitignore/Python.gitignore >> .gitignore'
 alias ighs='cat /Users/$HOME/tools/gitignore/Haskell.gitignore >> .gitignore'
+
+# Kubectl
+alias k='kubectl'
+alias ka='kubectl apply -f'
+alias kg='kubectl get'
+alias kgdep='kubectl get deployment'
+alias kgns='kubectl get namespaces'
+alias kgpo='kubectl get pods'
+alias klo='kubectl logs -f'
+
+# Prometheus
+
+alias po='prometheus'
+
+# random
+alias random="python3 -c 'import random; print(random.random())'"
