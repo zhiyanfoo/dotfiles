@@ -129,3 +129,5 @@ alias gcaa="git commit -a --amend -C HEAD"
 alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
 alias igpy='cat /Users/$HOME/tools/gitignore/Python.gitignore >> .gitignore'
 alias ighs='cat /Users/$HOME/tools/gitignore/Haskell.gitignore >> .gitignore'
+
+alias tulip_factorio='ssh -i "$HOME/.secrets/zhiyan-12-2019.pem" ec2-user@ec2-54-82-168-159.compute-1.amazonaws.com'
