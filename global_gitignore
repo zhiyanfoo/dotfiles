@@ -3,5 +3,4 @@
 __pycache__/
 _vimrc_local.vim
 tags
-tslint-imports.json
-api_key.rs
+.DS_STORE

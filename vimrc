@@ -78,19 +78,18 @@ Plugin 'vim-scripts/UnconditionalPaste'
 Plugin 'drmikehenry/vim-extline'
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
-" Plugin 'terryma/vim-multiple-cursors'
+Plugin 'terryma/vim-multiple-cursors'
 " gives you ability to diff swp files during recovery
 Plugin 'chrisbra/Recover.vim'
-Plugin 'jpalardy/vim-slime'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'neoclide/vim-jsx-improve'
 Plugin 'jason0x43/vim-js-indent'
 
-if has('nvim')
-    Plugin 'neovimhaskell/haskell-vim'
-endif
+" if has('nvim')
+"     Plugin 'neovimhaskell/haskell-vim'
+" endif
 
 Plugin 'maxbrunsfeld/vim-emacs-bindings'
 Plugin 'Vimjas/vim-python-pep8-indent'
@@ -106,6 +105,8 @@ Plugin 'prettier/vim-prettier'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'shougo/deoplete.nvim'
+Plugin 'ruby-formatter/rufo-vim'
+Plugin 'psf/black'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -143,7 +144,7 @@ filetype plugin indent on    " required
 "
 "
 "
-filetype on
+filetype off
 filetype plugin indent on
 
 " PLUGIN CONFIGS
@@ -174,13 +175,21 @@ else
   echo "javascript-typescript-stdio not installed!\n"
 endif
 
-if executable('hie-wrapper')
-  let g:LanguageClient_serverCommands.haskell = ['hie-wrapper']
-  " Use LanguageServer for omnifunc completion
-  autocmd FileType haskell setlocal omnifunc=LanguageClient#complete
+if executable('go-langserver')
+  let g:LanguageClient_serverCommands.go= ['go-langserver']
+  autocmd FileType go setlocal omnifunc=LanguageClient#complete
 else
-  echo "hie-wrapper not installed!\n"
+  echo "go-langserver not installed!\n"
 endif
+
+
+" if executable('hie-wrapper')
+"   let g:LanguageClient_serverCommands.haskell = ['hie-wrapper']
+"   " Use LanguageServer for omnifunc completion
+"   autocmd FileType haskell setlocal omnifunc=LanguageClient#complete
+" else
+"   echo "hie-wrapper not installed!\n"
+" endif
 
 
 " go to definition
@@ -292,7 +301,7 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : 
 nnoremap <c-a> :Ag<cr>
 nnoremap <c-s> :Tags<cr>
 
-imap jk <esc>
+inoremap jk <esc>
 
 let g:ultisnips_javascript = {
      \ 'keyword-spacing': 'always',
@@ -315,3 +324,5 @@ function! s:check_back_space() abort "{{{
 let col = col('.') - 1
 return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
+
+xmap <c-c> <esc>

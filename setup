@@ -82,6 +82,9 @@ brew install coreutils
 brew install pass
 brew install exercism
 brew install hub
+brew install aws-cli
+brew install wget
+brew install tig
 
 ###############################################################################
 # Apps                                                                        #
@@ -96,6 +99,7 @@ brew cask install --appdir="/Applications" vagrant
 brew cask install --appdir="/Applications" spotify
 brew cask install --appdir="/Applications" shiftit
 brew cask install --appdir="/Applications" transmission
+brew cask install google-cloud-sdk
 
 defaults write -app Skim SKAutoReloadFileUpdate -boolean true 
 
@@ -127,14 +131,14 @@ ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/vimrc ~/.vimrc
 ln -s ~/dotfiles/zshrc ~/.zshrc
 ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
-git config --global core.excludesfile ~/.gitignore_global
+git config --global core.excludesfile ~/.global_gitignore 
 
 mkdir -p ~/.config/nvim/
 ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
 ln -s ~/dotfiles/zsh-completion ~/.zsh-completion
 
 # let nvim find ftplugins
-mkdir -p ~/.nvim/after
+mkdir -p ~/.config/nvim/after
 ln -s ~/dotfiles/ftplugin ~/.config/nvim/after/ftplugin
 
 
@@ -185,3 +189,10 @@ git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
 
 # Load into iterm manually
 git clone "https://github.com/altercation/solarized" ~/tools/solarized
+
+###############################################################################
+# Secrets                                                                     #
+###############################################################################
+
+mkdir ~/.secrets
+touch ~/..secrets/secrets
