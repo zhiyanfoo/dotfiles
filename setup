@@ -51,7 +51,7 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 ###############################################################################
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="/usr/local/bin:$PATH"' >> $HOME/.bash_profile
 brew doctor
 brew update
 brew upgrade --all
@@ -90,7 +90,7 @@ brew install tig
 # Apps                                                                        #
 ###############################################################################
 
-brew cask install --appdir="~/Applications" iterm2
+brew cask install --appdir="$HOME/Applications" iterm2
 brew cask install --appdir="/Applications" firefox
 brew cask install --appdir="/Applications" skim
 brew cask install --appdir="/Applications" vlc
@@ -121,33 +121,34 @@ git config --global credential.helper osxkeychain
 # dotfiles                                                                    #
 ###############################################################################
 
-git clone "https://github.com/zhiyanfoo/dotfiles" ~/dotfiles
-ln -s ~/dotfiles/aliases ~/.aliases
-rm ~/.bash_profile
-ln -s ~/dotfiles/bash_profile ~/.bash_profile
-ln -s ~/dotfiles/commonprofile ~/.commonprofile
-ln -s ~/dotfiles/functions ~/.functions
-ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/vimrc ~/.vimrc
-ln -s ~/dotfiles/zshrc ~/.zshrc
-ln -s ~/dotfiles/global_gitignore ~/.global_gitignore
-git config --global core.excludesfile ~/.global_gitignore 
+git clone "https://github.com/zhiyanfoo/dotfiles" $HOME/dotfiles
+ln -s $HOME/dotfiles/aliases $HOME/.aliases
+rm $HOME/.bash_profile
+ln -s $HOME/dotfiles/bash_profile $HOME/.bash_profile
+ln -s $HOME/dotfiles/commonprofile $HOME/.commonprofile
+ln -s $HOME/dotfiles/functions $HOME/.functions
+ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
+ln -s $HOME/dotfiles/zshrc $HOME/.zshrc
+ln -s $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
+ln -s $HOME/dotfiles/nvimlispwords.lua $HOME/.config/nvimlispwords.lua
+git config --global core.excludesfile $HOME/.global_gitignore 
 
-mkdir -p ~/.config/nvim/
-ln -s ~/dotfiles/nvim_init.vim ~/.config/nvim/init.vim
-ln -s ~/dotfiles/zsh-completion ~/.zsh-completion
+mkdir -p $HOME/.config/nvim/
+ln -s $HOME/dotfiles/nvim_init.vim $HOME/.config/nvim/init.vim
+ln -s $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
 
 # let nvim find ftplugins
-mkdir -p ~/.config/nvim/after
-ln -s ~/dotfiles/ftplugin ~/.config/nvim/after/ftplugin
+mkdir -p $HOME/.config/nvim/after
+ln -s $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
 
 
 ###############################################################################
 # ZEN PYTHON ENVIROMENT MANAGER                                               #
 ###############################################################################
 
-git clone "https://github.com/zhiyanfoo/zen" ~/tools/zen
-./~/tools/zen/installation.sh
+git clone "https://github.com/zhiyanfoo/zen" $HOME/tools/zen
+./$HOME/tools/zen/installation.sh
 
 source /usr/local/bin/zen create repl
 source /usr/local/bin/zen use repl
@@ -164,35 +165,35 @@ deactivate
 # vim plugins                                                                 #
 ###############################################################################
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
 source .aliases
 vim -c 'PluginInstall'
 
-# cd ~/.vim/bundle/YouCompleteMe
+# cd $HOME/.vim/bundle/YouCompleteMe
 # ./install.py --clang-completer
 
 ###############################################################################
 # Snippets                                                                    #
 ###############################################################################
 
-mkdir -p ~/.vim/UltiSnips
-mkdir -p ~/tools
+mkdir -p $HOME/.vim/UltiSnips
+mkdir -p $HOME/tools
 
-git clone "https://github.com/honza/vim-snippets" ~/tools/vim-snippets
-git clone "https://github.com/zhiyanfoo/snippets" ~/tools/z-snippets
-./~/tools/z-snippets/create_symlinks.sh
+git clone "https://github.com/honza/vim-snippets" $HOME/tools/vim-snippets
+git clone "https://github.com/zhiyanfoo/snippets" $HOME/tools/z-snippets
+./$HOME/tools/z-snippets/create_symlinks.sh
 
 ###############################################################################
 # Colorscheme                                                                 #
-###############################################################################
+##############################################################################
 
 # Load into iterm manually
-git clone "https://github.com/altercation/solarized" ~/tools/solarized
+git clone "https://github.com/altercation/solarized" $HOME/tools/solarized
 
 ###############################################################################
 # Secrets                                                                     #
 ###############################################################################
 
-mkdir ~/.secrets
-touch ~/..secrets/secrets
+mkdir $HOME/.secrets
+touch $HOME/..secrets/secrets

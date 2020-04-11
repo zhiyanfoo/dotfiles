@@ -80,3 +80,12 @@ function ranger-cd {
     fi
     rm -f -- "$tempfile"
 }
+
+function snc {
+    if [ -z "$1" ]
+    then
+        echo "No arg passed"
+    else 
+        rsync -avzh "/Users/zhiyan/courses/$1/" "z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/$1/"
+    fi
+}

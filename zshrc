@@ -28,7 +28,6 @@ then
 fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="$PATH:$HOME/Courses/nand2tetris2/tools"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 
 # zsh autocomplete uses the variable fpath
@@ -68,3 +67,4 @@ for f in $HOME/.config/company/*_rc;  do source $f; done
 source ~/.rvm/scripts/rvm
 source ~/.secrets/secrets
 export PROMPT="🔥 "
+export NVIM_LISPWORDS="$HOME/.config/nvimlispwords.lua"

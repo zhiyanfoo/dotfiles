@@ -1,5 +1,4 @@
 " NOTICE WILL REMOVE TRAILING WHITESPACE ON CERTAIN FILES WHEN SAVED
-
 " BASIC CONFIG
 " -----------------------------------------------------------------
 set nocompatible
@@ -175,12 +174,12 @@ else
   echo "javascript-typescript-stdio not installed!\n"
 endif
 
-if executable('go-langserver')
-  let g:LanguageClient_serverCommands.go= ['go-langserver']
-  autocmd FileType go setlocal omnifunc=LanguageClient#complete
-else
-  echo "go-langserver not installed!\n"
-endif
+" if executable('go-langserver')
+"   let g:LanguageClient_serverCommands.go= ['go-langserver']
+"   autocmd FileType go setlocal omnifunc=LanguageClient#complete
+" else
+"   echo "go-langserver not installed!\n"
+" endif
 
 
 " if executable('hie-wrapper')
@@ -283,18 +282,10 @@ nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :noh
 nnoremap q: <Nop>
 nnoremap <F1> <Nop>
 
-
 " remove automatic insertion of comments after a comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-
-if has("autocmd")
-  au BufReadPost *.rkt,*.rktl set filetype=racket
-  au filetype racket set lisp
-  au filetype racket set autoindent
-endif
-
-autocmd FileType c,cpp,java,php,python,javascript,typescript autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,java,php,python,javascript,typescript,racket autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " search file contents with command Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
@@ -326,3 +317,4 @@ return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
 xmap <c-c> <esc>
+nnoremap g<C-G> gg=G''
