@@ -4,6 +4,8 @@
 
 # exit script if any command fails
 set -e
+# print each line before running
+set -x
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
