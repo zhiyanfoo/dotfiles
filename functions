@@ -81,11 +81,14 @@ function ranger-cd {
     rm -f -- "$tempfile"
 }
 
-function snc {
-    if [ -z "$1" ]
-    then
-        echo "No arg passed"
-    else 
-        rsync -avzh "/Users/zhiyan/courses/$1/" "z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/$1/"
-    fi
-}
+# function snc {
+#     if [ -z "$1" ]
+#     then
+#         echo "No arg passed"
+#     else 
+#         rsync -avzh "/Users/zhiyan/courses/$1/" "z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/$1/"
+#     fi
+# }
+
+# ["trigger",  "/Users/zhiyan/tulip/tulip/environments/cloud/services/src/tulip/ingressadjuster", {
+# "name": "ingressadjuster", "command": ["rsync", "-avzh", "/Users/zhiyan/tulip/tulip/environments/cloud/services/src/tulip/ingressadjuster", "ubuntu@deploy.bulb.cloud:/home/ubuntu/zhiyan/tulip/environments/cloud/services/src/tulip/ingressadjuster"]}] 

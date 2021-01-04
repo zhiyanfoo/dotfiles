@@ -57,6 +57,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'zenbro/mirror.vim'
 Plugin 'rust-lang/rust.vim'
 
 if !has('nvim')
@@ -102,10 +103,9 @@ Plugin 'nvie/vim-flake8'
 Plugin 'prettier/vim-prettier'
 
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'leafgarland/typescript-vim'
+" Plugin 'leafgarland/typescript-vim'
 Plugin 'shougo/deoplete.nvim'
 Plugin 'ruby-formatter/rufo-vim'
-Plugin 'psf/black'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -160,19 +160,19 @@ let g:LanguageClient_autoStart = 1
 " -----------------------------------------------------------------
 
 " Minimal LSP configuration for JavaScript
-let g:LanguageClient_serverCommands = {}
-if executable('javascript-typescript-stdio')
-  let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
-  let g:LanguageClient_serverCommands['typescript'] = ['javascript-typescript-stdio']
-  let g:LanguageClient_serverCommands['javascript.jsx'] = ['javascript-typescript-stdio']
-  let g:LanguageClient_serverCommands['typescript.tsx'] = ['javascript-typescript-stdio']
+" let g:LanguageClient_serverCommands = {}
+" if executable('javascript-typescript-stdio')
+"   let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
+"   let g:LanguageClient_serverCommands['typescript'] = ['javascript-typescript-stdio']
+"   let g:LanguageClient_serverCommands['javascript.jsx'] = ['javascript-typescript-stdio']
+"   let g:LanguageClient_serverCommands['typescript.tsx'] = ['javascript-typescript-stdio']
 
-  " Use LanguageServer for omnifunc completion
-  autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
-  autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
-else
-  echo "javascript-typescript-stdio not installed!\n"
-endif
+"   " Use LanguageServer for omnifunc completion
+"   autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
+"   autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
+" else
+"   echo "javascript-typescript-stdio not installed!\n"
+" endif
 
 " if executable('go-langserver')
 "   let g:LanguageClient_serverCommands.go= ['go-langserver']
@@ -292,7 +292,7 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : 
 nnoremap <c-a> :Ag<cr>
 nnoremap <c-s> :Tags<cr>
 
-inoremap jk <esc>
+" inoremap jk <esc>
 
 let g:ultisnips_javascript = {
      \ 'keyword-spacing': 'always',
@@ -318,3 +318,5 @@ endfunction"}}}
 
 xmap <c-c> <esc>
 nnoremap g<C-G> gg=G''
+
+nnor <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path

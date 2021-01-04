@@ -1,6 +1,7 @@
 source ~/.commonprofile
 source ~/.functions
 
+export rvm_silence_path_mismatch_check_flag=1
 # fzf installed line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -15,6 +16,7 @@ export TERM="screen-256color"
 
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
 export SAVEHIST=100000
 export HISTFILE=~/.zsh_history
 
@@ -68,3 +70,30 @@ source ~/.rvm/scripts/rvm
 source ~/.secrets/secrets
 export PROMPT="🔥 "
 export NVIM_LISPWORDS="$HOME/.config/nvimlispwords.lua"
+
+export GOPATH="$HOME/go"
+export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
+export PATH="/usr/local/opt/mongodb-community@3.6/bin:$PATH"
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
+DOCKER_BUILDKIT=1
+
+# 2x ctrl-d to exit ...
+export IGNOREEOF=1
+
+# bash like ctrl-d wrapper for IGNOREEOF
+setopt ignore_eof
+function bash-ctrl-d() {
+  if [[ $CURSOR == 0 && -z $BUFFER ]]
+  then
+    [[ -z $IGNOREEOF || $IGNOREEOF == 0 ]] && exit
+    if [[ "$LASTWIDGET" == "bash-ctrl-d" ]]
+    then
+      (( --__BASH_IGNORE_EOF <= 0 )) && exit
+    else
+      (( __BASH_IGNORE_EOF = IGNOREEOF ))
+    fi
+  fi
+}
+zle -N bash-ctrl-d
+bindkey "^d" bash-ctrl-d
+DOCKER_BUILDKIT=1

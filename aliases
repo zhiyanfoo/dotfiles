@@ -26,6 +26,9 @@ alias ghost='\gs'
 
 # alias snc="rsync -avzh /Users/zhiyan/courses/cs241/ z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/cs241/"
 
+rsc="rsync -avzh"
+alias snc="$rsc $ad1 $ad2" 
+
 alias sm="snc; student \"make vm -C cs246e/vm/src;\""
 
 
@@ -56,6 +59,8 @@ alias remove_all_swaps="rm $HOME/.local/share/nvim/swap/* "
 ####### SSH
 
 alias student="ssh -Y z2foo@linux.student.cs.uwaterloo.ca"
+alias rtssh='ssh -i ~/.secrets/zhiyan-12-2019.pem -A ubuntu@35.172.120.181'
+alias zssh="ssh -i ~/.ssh/zhiyan-personal-sg.pem -A ubuntu@54.179.125.202"
 
 ####### Zen
 
@@ -150,3 +155,9 @@ alias random="python3 -c 'import random; print(random.random())'"
 
 #school
 alias xxd4='xxd -bits -cols 4'
+
+# kubernetes
+alias ks='kubectl -n kube-system'
+
+# general 
+alias router-ip='curl checkip.amazonaws.com'
