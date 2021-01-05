@@ -134,6 +134,7 @@ ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/zshrc $HOME/.zshrc
 ln -s $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
 ln -s $HOME/dotfiles/nvimlispwords.lua $HOME/.config/nvimlispwords.lua
+ln -s $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
 git config --global core.excludesfile $HOME/.global_gitignore 
 
 mkdir -p $HOME/.config/nvim/
