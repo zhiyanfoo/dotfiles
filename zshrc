@@ -37,6 +37,9 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # COMPLETION SETTINGS
 # add custom completion scripts
 fpath=(~/.zsh-completion $fpath) 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
 
 zstyle ':completion:*' menu select=2
 # The following lines were added by compinstall
@@ -97,3 +100,8 @@ function bash-ctrl-d() {
 zle -N bash-ctrl-d
 bindkey "^d" bash-ctrl-d
 DOCKER_BUILDKIT=1
+
+[[ -s "/Users/zhiyan/.gvm/scripts/gvm" ]] && source "/Users/zhiyan/.gvm/scripts/gvm"
+
+export NNN_FIFO=/tmp/nnn.fifo
+export NNN_PLUG='p:preview-tui'

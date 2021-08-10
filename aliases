@@ -33,25 +33,20 @@ alias sm="snc; student \"make vm -C cs246e/vm/src;\""
 
 
 # c++
-alias g++14='g++ -std=c++14 -Wall'
-alias g++14db='g++ -g -std=c++14 -Wall'
+alias g++17='g++ -std=c++17 -Wall'
+alias g++17db='g++ -g -std=c++17 -Wall'
 
 # rust
 
 alias cr="cargo run"
 alias rf="~/tools/rustfmt/target/release/rustfmt"
 
-####### Ctags
-
-# alias pytags=$'ctags -R --extras=+f --fields=+l --languages=python --python-kinds=-iv -f ./tags $(python -c "import os, sys; print(\' \'.join(str(d) for d in sys.path if os.path.isdir(d))  + \' ./\')")'
-
 ####### Vim
 
 alias vi="/usr/local/bin/nvim"
-alias vim="/usr/local/bin/nvim --cmd \"let g:more_features_checker='yes'\""
+alias vim="/usr/local/bin/nvim"
 alias svim="/usr/local/bin/nvim -i NONE -n"
 alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
-alias mvim="mvim -v"
 alias view='/usr/local/bin/nvim -R'
 
 alias remove_all_swaps="rm $HOME/.local/share/nvim/swap/* "
@@ -69,11 +64,10 @@ alias zen2="source /usr/local/bin/zen2"
 
 ####### tmux
 
-alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
+alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -t -n1 tmux kill-session -t"
 
 
 #####
-# alias git='hub'
 
 ####### Git
 # cite 'about-alias'
@@ -160,4 +154,4 @@ alias xxd4='xxd -bits -cols 4'
 alias ks='kubectl -n kube-system'
 
 # general 
-alias router-ip='curl checkip.amazonaws.com'
+alias routerip='curl checkip.amazonaws.com'
