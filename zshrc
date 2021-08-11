@@ -1,7 +1,6 @@
 source ~/.commonprofile
 source ~/.functions
 
-export rvm_silence_path_mismatch_check_flag=1
 # fzf installed line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -19,15 +18,6 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 export SAVEHIST=100000
 export HISTFILE=~/.zsh_history
-
-VENV_WRAPPER=/usr/local/bin/virtualenvwrapper_lazy.sh
-
-plugins=(git brew python virtualenvwrapper)
-
-if [ -f "$VENV_WRAPPER" ]
-then
-    source $VENV_WRAPPER
-fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
@@ -61,10 +51,6 @@ source $HOME/.zsh-completion/_az
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
-  . ~/.config/exercism/exercism_completion.zsh
-fi
-
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
@@ -76,7 +62,6 @@ export NVIM_LISPWORDS="$HOME/.config/nvimlispwords.lua"
 
 export GOPATH="$HOME/go"
 export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
-export PATH="/usr/local/opt/mongodb-community@3.6/bin:$PATH"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 DOCKER_BUILDKIT=1
 
@@ -99,7 +84,6 @@ function bash-ctrl-d() {
 }
 zle -N bash-ctrl-d
 bindkey "^d" bash-ctrl-d
-DOCKER_BUILDKIT=1
 
 [[ -s "/Users/zhiyan/.gvm/scripts/gvm" ]] && source "/Users/zhiyan/.gvm/scripts/gvm"
 
