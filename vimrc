@@ -2,7 +2,6 @@
 " BASIC CONFIG
 " -----------------------------------------------------------------
 set nocompatible
-" set autoindent
 set showcmd
 set number
 set cmdheight=1
@@ -24,15 +23,6 @@ set undofile
 autocmd filetype crontab setlocal nobackup nowritebackup
 " keeps lines at the bottom always
 set scrolloff=5
-if has('gui_running')
-    set background=light
-    colorscheme solarized
-    autocmd InsertEnter * set formatoptions+=a
-    autocmd InsertLeave * set formatoptions-=a
-elseif !has('nvim')
-    set term=xterm-256color
-endif
-
 set hidden
 syntax on
 set softtabstop=4
@@ -148,10 +138,6 @@ filetype plugin indent on
 
 " PLUGIN CONFIGS
 " -----------------------------------------------------------------
-
-let g:slime_target = "tmux"
-let g:slime_python_ipython = 1
-let g:typescript_indent_disable = 1
 
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
