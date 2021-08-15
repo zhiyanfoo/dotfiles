@@ -8,7 +8,6 @@ set cmdheight=1
 set ruler
 set wildmode=longest,list,full
 set wildmenu
-set smartcase
 set splitbelow
 set splitright
 set textwidth=96
@@ -74,28 +73,13 @@ Plugin 'chrisbra/Recover.vim'
 
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-Plugin 'neoclide/vim-jsx-improve'
-Plugin 'jason0x43/vim-js-indent'
-
-" if has('nvim')
-"     Plugin 'neovimhaskell/haskell-vim'
-" endif
 
 Plugin 'maxbrunsfeld/vim-emacs-bindings'
-Plugin 'Vimjas/vim-python-pep8-indent'
 
-"idris mode
-Plugin 'idris-hackers/idris-vim'
-Plugin 'mitsuhiko/vim-jinja'
-" nnoremap <buffer> <silent> <LocalLeader>dd 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
 
-Plugin 'nvie/vim-flake8'
-Plugin 'prettier/vim-prettier'
-
-Plugin 'editorconfig/editorconfig-vim'
-" Plugin 'leafgarland/typescript-vim'
 Plugin 'shougo/deoplete.nvim'
-Plugin 'ruby-formatter/rufo-vim'
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/neosnippet-snippets'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -144,6 +128,12 @@ let g:LanguageClient_autoStart = 1
 
 " Language Server
 " -----------------------------------------------------------------
+let g:LanguageClient_serverCommands = {
+    \ 'go': ['gopls'],
+    \ 'cpp': ['clangd'],
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls']
+\ }
+
 
 " Minimal LSP configuration for JavaScript
 " let g:LanguageClient_serverCommands = {}
@@ -159,14 +149,6 @@ let g:LanguageClient_autoStart = 1
 " else
 "   echo "javascript-typescript-stdio not installed!\n"
 " endif
-
-" if executable('go-langserver')
-"   let g:LanguageClient_serverCommands.go= ['go-langserver']
-"   autocmd FileType go setlocal omnifunc=LanguageClient#complete
-" else
-"   echo "go-langserver not installed!\n"
-" endif
-
 
 " if executable('hie-wrapper')
 "   let g:LanguageClient_serverCommands.haskell = ['hie-wrapper']
@@ -278,15 +260,6 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : 
 nnoremap <c-a> :Ag<cr>
 nnoremap <c-s> :Tags<cr>
 
-" inoremap jk <esc>
-
-let g:ultisnips_javascript = {
-     \ 'keyword-spacing': 'always',
-     \ 'semi': 'never',
-     \ 'space-before-function-paren': 'always',
-     \ }
-
-
 let g:LanguageClient_diagnosticsSignsMax=0
 let g:LanguageClient_diagnosticsEnable=0
 
@@ -302,7 +275,41 @@ let col = col('.') - 1
 return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
+" begin
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <c-j>     <Plug>(neosnippet_expand_or_jump)
+smap <c-j>     <Plug>(neosnippet_expand_or_jump)
+xmap <c-j>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+let g:neosnippet#disable_runtime_snippets = {'_' : 1}
+" end
+
+let g:neosnippet#snippets_directory = "~/.config/nvim/snippets"
+
 xmap <c-c> <esc>
 nnoremap g<C-G> gg=G''
 
 nnor <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
+
+
+
+
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+i

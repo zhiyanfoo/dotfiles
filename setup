@@ -82,8 +82,6 @@ brew install youtube-dl
 brew install unrar
 brew install coreutils
 brew install pass
-brew install exercism
-brew install hub
 brew install aws-cli
 brew install wget
 brew install tig
@@ -135,6 +133,7 @@ ln -s $HOME/dotfiles/zshrc $HOME/.zshrc
 ln -s $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
 ln -s $HOME/dotfiles/nvimlispwords.lua $HOME/.config/nvimlispwords.lua
 ln -s $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
+ln -s $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
 git config --global core.excludesfile $HOME/.global_gitignore 
 
 mkdir -p $HOME/.config/nvim/
@@ -173,25 +172,13 @@ git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.v
 source .aliases
 vim -c 'PluginInstall'
 
-# cd $HOME/.vim/bundle/YouCompleteMe
-# ./install.py --clang-completer
-
-###############################################################################
-# Snippets                                                                    #
-###############################################################################
-
-mkdir -p $HOME/.vim/UltiSnips
-mkdir -p $HOME/tools
-
-git clone "https://github.com/honza/vim-snippets" $HOME/tools/vim-snippets
-git clone "https://github.com/zhiyanfoo/snippets" $HOME/tools/z-snippets
-./$HOME/tools/z-snippets/create_symlinks.sh
 
 ###############################################################################
 # Colorscheme                                                                 #
 ##############################################################################
 
 # Load into iterm manually
+mkdir -p $HOME/tools
 git clone "https://github.com/altercation/solarized" $HOME/tools/solarized
 
 ###############################################################################

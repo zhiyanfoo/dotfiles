@@ -54,17 +54,25 @@ alias remove_all_swaps="rm $HOME/.local/share/nvim/swap/* "
 ####### SSH
 
 alias student="ssh -Y z2foo@linux.student.cs.uwaterloo.ca"
-alias rtssh='ssh -i ~/.secrets/zhiyan-12-2019.pem -A ubuntu@35.172.120.181'
-alias zssh="ssh -i ~/.ssh/zhiyan-personal-sg.pem -A ubuntu@54.179.125.202"
+alias zssh="ssh -i ~/.ssh/zhiyan-sg.pem -A ubuntu@13.213.248.58"
+
+####### ec2
+alias zstart="aws ec2 start-instances --instance-ids i-0428a59665124b221"
+alias zstop="aws ec2 stop-instances --instance-ids i-0428a59665124b221"
 
 ####### Zen
 
 alias zen="source /usr/local/bin/zen"
 alias zen2="source /usr/local/bin/zen2"
+alias dea='deactivate'
 
 ####### tmux
 
 alias kill-detached="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -t -n1 tmux kill-session -t"
+
+####### Ginkgo
+
+alias gk='ginkgo'
 
 
 #####
