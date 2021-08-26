@@ -3,26 +3,22 @@
 set -x
 set -e
 
-# sudo apt install zsh
-# change shell edit 
-# sudo vim /etc/passwd
-# https://forums.aws.amazon.com/thread.jspa?threadID=83460
 # setup add ssh-key with 
 # ssh-keygen -t rsa -b 4096 -C "zhiyanfoo@gmail.com"
 # scp 
 # git clone git@github.com:zhiyanfoo/dotfiles.git
 
-sudo apt update
-sudo apt install neovim
-sudo apt install fd-find
+sudo apt update -y
+sudo apt install neovim -y
+sudo apt install fd-find -y
 sudo ln -s $(which fdfind) /usr/local/bin/fd
-sudo apt install ripgrep
-sudo apt install cmake
-sudo apt install gnupg2
-sudo apt install fzf
-sudo apt install wget
-sudo apt install tig
-sudo apt install python3-pip
+sudo apt install ripgrep -y
+sudo apt install cmake -y
+sudo apt install gnupg2 -y
+sudo apt install fzf -y
+sudo apt install wget -y
+sudo apt install tig -y
+sudo apt install python3-pip -y
 
 ln -s $HOME/dotfiles/remote/aliases $HOME/.aliases
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
@@ -42,10 +38,13 @@ nvim -c 'PluginInstall'
 pip3 install -U pynvim
 pip3 install -U msgpack
 
+pushd "$HOME/.vim/bundle/LanguageClient-neovim"
+bash install.sh
+popd
 
 
 
-
-
-
-
+# sudo apt install zsh
+# change shell edit 
+# sudo vim /etc/passwd
+# https://forums.aws.amazon.com/thread.jspa?threadID=83460

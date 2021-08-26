@@ -88,3 +88,5 @@ bindkey "^d" bash-ctrl-d
 export NNN_FIFO=/tmp/nnn.fifo
 export NNN_PLUG='p:preview-tui'
 export CILIUMDIR="GOPATH/src/github.com/cilium/cilium"
+
+[[ -s "/Users/zhiyan/.gvm/scripts/gvm" ]] && source "/Users/zhiyan/.gvm/scripts/gvm"
