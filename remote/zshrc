@@ -37,4 +37,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
+source "$HOME/.aliases"
+
 [[ -s "/Users/zhiyan/.gvm/scripts/gvm" ]] && source "/Users/zhiyan/.gvm/scripts/gvm"
