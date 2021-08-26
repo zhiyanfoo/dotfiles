@@ -10,7 +10,7 @@ set -e
 # setup add ssh-key with 
 # ssh-keygen -t rsa -b 4096 -C "zhiyanfoo@gmail.com"
 # scp 
-# git clone https://github.com/zhiyanfoo/dotfiles
+# git clone git@github.com:zhiyanfoo/dotfiles.git
 
 sudo apt update
 sudo apt install neovim

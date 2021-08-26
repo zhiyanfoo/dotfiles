@@ -8,6 +8,8 @@ alias la='ls -a'       # Compact view, show hidden
 alias ll='ls -al'
 alias l1='ls -1'
 
+alias cdcilium="cd $GOPATH/src/github.com/cilium/cilium" 
+
 ####### Vim
 
 alias vi="/usr/bin/nvim"

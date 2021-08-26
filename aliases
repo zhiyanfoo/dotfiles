@@ -31,6 +31,7 @@ alias snc="$rsc $ad1 $ad2"
 
 alias sm="snc; student \"make vm -C cs246e/vm/src;\""
 
+alias cdcilium='cd $GOPATH/src/github.com/cilium/cilium' 
 
 # c++
 alias g++17='g++ -std=c++17 -Wall'
