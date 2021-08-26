@@ -38,7 +38,7 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
 
-[[ -s "/Users/zhiyan/.gvm/scripts/gvm" ]] && source "/Users/zhiyan/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 # has to be sourced after gopath is set
 source "$HOME/.aliases"
