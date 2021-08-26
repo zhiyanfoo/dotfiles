@@ -19,6 +19,8 @@ sudo apt install fzf -y
 sudo apt install wget -y
 sudo apt install tig -y
 sudo apt install python3-pip -y
+sudo apt-get install bison -y
+
 
 ln -s $HOME/dotfiles/remote/aliases $HOME/.aliases
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
@@ -42,7 +44,26 @@ pushd "$HOME/.vim/bundle/LanguageClient-neovim"
 bash install.sh
 popd
 
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+
+gvm install go1.4 -B
+gvm use go1.4
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.17
+gvm use go1.17 --default
+
+mkdir -p "${GOPATH}/src/github.com/cilium"
+pushd "${GOPATH}/src/github.com/cilium"
+git clone git@github.com:zhiyanfoo/cilium.git
+pushd cilium 
+git remote add upstream https://github.com/cilium/cilium.git
+git fetch upstream
+git merge upstream/master
+git push origin master
+popd
+popd
 
 # sudo apt install zsh
 # change shell edit 
