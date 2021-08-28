@@ -20,7 +20,13 @@ sudo apt install wget -y
 sudo apt install tig -y
 sudo apt install python3-pip -y
 sudo apt-get install bison -y
-
+sudo apt install virtualbox -y
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt update
+sudo apt install vagrant -y
+sudo apt install 'llvm-12*' -y
+sudo apt install 'clang' -y
 
 ln -s $HOME/dotfiles/remote/aliases $HOME/.aliases
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
@@ -64,6 +70,31 @@ git merge upstream/master
 git push origin master
 popd
 popd
+
+# docker
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
+    -y
+
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+# run 
+sudo groupadd docker
+sudo usermod -aG docker $USER
+# need to exit shell and reenter to run docker without sudo
 
 # sudo apt install zsh
 # change shell edit 
