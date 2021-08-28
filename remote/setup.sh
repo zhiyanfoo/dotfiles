@@ -20,7 +20,6 @@ sudo apt install wget -y
 sudo apt install tig -y
 sudo apt install python3-pip -y
 sudo apt-get install bison -y
-sudo apt install virtualbox -y
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 sudo apt update
@@ -95,6 +94,15 @@ sudo docker run hello-world
 sudo groupadd docker
 sudo usermod -aG docker $USER
 # need to exit shell and reenter to run docker without sudo
+
+# virtualbox
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+echo "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" | \
+     sudo tee -a /etc/apt/sources.list.d/virtualbox.list
+sudo apt update
+sudo apt install virtualbox-6.1
+
 
 # sudo apt install zsh
 # change shell edit 
