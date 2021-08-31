@@ -58,6 +58,7 @@ gvm use go1.4
 export GOROOT_BOOTSTRAP=$GOROOT
 gvm install go1.17
 gvm use go1.17 --default
+GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
 mkdir -p "${GOPATH}/src/github.com/cilium"
 pushd "${GOPATH}/src/github.com/cilium"
