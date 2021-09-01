@@ -27,19 +27,22 @@ sudo apt install vagrant -y
 sudo apt install 'llvm-12*' -y
 sudo apt install 'clang' -y
 
-ln -s $HOME/dotfiles/remote/aliases $HOME/.aliases
-ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
-ln -s $HOME/dotfiles/remote/zshrc $HOME/.zshrc
-ln -s $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
-ln -s $HOME/dotfiles/commonprofile $HOME/.commonprofile
-mkdir -p $HOME/.config/nvim/
-ln -s $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
-ln -s $HOME/dotfiles/remote/nvim_init.vim $HOME/.config/nvim/init.vim
-ln -s $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
-mkdir -p $HOME/.config/nvim/after
-ln -s $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
+mkdir -p "$HOME/tools"
+git clone https://github.com/rupa/z "$HOME/tools/z"
 
-git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+ln -s "$HOME/dotfiles/remote/aliases" "$HOME/.aliases"
+ln -s "$HOME/dotfiles/vimrc" "$HOME/.vimrc"
+ln -s "$HOME/dotfiles/remote/zshrc" "$HOME/.zshrc"
+ln -s "$HOME/dotfiles/global_gitignore" "$HOME/.global_gitignore"
+ln -s "$HOME/dotfiles/commonprofile" "$HOME/.commonprofile"
+mkdir -p "$HOME/.config/nvim/"
+ln -s "$HOME/dotfiles/snippets" "$HOME/.config/nvim/snippets"
+ln -s "$HOME/dotfiles/remote/nvim_init.vim" "$HOME/.config/nvim/init.vim"
+ln -s "$HOME/dotfiles/zsh-completion" "$HOME/.zsh-completion"
+mkdir -p "$HOME/.config/nvim/after"
+ln -s "$HOME/dotfiles/ftplugin" "$HOME/.config/nvim/after/ftplugin"
+
+git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
 nvim -c 'PluginInstall'
 
 pip3 install -U pynvim
