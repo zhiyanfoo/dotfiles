@@ -108,7 +108,7 @@ sudo apt update
 sudo apt install virtualbox-6.1
 
 
-# sudo apt install zsh
+# sudo apt install zsh -y
 # change shell edit 
 # sudo vim /etc/passwd
 # https://forums.aws.amazon.com/thread.jspa?threadID=83460
