@@ -304,11 +304,10 @@ xmap <c-c> <esc>
 nnoremap g<C-G> gg=G''
 
 nnor <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
+nnoremap <c-q> <c-w>w
 
 
 
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-i

@@ -9,6 +9,7 @@ alias ll='ls -al'
 alias l1='ls -1'
 
 alias cdcilium="cd $GOPATH/src/github.com/cilium/cilium" 
+alias remove_all_swaps='rm $HOME/.local/share/nvim/swap/*'
 
 ####### Vim
 
@@ -79,4 +80,14 @@ alias gnew="git log HEAD@{1}..HEAD@{0}"
 # Add uncommitted and unstaged changes to the last commit
 alias gcaa="git commit -a --amend -C HEAD"
 
+# kubectl
+alias k='kubectl'
+alias ks='kubectl -n kube-system'
+alias ka='kubectl apply -f'
+alias kg='kubectl get'
+alias kgdep='kubectl get deployment'
+alias kgns='kubectl get namespaces'
+alias kgpo='kubectl get pods'
+alias klo='kubectl logs -f'
 
+alias snc='source $HOME/tools/native_cidr.sh'

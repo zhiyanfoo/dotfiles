@@ -3,6 +3,7 @@
 PROMPT="$ "
 
 setopt histignorealldups sharehistory
+[ -f "$HOME/.custom-pre" ] && source "$HOME/.custom-pre"
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -40,5 +41,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 source "$HOME/.aliases"
 
 export EDITOR="$(which -p nvim)"
+export PATH="$GOPATH/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f "$HOME/tools/z/z.sh" ] && source "$HOME/tools/z/z.sh"
+
+[ -f "$HOME/.custom-post" ] && source "$HOME/.custom-post"
