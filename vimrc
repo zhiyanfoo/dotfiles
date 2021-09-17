@@ -79,7 +79,6 @@ Plugin 'maxbrunsfeld/vim-emacs-bindings'
 
 Plugin 'shougo/deoplete.nvim'
 Plugin 'Shougo/neosnippet.vim'
-Plugin 'Shougo/neosnippet-snippets'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -289,7 +288,7 @@ xmap <c-j>     <Plug>(neosnippet_expand_target)
 " \ neosnippet#expandable_or_jumpable() ?
 " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')

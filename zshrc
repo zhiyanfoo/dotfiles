@@ -39,9 +39,6 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-autoload bashcompinit
-bashcompinit
-
 source $HOME/tools/zen/completions/zen_bash_completion
 source $HOME/tools/zen/completions/zen2_bash_completion
 source $HOME/.zsh-completion/_az
@@ -88,3 +85,8 @@ bindkey "^d" bash-ctrl-d
 export NNN_FIFO=/tmp/nnn.fifo
 export NNN_PLUG='p:preview-tui'
 export CILIUMDIR="GOPATH/src/github.com/cilium/cilium"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+
+[ -f "$HOME/.custom-post" ] && source "$HOME/.custom-post"
