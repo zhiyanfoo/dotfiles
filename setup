@@ -15,48 +15,16 @@ osascript -e 'tell application "System Preferences" to quit'
 sudo -v # Keep-alive: update existing `sudo` time stamp until setup has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-###############################################################################
-# Mac system preferences                                                      #
-###############################################################################
-
-# Disable the 'Are you sure you want to open this application?' dialog
-defaults write com.apple.LaunchServices LSQuarantine -bool false
-
-# Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
-# Trackpad: enable tap to click for this user and for the login screen
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
-# Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
-# add sound effect back
-# sudo nvram -d SystemAudioVolume
-
-# Disable Dashboard
-# defaults write com.apple.dashboard mcx-disabled -bool true
-
-# Don’t show Dashboard as a Space
-# defaults write com.apple.dock dashboard-in-overlay -bool true
-
-# (Use karabiner instead) Set a blazingly fast keyboard repeat rate 
-# defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-# defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-
-# Prevent Time Machine from prompting to use new hard drives as backup volume
-defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 ###############################################################################
 # Brew                                                                        #
 ###############################################################################
 
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-echo 'export PATH="/usr/local/bin:$PATH"' >> $HOME/.bash_profile
+# ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 brew doctor
 brew update
-brew upgrade --all
+brew upgrade
 
 brew install fd # required for zshrc's fzf customization
 brew install ripgrep
@@ -72,17 +40,12 @@ brew install neovim
 brew install cmake
 brew install gnupg2
 brew install fzf
-/usr/local/opt/fzf/install
+/opt/homebrew/opt/fzf/install
 brew install z
-brew tap universal-ctags/universal-ctags
-brew install --HEAD universal-ctags
-brew install ranger
-brew install rename
 brew install youtube-dl
-brew install unrar
 brew install coreutils
 brew install pass
-brew install aws-cli
+brew install awscli
 brew install wget
 brew install tig
 
@@ -90,16 +53,16 @@ brew install tig
 # Apps                                                                        #
 ###############################################################################
 
-brew cask install --appdir="$HOME/Applications" iterm2
-brew cask install --appdir="/Applications" firefox
-brew cask install --appdir="/Applications" skim
-brew cask install --appdir="/Applications" vlc
-brew cask install --appdir="/Applications" google-chrome
-brew cask install --appdir="/Applications" vagrant
-brew cask install --appdir="/Applications" spotify
-brew cask install --appdir="/Applications" shiftit
-brew cask install --appdir="/Applications" transmission
-brew cask install google-cloud-sdk
+brew install --cask iterm2
+brew install --cask firefox
+brew install --cask skim
+brew install --cask vlc
+brew install --cask google-chrome
+brew install --cask vagrant
+brew install --cask spotify
+brew install --cask shiftit
+brew install --cask transmission
+brew install --cask google-cloud-sdk
 
 defaults write -app Skim SKAutoReloadFileUpdate -boolean true 
 
@@ -109,7 +72,6 @@ defaults write -app Skim SKAutoReloadFileUpdate -boolean true
 
 git config --global user.name "Zhiyan Foo"
 git config --global user.email "zhiyanfoo@gmail.com"
-git config --global credential.helper osxkeychain
 
 ###############################################################################
 # ruby version manager                                                        #
@@ -121,23 +83,26 @@ git config --global credential.helper osxkeychain
 # dotfiles                                                                    #
 ###############################################################################
 
-git clone "https://github.com/zhiyanfoo/dotfiles" $HOME/dotfiles
+# git clone "https://github.com/zhiyanfoo/dotfiles" $HOME/dotfiles
 ln -s $HOME/dotfiles/aliases $HOME/.aliases
-rm $HOME/.bash_profile
+rm -f $HOME/.bash_profile
 ln -s $HOME/dotfiles/bash_profile $HOME/.bash_profile
 ln -s $HOME/dotfiles/commonprofile $HOME/.commonprofile
 ln -s $HOME/dotfiles/functions $HOME/.functions
 ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
 ln -s $HOME/dotfiles/zshrc $HOME/.zshrc
+
 ln -s $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
-ln -s $HOME/dotfiles/nvimlispwords.lua $HOME/.config/nvimlispwords.lua
-ln -s $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
-ln -s $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
 git config --global core.excludesfile $HOME/.global_gitignore 
 
+ln -s $HOME/dotfiles/nvimlispwords.lua $HOME/.config/nvimlispwords.lua
+ln -s $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
+
 mkdir -p $HOME/.config/nvim/
+ln -s $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
 ln -s $HOME/dotfiles/nvim_init.vim $HOME/.config/nvim/init.vim
+
 ln -s $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
 
 # let nvim find ftplugins
@@ -150,18 +115,23 @@ ln -s $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
 ###############################################################################
 
 git clone "https://github.com/zhiyanfoo/zen" $HOME/tools/zen
-./$HOME/tools/zen/installation.sh
+sudo $HOME/tools/zen/installation.sh
 
-source /usr/local/bin/zen create repl
-source /usr/local/bin/zen use repl
-/usr/local/bin/pip3 install ipython
-/usr/local/bin/pip3 install bpython
-
-source /usr/local/bin/zen create neovim
-source /usr/local/bin/zen use neovim
-/usr/local/bin/pip3 install neovim
+source /opt/zen/zen create repl
+source /opt/zen/zen use repl
 deactivate
 
+source /opt/zen/zen create neovim
+source /opt/zen/zen use neovim
+pip3 install neovim
+pip3 install -U pynvim
+pip3 install -U msgpack
+
+pushd "$HOME/.vim/bundle/LanguageClient-neovim"
+bash install.sh
+popd
+
+deactivate
 
 ###############################################################################
 # vim plugins                                                                 #
@@ -169,8 +139,7 @@ deactivate
 
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
-source .aliases
-vim -c 'PluginInstall'
+/opt/homebrew/bin/nvim -c 'PluginInstall'
 
 
 ###############################################################################
@@ -186,4 +155,4 @@ git clone "https://github.com/altercation/solarized" $HOME/tools/solarized
 ###############################################################################
 
 mkdir $HOME/.secrets
-touch $HOME/..secrets/secrets
+touch $HOME/.secrets/secrets

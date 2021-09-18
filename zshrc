@@ -1,6 +1,8 @@
 source ~/.commonprofile
 source ~/.functions
 
+eval $(/opt/homebrew/bin/brew shellenv)
+
 # fzf installed line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -19,6 +21,7 @@ export HISTFILE=~/.zsh_history
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+
 
 # zsh autocomplete uses the variable fpath
 # add custom to ~/.zsh-completion
@@ -42,19 +45,15 @@ compinit
 autoload bashcompinit
 bashcompinit
 
-source $HOME/tools/zen/completions/zen_bash_completion
-source $HOME/tools/zen/completions/zen2_bash_completion
+source "/opt/zen/zen_completion"
+source "/opt/zen2/zen2_completion"
 source $HOME/.zsh-completion/_az
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-
-for f in $HOME/.config/company/*_rc;  do source $f; done
-source ~/.rvm/scripts/rvm
-source ~/.secrets/secrets
+source $HOME/.rvm/scripts/rvm
+source $HOME/.secrets/secrets
 export PROMPT="🔥 "
 export NVIM_LISPWORDS="$HOME/.config/nvimlispwords.lua"
 
@@ -88,3 +87,7 @@ bindkey "^d" bash-ctrl-d
 export NNN_FIFO=/tmp/nnn.fifo
 export NNN_PLUG='p:preview-tui'
 export CILIUMDIR="GOPATH/src/github.com/cilium/cilium"
+
+source "$(brew --prefix)"/etc/profile.d/z.sh
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"

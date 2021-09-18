@@ -5,5 +5,3 @@ export PATH="$PATH:$HOME/.cargo/bin"
 source ~/.aliases
 
 export HISTSIZE=100000
-
-source /usr/local/etc/profile.d/z.sh

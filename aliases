@@ -44,11 +44,10 @@ alias rf="~/tools/rustfmt/target/release/rustfmt"
 
 ####### Vim
 
-alias vi="/usr/local/bin/nvim"
-alias vim="/usr/local/bin/nvim"
-alias svim="/usr/local/bin/nvim -i NONE -n"
-alias vimp="/usr/local/bin/nvim  -u ~/dotfiles/pair-programming.vimrc"
-alias view='/usr/local/bin/nvim -R'
+alias vim="$(which -p nvim)"
+alias svim="$(which -p nvim) -i NONE -n"
+alias vimp="$(which -p nvim) -u $HOME/dotfiles/pair-programming.vimrc"
+alias view='$(which -p nvim) -R'
 
 alias remove_all_swaps="rm $HOME/.local/share/nvim/swap/* "
 
@@ -63,8 +62,8 @@ alias zstop="aws ec2 stop-instances --instance-ids i-0428a59665124b221"
 
 ####### Zen
 
-alias zen="source /usr/local/bin/zen"
-alias zen2="source /usr/local/bin/zen2"
+alias zen="source /opt/zen/zen"
+alias zen2="source /opt/zen2/zen2"
 alias dea='deactivate'
 
 ####### tmux
