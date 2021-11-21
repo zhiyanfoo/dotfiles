@@ -91,3 +91,5 @@ export CILIUMDIR="GOPATH/src/github.com/cilium/cilium"
 source "$(brew --prefix)"/etc/profile.d/z.sh
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

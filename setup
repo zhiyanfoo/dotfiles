@@ -48,6 +48,7 @@ brew install pass
 brew install awscli
 brew install wget
 brew install tig
+brew install watchman
 
 ###############################################################################
 # Apps                                                                        #

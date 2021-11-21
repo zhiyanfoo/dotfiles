@@ -46,6 +46,7 @@ alias rf="~/tools/rustfmt/target/release/rustfmt"
 
 alias vim="$(which -p nvim)"
 alias svim="$(which -p nvim) -i NONE -n"
+alias blankvim="$(which -p nvim) -u NONE"
 alias vimp="$(which -p nvim) -u $HOME/dotfiles/pair-programming.vimrc"
 alias view='$(which -p nvim) -R'
 
@@ -163,3 +164,7 @@ alias ks='kubectl -n kube-system'
 
 # general 
 alias routerip='curl checkip.amazonaws.com'
+
+alias cs343='ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.213.182.46'
+
+alias snc="rsync -avzh--exclude '*.d' --exclude '*.o' --exclude '*.pdf' --exclude vm --exclude out -e 'ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.214.16.158' /Users/zhiyan/courses/cs246e/vm/src/ z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/cs246e/vm/src/"

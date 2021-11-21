@@ -291,14 +291,7 @@ xmap <c-j>     <Plug>(neosnippet_expand_target)
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
 let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-" end
-
 let g:neosnippet#snippets_directory = "~/.config/nvim/snippets"
 
 xmap <c-c> <esc>
