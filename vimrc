@@ -254,10 +254,13 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 autocmd FileType c,cpp,java,php,python,javascript,typescript,racket autocmd BufWritePre <buffer> %s/\s\+$//e
 
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden -g "!.git"'
+
 " search file contents with command Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <c-a> :Ag<cr>
 nnoremap <c-s> :Tags<cr>
+
 
 let g:LanguageClient_diagnosticsSignsMax=0
 let g:LanguageClient_diagnosticsEnable=0

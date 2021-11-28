@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -x
 set -e
@@ -7,46 +7,6 @@ set -e
 # ssh-keygen -t rsa -b 4096 -C "zhiyanfoo@gmail.com"
 # scp 
 # git clone git@github.com:zhiyanfoo/dotfiles.git
-
-sudo apt update -y
-sudo apt install neovim -y
-sudo apt install fd-find -y
-sudo ln -s $(which fdfind) /usr/local/bin/fd
-sudo apt install ripgrep -y
-sudo apt install cmake -y
-sudo apt install gnupg2 -y
-sudo apt install fzf -y
-sudo apt install wget -y
-sudo apt install tig -y
-sudo apt install python3-pip -y
-sudo apt-get install bison -y
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt update
-sudo apt install vagrant -y
-sudo apt install 'llvm-12*' -y
-sudo apt install 'clang' -y
-
-mkdir -p "$HOME/tools"
-git clone https://github.com/rupa/z "$HOME/tools/z"
-
-ln -s "$HOME/dotfiles/remote/aliases" "$HOME/.aliases"
-ln -s "$HOME/dotfiles/vimrc" "$HOME/.vimrc"
-ln -s "$HOME/dotfiles/remote/zshrc" "$HOME/.zshrc"
-ln -s "$HOME/dotfiles/global_gitignore" "$HOME/.global_gitignore"
-ln -s "$HOME/dotfiles/commonprofile" "$HOME/.commonprofile"
-mkdir -p "$HOME/.config/nvim/"
-ln -s "$HOME/dotfiles/snippets" "$HOME/.config/nvim/snippets"
-ln -s "$HOME/dotfiles/remote/nvim_init.vim" "$HOME/.config/nvim/init.vim"
-ln -s "$HOME/dotfiles/zsh-completion" "$HOME/.zsh-completion"
-mkdir -p "$HOME/.config/nvim/after"
-ln -s "$HOME/dotfiles/ftplugin" "$HOME/.config/nvim/after/ftplugin"
-
-git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
-nvim -c 'PluginInstall'
-
-pip3 install -U pynvim
-pip3 install -U msgpack
 
 pushd "$HOME/.vim/bundle/LanguageClient-neovim"
 bash install.sh

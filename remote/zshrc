@@ -47,3 +47,4 @@ export PATH="$GOPATH/bin:$PATH"
 [ -f "$HOME/tools/z/z.sh" ] && source "$HOME/tools/z/z.sh"
 
 [ -f "$HOME/.custom-post" ] && source "$HOME/.custom-post"
+cd cs343/6
