@@ -81,6 +81,8 @@ Plugin 'shougo/deoplete.nvim'
 Plugin 'Shougo/neosnippet.vim'
 Plugin 'Shougo/neosnippet-snippets'
 
+Plugin 'drmikehenry/vim-headerguard'
+
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
 " The following are examples of different formats supported.
@@ -299,8 +301,6 @@ nnoremap g<C-G> gg=G''
 
 nnor <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
 nnoremap <c-q> <c-w>w
-
-
 
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"

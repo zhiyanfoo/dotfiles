@@ -4,7 +4,7 @@ set -x
 set -e
 
 # setup add ssh-key with 
-# ssh-keygen -t rsa -b 4096 -C "zhiyanfoo@gmail.com"
+# ssh-keygen -t ed25519 -C "zhiyanfoo@gmail.com"
 # scp 
 # git clone git@github.com:zhiyanfoo/dotfiles.git
 

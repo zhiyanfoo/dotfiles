@@ -93,3 +93,6 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+export LC_ALL=en_US.utf-8
+export LANG=en_US.utf-8

@@ -166,5 +166,9 @@ alias ks='kubectl -n kube-system'
 alias routerip='curl checkip.amazonaws.com'
 
 alias cs343='ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.213.182.46'
+alias stop_cs343='aws ec2 stop-instances --instance-ids i-0db50083bd302875d'
+alias start_cs343='aws ec2 start-instances --instance-ids i-0db50083bd302875d'
+
+alias cs452='ssh -i ~/.ssh/zhiyan-ohio.pem ubuntu@18.217.194.2'
 
 alias snc="rsync -avzh--exclude '*.d' --exclude '*.o' --exclude '*.pdf' --exclude vm --exclude out -e 'ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.214.16.158' /Users/zhiyan/courses/cs246e/vm/src/ z2foo@linux.student.cs.uwaterloo.ca:/u0/z2foo/cs246e/vm/src/"
