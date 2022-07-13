@@ -64,7 +64,6 @@ Plugin 'svermeulen/vim-easyclip'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-scripts/UnconditionalPaste'
 " underline text for numpy doc for example
-Plugin 'drmikehenry/vim-extline'
 "keep window on buffer delete
 Plugin 'kwbdi.vim'
 Plugin 'terryma/vim-multiple-cursors'
@@ -138,19 +137,19 @@ let g:LanguageClient_serverCommands = {
 
 
 " Minimal LSP configuration for JavaScript
-" let g:LanguageClient_serverCommands = {}
-" if executable('javascript-typescript-stdio')
-"   let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
-"   let g:LanguageClient_serverCommands['typescript'] = ['javascript-typescript-stdio']
-"   let g:LanguageClient_serverCommands['javascript.jsx'] = ['javascript-typescript-stdio']
-"   let g:LanguageClient_serverCommands['typescript.tsx'] = ['javascript-typescript-stdio']
+let g:LanguageClient_serverCommands = {}
+if executable('typescript-language-server')
+  let g:LanguageClient_serverCommands.javascript = ['typescript-language-server', '--stdio']
+  let g:LanguageClient_serverCommands['typescript'] = ['typescript-language-server', '--stdio']
+  let g:LanguageClient_serverCommands['javascript.jsx'] = ['typescript-language-server', '--stdio']
+  let g:LanguageClient_serverCommands['typescript.tsx'] = ['typescript-language-server', '--stdio']
 
-"   " Use LanguageServer for omnifunc completion
-"   autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
-"   autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
-" else
-"   echo "javascript-typescript-stdio not installed!\n"
-" endif
+  " Use LanguageServer for omnifunc completion
+  autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
+  autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
+else
+  echo "typescript-language-server not installed!\n"
+endif
 
 " if executable('hie-wrapper')
 "   let g:LanguageClient_serverCommands.haskell = ['hie-wrapper']
@@ -168,7 +167,7 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 " rename variable under cursor
 nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-nnoremap <silent> <leader>lb :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> F :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
 nnoremap <silent> <leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 

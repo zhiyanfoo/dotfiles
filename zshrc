@@ -81,8 +81,9 @@ function bash-ctrl-d() {
 }
 zle -N bash-ctrl-d
 bindkey "^d" bash-ctrl-d
+bindkey -e
 
-[[ -s "/Users/zhiyan/.gvm/scripts/gvm" ]] && source "/Users/zhiyan/.gvm/scripts/gvm"
+[[ -s "/Users/zhiyanfoo/.gvm/scripts/gvm" ]] && source "/Users/zhiyanfoo/.gvm/scripts/gvm"
 
 export NNN_FIFO=/tmp/nnn.fifo
 export NNN_PLUG='p:preview-tui'
@@ -96,3 +97,8 @@ eval "$(jenv init -)"
 
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
+
+for file in "$HOME"/.config/company/*
+do
+    source $file
+done
