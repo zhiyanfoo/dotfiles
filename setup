@@ -9,124 +9,7 @@ set -x
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
-
-# Ask for the administrator password upfront
-sudo -v # Keep-alive: update existing `sudo` time stamp until setup has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
-
-###############################################################################
-# Brew                                                                        #
-###############################################################################
-
-# ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-brew doctor
-brew update
-brew upgrade
-
-brew install fd # required for zshrc's fzf customization
-brew install ripgrep
-brew install ag
-brew install zsh
-brew install git
-brew install tmux 
-brew install reattach-to-user-namespace
-brew install python3
-brew install neovim
-# for the youcompleteme vim plugin
-brew install cmake
-brew install gnupg2
-brew install fzf
-/opt/homebrew/opt/fzf/install
-brew install z
-brew install youtube-dl
-brew install coreutils
-brew install pass
-brew install awscli
-brew install wget
-brew install tig
-brew install watchman
-brew install pyenv
-
-###############################################################################
-# Apps                                                                        #
-###############################################################################
-
-brew install --cask iterm2
-brew install --cask firefox
-brew install --cask skim
-brew install --cask vlc
-brew install --cask google-chrome
-brew install --cask vagrant
-brew install --cask spotify
-brew install --cask shiftit
-brew install --cask transmission
-brew install --cask google-cloud-sdk
-
-defaults write -app Skim SKAutoReloadFileUpdate -boolean true 
-
-###############################################################################
-# Git setup                                                                   #
-###############################################################################
-
-git config --global user.name "Zhiyan Foo"
-git config --global user.email "zhiyanfoo@gmail.com"
-
-###############################################################################
-# ruby version manager                                                        #
-###############################################################################
-
-\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
-
-###############################################################################
-# dotfiles                                                                    #
-###############################################################################
-
-# git clone "https://github.com/zhiyanfoo/dotfiles" $HOME/dotfiles
-ln -s $HOME/dotfiles/aliases $HOME/.aliases
-rm -f $HOME/.bash_profile
-ln -s $HOME/dotfiles/bash_profile $HOME/.bash_profile
-ln -s $HOME/dotfiles/commonprofile $HOME/.commonprofile
-ln -s $HOME/dotfiles/functions $HOME/.functions
-ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
-ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
-ln -s $HOME/dotfiles/zshrc $HOME/.zshrc
-
-ln -s $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
-git config --global core.excludesfile $HOME/.global_gitignore 
-
-ln -s $HOME/dotfiles/nvimlispwords.lua $HOME/.config/nvimlispwords.lua
-ln -s $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
-
-mkdir -p $HOME/.config/nvim/
-ln -s $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
-ln -s $HOME/dotfiles/nvim_init.vim $HOME/.config/nvim/init.vim
-
-ln -s $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
-
-# let nvim find ftplugins
-mkdir -p $HOME/.config/nvim/after
-ln -s $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
-
-
-###############################################################################
-# ZEN PYTHON ENVIROMENT MANAGER                                               #
-###############################################################################
-
-git clone "https://github.com/zhiyanfoo/zen" $HOME/tools/zen
-sudo $HOME/tools/zen/installation.sh
-
-source /opt/zen/zen create repl
-source /opt/zen/zen use repl
-deactivate
-
-source /opt/zen/zen create neovim
 source /opt/zen/zen use neovim
-pip3 install neovim
-pip3 install -U pynvim
-pip3 install -U msgpack
 
 pushd "$HOME/.vim/bundle/LanguageClient-neovim"
 bash install.sh
@@ -138,9 +21,6 @@ deactivate
 # vim plugins                                                                 #
 ###############################################################################
 
-git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
-
-/opt/homebrew/bin/nvim -c 'PluginInstall'
 
 
 ###############################################################################
