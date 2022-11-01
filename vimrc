@@ -129,6 +129,7 @@ let g:LanguageClient_autoStart = 1
 
 " Language Server
 " -----------------------------------------------------------------
+let g:LanguageClient_serverCommands = {}
 let g:LanguageClient_serverCommands = {
     \ 'go': ['gopls'],
     \ 'cpp': ['clangd'],
@@ -137,7 +138,6 @@ let g:LanguageClient_serverCommands = {
 
 
 " Minimal LSP configuration for JavaScript
-let g:LanguageClient_serverCommands = {}
 if executable('typescript-language-server')
   let g:LanguageClient_serverCommands.javascript = ['typescript-language-server', '--stdio']
   let g:LanguageClient_serverCommands['typescript'] = ['typescript-language-server', '--stdio']
@@ -242,7 +242,7 @@ nnoremap <leader>spn :set nospell<cr>
 " fzf mappings
 
 nnoremap <silent> <c-p> :Files<cr>
-nnoremap <silent> <c-m> :Buffers<cr>
+nnoremap M :Buffers<cr>
 let g:fzf_layout = { 'down': '~40%' }
 
 " remove trailing whitespace http://vim.wikia.com/wiki/Remove_unwanted_spaces
