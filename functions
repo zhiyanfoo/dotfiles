@@ -51,3 +51,24 @@ function editdot {
 function sourcedot {
     source "$HOME/dotfiles/$1"
 }
+
+function twac {
+    session="$1"
+    dir="/Users/zhiyan.foo/dd/service-discovery-platform"
+
+    # Check if the session exists, discarding output
+    # We can check $? for the exit status (zero for success, non-zero for failure)
+    tmux has-session -t $session 2>/dev/null
+    if [ $? != 0 ]; then
+        echo $dir
+        tmux new-session -d -s "$session" -c "$dir" -n m /opt/homebrew/bin/nvim
+        tmux split-window -v -c "$dir" -t "$session":m
+        tmux split-window -h -c "$dir" -t "$session":m
+        tmux select-pane -L -t "$session":m
+        # Set up your session
+    fi
+
+    # Attach to created session
+    # tmux switch -t "$session"
+}
+

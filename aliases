@@ -142,7 +142,6 @@ alias ighs='cat /Users/$HOME/tools/gitignore/Haskell.gitignore >> .gitignore'
 
 # Kubectl
 alias k='kubectl'
-alias ka='kubectl apply -f'
 alias kg='kubectl get'
 alias kgdep='kubectl get deployment'
 alias kgns='kubectl get namespaces'
@@ -160,7 +159,7 @@ alias random="python3 -c 'import random; print(random.random())'"
 alias xxd4='xxd -bits -cols 4'
 
 # kubernetes
-alias ks='kubectl -n kube-system'
+# alias ks='kubectl -n kube-system'
 
 # general 
 alias routerip='curl checkip.amazonaws.com'
