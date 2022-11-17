@@ -74,10 +74,8 @@ Plugin 'junegunn/fzf.vim'
 
 Plugin 'maxbrunsfeld/vim-emacs-bindings'
 
-
-Plugin 'shougo/deoplete.nvim'
-
 Plugin 'drmikehenry/vim-headerguard'
+Plugin 'neovim/nvim-lspconfig'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -140,8 +138,6 @@ let mapleader = ","
 
 let g:rust_clip_command = 'pbcopy'
 let g:rustfmt_autosave = 0
-nnoremap - O<esc>
-
 "undo undo
 nnoremap <S-U> <C-R>
 
@@ -212,18 +208,6 @@ autocmd FileType c,cpp,java,php,python,javascript,typescript,racket autocmd BufW
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <c-a> :Ag<cr>
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
 xmap <c-c> <esc>
 
 nnor <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
@@ -254,3 +238,4 @@ command! -range GB call GitBrowse({
             \ 'line1': <line1>,
             \ 'line2': <line2>,
             \ })
+command! Scratch lua require'tools'.makeScratch()
