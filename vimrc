@@ -31,7 +31,8 @@ set expandtab
 set mouse=a
 
 "system clipboard
-set clipboard=unnamed
+set clipboard+=unnamed
+
 
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
@@ -50,11 +51,9 @@ Plugin 'zenbro/mirror.vim'
 Plugin 'rust-lang/rust.vim'
 
 if !has('nvim')
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
+    Plugin 'roxma/nvim-yarp'
+    Plugin 'roxma/vim-hug-neovim-rpc'
 endif
-
-Plugin 'autozimu/LanguageClient-neovim'
 
 Plugin 'tpope/vim-commentary'
 Plugin 'wesQ3/vim-windowswap'
@@ -77,8 +76,6 @@ Plugin 'maxbrunsfeld/vim-emacs-bindings'
 
 
 Plugin 'shougo/deoplete.nvim'
-Plugin 'Shougo/neosnippet.vim'
-Plugin 'Shougo/neosnippet-snippets'
 
 Plugin 'drmikehenry/vim-headerguard'
 
@@ -124,62 +121,17 @@ filetype plugin indent on
 " PLUGIN CONFIGS
 " -----------------------------------------------------------------
 
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
-
-" Language Server
-" -----------------------------------------------------------------
-let g:LanguageClient_serverCommands = {}
-let g:LanguageClient_serverCommands = {
-    \ 'go': ['gopls'],
-    \ 'cpp': ['clangd'],
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls']
-\ }
+" nnoremap <silent> <c-]> :call LanguageClient#textDocument_definition()<CR>
+" " type info under cursor
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" " rename variable under cursor
+" nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+" nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+" nnoremap <silent> F :call LanguageClient#textDocument_references()<CR>
+" nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
+" nnoremap <silent> <leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 
 
-" Minimal LSP configuration for JavaScript
-if executable('typescript-language-server')
-  let g:LanguageClient_serverCommands.javascript = ['typescript-language-server', '--stdio']
-  let g:LanguageClient_serverCommands['typescript'] = ['typescript-language-server', '--stdio']
-  let g:LanguageClient_serverCommands['javascript.jsx'] = ['typescript-language-server', '--stdio']
-  let g:LanguageClient_serverCommands['typescript.tsx'] = ['typescript-language-server', '--stdio']
-
-  " Use LanguageServer for omnifunc completion
-  autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
-  autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
-else
-  echo "typescript-language-server not installed!\n"
-endif
-
-" if executable('hie-wrapper')
-"   let g:LanguageClient_serverCommands.haskell = ['hie-wrapper']
-"   " Use LanguageServer for omnifunc completion
-"   autocmd FileType haskell setlocal omnifunc=LanguageClient#complete
-" else
-"   echo "hie-wrapper not installed!\n"
-" endif
-
-
-" go to definition
-nnoremap <silent> <c-]> :call LanguageClient#textDocument_definition()<CR>
-" type info under cursor
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" rename variable under cursor
-nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-nnoremap <silent> F :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
-nnoremap <silent> <leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-
-
-" MODES
-" -----------------------------------------------------------------
-
-func! WordProcessorMode()
-    setlocal spell spelllang=en_us
-    set vb t_vb=
-endfu
-com! WP call WordProcessorMode()
 
 " MAPPINGS
 " -----------------------------------------------------------------
@@ -259,48 +211,46 @@ autocmd FileType c,cpp,java,php,python,javascript,typescript,racket autocmd BufW
 " search file contents with command Ag
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <c-a> :Ag<cr>
-nnoremap <c-s> :Tags<cr>
-
-let g:LanguageClient_diagnosticsSignsMax=0
-let g:LanguageClient_diagnosticsEnable=0
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 
 inoremap <silent><expr> <TAB>
-\ pumvisible() ? "\<C-n>" :
-\ <SID>check_back_space() ? "\<TAB>" :
-\ deoplete#mappings#manual_complete()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ deoplete#mappings#manual_complete()
 function! s:check_back_space() abort "{{{
-let col = col('.') - 1
-return !col || getline('.')[col - 1]  =~ '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
-" begin
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <c-j>     <Plug>(neosnippet_expand_or_jump)
-smap <c-j>     <Plug>(neosnippet_expand_or_jump)
-xmap <c-j>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-let g:neosnippet#snippets_directory = "~/.config/nvim/snippets"
-
 xmap <c-c> <esc>
-nnoremap g<C-G> gg=G''
 
 nnor <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
-nnoremap <c-q> <c-w>w
-
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+nnoremap <leader>gi :!goimports -w %:p<CR>
+
+" https://dev.to/pbnj/open-local-files-and-line-numbers-in-github-and-gitlab-26m6
+function! GitBrowse(args) abort
+    if a:args.filename ==# ''
+        return
+    endif
+    let l:remote = trim(system('git config branch.'.a:args.branch.'.remote || echo "origin" '))
+    if a:args.range == 0
+        let l:cmd = 'git browse ' . l:remote . ' ' . a:args.filename
+    else
+        let l:cmd = 'git browse ' . l:remote . ' ' . a:args.filename . ' ' . a:args.line1 . ' ' . a:args.line2
+    endif
+    execute 'silent ! ' . l:cmd | redraw!
+endfunction
+
+command! -range GB call GitBrowse({
+            \ 'branch': trim(system('git rev-parse --abbrev-ref HEAD 2>/dev/null')),
+            \ 'filename': trim(system('git ls-files --full-name ' . expand('%'))),
+            \ 'range': <range>,
+            \ 'line1': <line1>,
+            \ 'line2': <line2>,
+            \ })
