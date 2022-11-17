@@ -1,0 +1,3 @@
+@daily zhiyanfoo /opt/homebrew/bin/brew update
+0 1 * * * zhiyanfoo /opt/homebrew/bin/pass git pull --rebase
+0 0 * * * zhiyanfoo /opt/homebrew/bin/pass git push
