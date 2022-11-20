@@ -76,6 +76,15 @@ Plugin 'maxbrunsfeld/vim-emacs-bindings'
 
 Plugin 'drmikehenry/vim-headerguard'
 Plugin 'neovim/nvim-lspconfig'
+Plugin 'svermeulen/vimpeccable'
+
+Plugin 'Shougo/ddc.vim'
+Plugin 'vim-denops/denops.vim'
+Plugin 'Shougo/ddc-nvim-lsp'
+Plugin 'Shougo/ddc-source-around'
+Plugin 'Shougo/ddc-matcher_head'
+Plugin 'Shougo/ddc-sorter_rank'
+Plugin 'Shougo/ddc-ui-native'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -141,7 +150,7 @@ let g:rustfmt_autosave = 0
 "undo undo
 nnoremap <S-U> <C-R>
 
-nnoremap <leader>ev :edit $MYVIMRC<cr>
+nnoremap <leader>el :edit ~/.config/nvim/lua/tools.lua<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " shared vimrc
@@ -239,3 +248,31 @@ command! -range GB call GitBrowse({
             \ 'line2': <line2>,
             \ })
 command! Scratch lua require'tools'.makeScratch()
+
+lua require('startup')
+lua require('tools')
+
+call ddc#custom#patch_global('ui', 'native')
+call ddc#custom#patch_global('sources', ['around'])
+call ddc#custom#patch_global('sourceOptions', {
+    \ '_': {
+    \   'matchers': ['matcher_head'],
+    \   'sorters': ['sorter_rank']},
+    \ })
+
+    " \ 'nvim-lsp': {
+    " \   'mark': 'lsp',
+    " \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
+
+" Mappings
+
+" <TAB>: completion.
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? '<C-n>' :
+\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+\ '<TAB>' : ddc#map#manual_complete()
+
+" <S-TAB>: completion back.
+inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+call ddc#enable()

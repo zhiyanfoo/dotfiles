@@ -1,0 +1,8 @@
+https://freshman.tech/vim-quickfix-and-location-list/
+:lopen - Open the location list window.
+:lcl or :lclose - Close the location list window.
+:lnext - Go to the next item on the list.
+:lprev - Go to the previous item on the list.
+:lfirst - Go to the first item on the list.
+:llast - Go to the last item on the list.
+:ll <n> - Go to the nth item.
