@@ -82,6 +82,9 @@ alias gk='ginkgo'
 # cite 'about-alias'
 # about-alias 'common git abbreviations'
 
+alias git_prune_local_braches_main="git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d"
+alias git_prune_local_braches_master="git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d"
+
 alias gcl='git clone'
 alias ga='git add'
 alias gall='git add -A'

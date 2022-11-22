@@ -58,8 +58,8 @@ export GO111MODULE=auto
 export GOPRIVATE=github.com/DataDog
 # END ANSIBLE MANAGED BLOCK
 
-source ~/.commonprofile
 source ~/.functions
+source ~/.commonprofile
 
 eval $(/opt/homebrew/bin/brew shellenv)
 
