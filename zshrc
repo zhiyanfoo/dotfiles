@@ -73,7 +73,7 @@ eval $(/opt/homebrew/bin/brew shellenv)
 
 export FZF_DEFAULT_COMMAND=$'fd --type f --exclude \'*.pyc\' --exclude node_modules'
 
-setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 export SAVEHIST=100000
@@ -192,4 +192,30 @@ nvm() {
     nvm "$@"
 }
 
+export PATH="$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}"
+export PATH="$PATH:$(go env GOPATH)/bin"
+source <(kubectl completion zsh)
 # zprof
+#compdef gt
+###-begin-gt-completions-###
+#
+# yargs command completion script
+#
+# Installation: /opt/homebrew/bin/gt completion >> ~/.zshrc
+#    or /opt/homebrew/bin/gt completion >> ~/.zprofile on OSX.
+#
+_gt_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" /opt/homebrew/bin/gt --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  _describe 'values' reply
+}
+compdef _gt_yargs_completions gt
+###-end-gt-completions-###
+
+export GOPROXY="binaries.ddbuild.io,proxy.golang.org,direct"
+export GONOSUMDB="github.com/DataDog,go.ddbuild.io"
+export GITLAB_TOKEN=$(security find-generic-password -a ${USER} -s gitlab_token -w)

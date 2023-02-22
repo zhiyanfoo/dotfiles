@@ -62,3 +62,23 @@ function create_session {
         echo "session already created"
     fi
 }
+
+function search_repo() {
+    open "https://github.com/search?q=org%3ADataDog+$1&type=repositories"
+}
+
+function kcontext {
+    cluster=$2
+    dc=$1
+    shift
+    shift
+    kubectl --context $cluster.$dc -n service-discovery $@
+}
+
+gch() {
+ git checkout "$(git branch | fzf| tr -d '[:space:]')"
+}
+
+gcha() {
+ git checkout "$(git branch --all | fzf| tr -d '[:space:]')"
+}

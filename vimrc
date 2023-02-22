@@ -275,4 +275,5 @@ inoremap <silent><expr> <TAB>
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
+nnoremap <leader>cc :cclose<CR>
 call ddc#enable()

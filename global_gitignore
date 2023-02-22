@@ -4,3 +4,4 @@ __pycache__/
 _vimrc_local.vim
 tags
 .DS_STORE
+.zcompdump
