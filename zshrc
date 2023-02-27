@@ -215,7 +215,3 @@ _gt_yargs_completions()
 }
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
-
-export GOPROXY="binaries.ddbuild.io,proxy.golang.org,direct"
-export GONOSUMDB="github.com/DataDog,go.ddbuild.io"
-export GITLAB_TOKEN=$(security find-generic-password -a ${USER} -s gitlab_token -w)
