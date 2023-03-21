@@ -52,6 +52,8 @@ ln -s $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
 mkdir -p $HOME/.config/nvim/after
 ln -s $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
 ln -s $HOME/dotfiles/lua $HOME/.config/nvim/lua
+ln -s /Users/zhiyan.foo/dotfiles/aichat/roles.yaml "$HOME/Library/Application Support/aichat/roles.yaml"
+
 
 
 ###############################################################################
