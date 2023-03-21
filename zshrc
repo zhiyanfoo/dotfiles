@@ -194,6 +194,7 @@ nvm() {
 
 export PATH="$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}"
 export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$HOME/dotfiles/language-server-protocol-commands"
 source <(kubectl completion zsh)
 # zprof
 #compdef gt

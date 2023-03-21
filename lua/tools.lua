@@ -50,8 +50,7 @@ end
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
--- local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls' }
-local servers = { 'gopls', 'pyls' }
+-- { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls' }
 
 lspconfig.gopls.setup {
     cmd = { 'gopls', '--remote=auto' },
@@ -62,6 +61,22 @@ lspconfig.rust_analyzer.setup {
     cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
     on_attach = on_attach,
 }
+
+lspconfig.pylsp.setup {
+  cmd = { 'python_lsp' },
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = {'W391', 'E302', 'E305', 'E303'},
+          maxLineLength = 100
+        }
+      }
+    }
+  },
+  on_attach = on_attach,
+}
+
 
 -- lspconfig. {
 --     cmd = { },
