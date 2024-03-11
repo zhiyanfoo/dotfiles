@@ -63,6 +63,24 @@ function create_session {
     fi
 }
 
+function create_session_no_editor {
+    session="$1"
+    dir="$2"
+
+    # Check if the session exists, discarding output
+    # We can check $? for the exit status (zero for success, non-zero for failure)
+    tmux has-session -t $session 2>/dev/null
+    if [ $? != 0 ]; then
+        echo $dir
+        tmux new-session -d -s "$session" -c "$dir" -n m
+        tmux split-window -h -c "$dir" -t "$session":m
+        tmux split-window -v -c "$dir" -t "$session":m
+        tmux select-pane -L -t "$session":m
+    else
+        echo "session already created"
+    fi
+}
+
 function search_repo() {
     open "https://github.com/search?q=org%3ADataDog+$1&type=repositories"
 }
@@ -81,4 +99,56 @@ gch() {
 
 gcha() {
  git checkout "$(git branch --all | fzf| tr -d '[:space:]')"
+}
+
+# get_containers() {
+# $1 get pods "$2" -o jsonpath='{.spec.containers[*].name}'
+# }
+
+delete_branches() {
+    if [ -z "$1" ]
+    then
+        echo "Usage: ./delete_branches_with_prefix.sh <prefix>"
+        exit 1
+    fi
+
+    # Set the prefix
+    prefix=$1
+
+    # Fetch and prune remote branches
+    git fetch --all --prune
+
+    # Find all local branches with the specified prefix and delete them
+    git branch | grep "^  $prefix" | xargs -I{} git branch -D {}
+}
+
+
+ghpr() {
+    local default_repo_prefix="DataDog"
+    local repo_prefix="$1"
+    local repo="$2"
+    local pull_request="$3"
+
+    if [[ $# -eq 1 ]]; then
+        # If only one argument, assume it's the pull request number and use default repo and prefix
+        pull_request="$repo_prefix"
+        repo="service-discovery-platform"
+        repo_prefix="$default_repo_prefix"
+    elif [[ $# -eq 2 ]]; then
+        # If only two arguments, assume it's the pull request number and use default repo prefix
+        pull_request="$repo"
+        repo="$repo_prefix"
+        repo_prefix="$default_repo_prefix"
+    fi
+
+    # Open the GitHub PR in the default web browser
+    if command -v xdg-open > /dev/null; then
+        # Linux
+        xdg-open "https://github.com/${repo_prefix}/${repo}/pull/${pull_request}"
+    elif command -v open > /dev/null; then
+        # macOS
+        open "https://github.com/${repo_prefix}/${repo}/pull/${pull_request}"
+    else
+        echo "Unable to open the pull request in a browser."
+    fi
 }

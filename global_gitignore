@@ -5,3 +5,5 @@ _vimrc_local.vim
 tags
 .DS_STORE
 .zcompdump
+.aider.*
+.aider

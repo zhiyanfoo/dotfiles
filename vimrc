@@ -85,6 +85,8 @@ Plugin 'Shougo/ddc-source-around'
 Plugin 'Shougo/ddc-matcher_head'
 Plugin 'Shougo/ddc-sorter_rank'
 Plugin 'Shougo/ddc-ui-native'
+Plugin 'tpope/vim-abolish'
+" Plugin 'github/copilot.vim'
 
 " Plugin 'goerz/jupytext.vim'
 " nnoremap \d <Nop>
@@ -195,7 +197,6 @@ nnoremap <leader>spn :set nospell<cr>
 
 " printing
 " generate pdf `:hardcopy > myfile.ps`  then `ps2pdf your_ps_file.ps`
-
 " fzf mappings
 
 nnoremap <silent> <c-p> :Files<cr>
@@ -277,3 +278,20 @@ inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
 nnoremap <leader>cc :cclose<CR>
 call ddc#enable()
+
+" copy current buffer path
+" https://vi.stackexchange.com/questions/3686/copy-the-full-path-of-current-buffer-to-clipboard
+command! CopyBuffer let @+ = expand('%:p')
+
+"                                                *copilot-i_<Tab>*
+" Copilot.vim uses <Tab> to accept the current suggestion.  If you have an
+" existing <Tab> map, that will be used as the fallback when no suggestion is
+" displayed.
+"                                                 *copilot#Accept()*
+" If you'd rather use a key that isn't <Tab>, define an <expr> map that calls
+" copilot#Accept().  Here's an example with CTRL-J:
+" >
+"         imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+"         let g:copilot_no_tab_map = v:true
+" From `:help copilot`
+imap <silent><script><expr> <C-I> copilot#Accept("\<CR>")

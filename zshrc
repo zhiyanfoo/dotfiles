@@ -5,7 +5,7 @@ source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completi
 
 # BEGIN ANSIBLE MANAGED BLOCK
 # Add homebrew binaries to the path.
-export PATH="/opt/homebrew/bin:${PATH?}"
+# export PATH="/opt/homebrew/bin:${PATH?}"
 
 # Force certain more-secure behaviours from homebrew
 export HOMEBREW_NO_INSECURE_REDIRECT=1
@@ -216,3 +216,6 @@ _gt_yargs_completions()
 }
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
+
+export DD_FABRIC_DATADOG_API_KEYS_DIR="$HOME/.secrets/datadog_api"
+alias vim=nvim
