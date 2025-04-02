@@ -219,3 +219,6 @@ compdef _gt_yargs_completions gt
 
 export DD_FABRIC_DATADOG_API_KEYS_DIR="$HOME/.secrets/datadog_api"
 alias vim=nvim
+eval "$(direnv hook zsh)"
+[ -f ~/.config/gitsign/include.sh ] && source ~/.config/gitsign/include.sh
+export PATH="$HOME/tools/bin:$PATH"

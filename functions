@@ -43,24 +43,20 @@ function gcr() {
     fi
 }
 
-
 function create_session {
     session="$1"
     dir="$2"
-
-    # Check if the session exists, discarding output
-    # We can check $? for the exit status (zero for success, non-zero for failure)
-    tmux has-session -t $session 2>/dev/null
-    if [ $? != 0 ]; then
-        echo $dir
-        tmux new-session -d -s "$session" -c "$dir" -n m
-        tmux split-window -v -c "$dir" -t "$session":m
-        tmux split-window -h -c "$dir" -t "$session":m
-        tmux send-keys -t "$session":m.0 nvim Enter
-        tmux select-pane -L -t "$session":m
-    else
-        echo "session already created"
+    if tmux list-session | grep -q "^$session:" ; then
+        echo "$session already exists";
+        return 1;
     fi
+
+
+    tmux new-session -d -s "$session" -c "$dir" -n m
+    tmux split-window -v -c "$dir" -t "$session":m
+    tmux split-window -h -c "$dir" -t "$session":m
+    tmux send-keys -t "$session":m.0 nvim Enter
+    tmux select-pane -L -t "$session":m
 }
 
 function create_session_no_editor {
@@ -151,4 +147,10 @@ ghpr() {
     else
         echo "Unable to open the pull request in a browser."
     fi
+}
+
+ansi2txt() {
+    while IFS= read -r line; do
+        echo "$line" | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
+    done
 }

@@ -30,8 +30,6 @@ set tabstop=4
 set expandtab
 set mouse=a
 
-"system clipboard
-set clipboard+=unnamed
 
 
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
@@ -85,7 +83,6 @@ Plugin 'Shougo/ddc-source-around'
 Plugin 'Shougo/ddc-matcher_head'
 Plugin 'Shougo/ddc-sorter_rank'
 Plugin 'Shougo/ddc-ui-native'
-Plugin 'tpope/vim-abolish'
 " Plugin 'github/copilot.vim'
 
 " Plugin 'goerz/jupytext.vim'
@@ -252,6 +249,8 @@ command! Scratch lua require'tools'.makeScratch()
 
 lua require('startup')
 lua require('tools')
+lua package.loaded["aicode"] = nil
+lua require('aicode')
 
 call ddc#custom#patch_global('ui', 'native')
 call ddc#custom#patch_global('sources', ['around'])
@@ -295,3 +294,5 @@ command! CopyBuffer let @+ = expand('%:p')
 "         let g:copilot_no_tab_map = v:true
 " From `:help copilot`
 imap <silent><script><expr> <C-I> copilot#Accept("\<CR>")
+"system clipboard
+set clipboard=unnamedplus

@@ -11,10 +11,6 @@ set -x
 # settings we’re about to change
 source /opt/zen/zen use neovim
 
-pushd "$HOME/.vim/bundle/LanguageClient-neovim"
-bash install.sh
-popd
-
 deactivate
 
 ###############################################################################
@@ -70,3 +66,10 @@ git clone "https://github.com/altercation/solarized" $HOME/tools/solarized
 
 mkdir $HOME/.secrets
 touch $HOME/.secrets/secrets
+
+
+git config --global column.ui auto
+git config --global branch.sort -committerdate
+git config --global tag.sort version:refname
+git config --global diff.algorithm histogram
+git config --global push.autoSetupRemote true
