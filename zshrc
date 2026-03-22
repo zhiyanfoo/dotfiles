@@ -68,8 +68,9 @@ eval $(/opt/homebrew/bin/brew shellenv)
 
 # If not running interactively, do not do anything
 # Start tmux at login
-[[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux -2
+# [[ $- != *i* ]] && return
+# don't run tmux automatically
+# [[ -z "$TMUX" ]] && exec tmux -2
 
 export FZF_DEFAULT_COMMAND=$'fd --type f --exclude \'*.pyc\' --exclude node_modules'
 
@@ -222,3 +223,6 @@ alias vim=nvim
 eval "$(direnv hook zsh)"
 [ -f ~/.config/gitsign/include.sh ] && source ~/.config/gitsign/include.sh
 export PATH="$HOME/tools/bin:$PATH"
+
+# Created by `pipx` on 2025-09-19 14:57:39
+export PATH="$PATH:/Users/zhiyan.foo/.local/bin"

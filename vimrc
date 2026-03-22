@@ -78,6 +78,7 @@ Plugin 'svermeulen/vimpeccable'
 
 Plugin 'Shougo/ddc.vim'
 Plugin 'vim-denops/denops.vim'
+Plugin 'vim-denops/denops-helloworld.vim'
 Plugin 'Shougo/ddc-nvim-lsp'
 Plugin 'Shougo/ddc-source-around'
 Plugin 'Shougo/ddc-matcher_head'
@@ -280,7 +281,11 @@ call ddc#enable()
 
 " copy current buffer path
 " https://vi.stackexchange.com/questions/3686/copy-the-full-path-of-current-buffer-to-clipboard
-command! CopyBuffer let @+ = expand('%:p')
+command! CopyFull let @+ = expand('%:p')
+command! CopyPath let @+ = expand('%:.')
+command! CP let @+ = expand('%:.')
+command! CF let @+ = expand('%:p')
+command! CL let @+ = expand('%:.') . ':' . line('.')
 
 "                                                *copilot-i_<Tab>*
 " Copilot.vim uses <Tab> to accept the current suggestion.  If you have an

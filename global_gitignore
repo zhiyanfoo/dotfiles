@@ -8,3 +8,6 @@ tags
 .aider.*
 .aider
 bazel-source-backup
+.claude
+CLAUDE.md
+.stacked-prs-config

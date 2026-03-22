@@ -84,7 +84,6 @@ alias gk='ginkgo'
 
 alias git_prune_local_braches_main="git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d"
 alias git_prune_local_braches_master="git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d"
-alias gf="git add .; git commit --amend --no-edit"
 alias gpf="git push --force"
 
 alias gcl='git clone'
@@ -143,6 +142,7 @@ alias gcaa="git commit -a --amend -C HEAD"
 alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
 alias igpy='cat /Users/$HOME/tools/gitignore/Python.gitignore >> .gitignore'
 alias ighs='cat /Users/$HOME/tools/gitignore/Haskell.gitignore >> .gitignore'
+alias gsk="git stash -k"
 
 # Kubectl
 alias k='kubectl'
