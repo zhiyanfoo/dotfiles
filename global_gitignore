@@ -8,6 +8,7 @@ tags
 .aider.*
 .aider
 bazel-source-backup
-.claude
 CLAUDE.md
 .stacked-prs-config
+/.claude/instructions
+/.claude/settings.local.json

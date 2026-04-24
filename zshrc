@@ -34,8 +34,6 @@ export GOPATH="${HOME?}/go"
 # Add binaries that are go install-ed to PATH
 export PATH="${GOPATH?}/bin:${PATH?}"
 
-# Point DATADOG_ROOT to ~/dd symlink
-export DATADOG_ROOT="${HOME?}/dd"
 
 # Tell the devenv vm to mount $GOPATH/src rather than just dd-go
 export MOUNT_ALL_GO_SRC=1

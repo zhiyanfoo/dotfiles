@@ -99,6 +99,8 @@ alias gst='git status'
 alias gsu='git status -uno'
 # alias gsu='git submodule update --init --recursive'
 alias gl='git pull'
+alias glm='git pull origin main'
+alias gum="git fetch origin main:main"
 # alias gpr='git pull --rebase'
 # alias gpp='git pull && git push'
 # alias gup='git fetch && git rebase'
@@ -135,6 +137,7 @@ alias gg="git log --graph --pretty=format:'%C(bold)%h%Creset%C(yellow)%d%Creset 
 # From http://blogs.atlassian.com/2014/10/advanced-git-aliases/
 # Show commits since last pull
 alias gnew="git log HEAD@{1}..HEAD@{0}"
+alias gdp='git diff -- ":(exclude)*.pb.go" ":(exclude)*_vtproto.pb.go" ":(exclude)*.pb.gw.go"'
 # Add uncommitted and unstaged changes to the last commit
 alias gcaa="git commit -a --amend -C HEAD"
 
@@ -143,6 +146,7 @@ alias gia='echo "$(git status --porcelain | grep ^?? | cut -c4-)" >>.gitignore'
 alias igpy='cat /Users/$HOME/tools/gitignore/Python.gitignore >> .gitignore'
 alias ighs='cat /Users/$HOME/tools/gitignore/Haskell.gitignore >> .gitignore'
 alias gsk="git stash -k"
+alias gbf='git reflog | grep "checkout: moving" | head -20 | awk "{print \$NF}" | awk "!seen[\$0]++"'
 
 # Kubectl
 alias k='kubectl'
@@ -169,6 +173,7 @@ alias xxd4='xxd -bits -cols 4'
 alias routerip='curl checkip.amazonaws.com'
 alias aichat35='aichat --model gpt-3.5-turbo'
 alias aichat8k='aichat --model gpt-4'
+alias cy='claude --dangerously-skip-permissions --model opus'
 
 # alias cs343='ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.213.182.46'
 # alias stop_cs343='aws ec2 stop-instances --instance-ids i-0db50083bd302875d'
