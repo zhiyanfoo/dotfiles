@@ -3,7 +3,10 @@
 source ~/.commonprofile
 source ~/.functions
 
-[[ -f ~/.zsh-completion ]] && source ~/.zsh-completion
+fpath=(~/.zsh-completion $fpath)
+
+# fzf
+command -v fzf >/dev/null && eval "$(fzf --zsh)"
 # BEGIN ANSIBLE MANAGED BLOCK
 # Load homebrew shell variables
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -64,3 +67,6 @@ export GONOSUMDB=github.com/DataDog,go.ddbuild.io
 export GOPRIVATE=
 export GOPROXY="https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror/@current/|https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror/@current/|https://depot-read-api-go.us1.ddbuild.io/magicmirror/testing/@current/"
 # END ANSIBLE MANAGED BLOCK
+
+# Initialize zsh completion (must run after fpath additions from brew, etc.)
+autoload -Uz compinit && compinit

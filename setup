@@ -18,7 +18,7 @@ set -x
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew install tmux neovim deno
+brew install tmux neovim deno fzf
 brew install --cask ghostty
 
 
