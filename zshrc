@@ -1,11 +1,12 @@
-# zmodload zsh/zprof
-# google-cloud-sdk brew caveat
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+[[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && export PATH="$HOME/.local/bin:$PATH"
 
+source ~/.commonprofile
+source ~/.functions
+
+[[ -f ~/.zsh-completion ]] && source ~/.zsh-completion
 # BEGIN ANSIBLE MANAGED BLOCK
-# Add homebrew binaries to the path.
-# export PATH="/opt/homebrew/bin:${PATH?}"
+# Load homebrew shell variables
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Force certain more-secure behaviours from homebrew
 export HOMEBREW_NO_INSECURE_REDIRECT=1
@@ -14,26 +15,31 @@ export HOMEBREW_DIR=/opt/homebrew
 export HOMEBREW_BIN=/opt/homebrew/bin
 
 # Load python shims
-# eval "$(pyenv init -)"
+eval "$(pyenv init -)"
 
 # Load ruby shims
-# eval "$(rbenv init -)"
+eval "$(rbenv init -)"
+
+# Load direnv hook
+eval "$(direnv hook zsh)"
+
+# Load git-dd completions for zsh
+autoload -Uz _git_dd
 
 # Prefer GNU binaries to Macintosh binaries.
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
-
-# Add AWS CLI to PATH
-export PATH="/opt/homebrew/opt/awscli@1/bin:$PATH"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 # Add datadog devtools binaries to the PATH
-export PATH="${HOME?}/dd/devtools/bin:${PATH?}"
+export PATH="$HOME/dd/devtools/bin:$PATH"
 
 # Point GOPATH to our go sources
-export GOPATH="${HOME?}/go"
+export GOPATH="$HOME/go"
 
 # Add binaries that are go install-ed to PATH
-export PATH="${GOPATH?}/bin:${PATH?}"
+export PATH="$GOPATH/bin:$PATH"
 
+# Point DATADOG_ROOT to ~/dd symlink
+export DATADOG_ROOT="$HOME/dd"
 
 # Tell the devenv vm to mount $GOPATH/src rather than just dd-go
 export MOUNT_ALL_GO_SRC=1
@@ -53,174 +59,8 @@ export HELM_DRIVER=configmap
 # remove it in Go 1.18, which breaks projects using the dep tool.
 # https://blog.golang.org/go116-module-changes
 export GO111MODULE=auto
-export GOPRIVATE=github.com/DataDog
+# Configure Go to pull go.ddbuild.io packages.
+export GONOSUMDB=github.com/DataDog,go.ddbuild.io
+export GOPRIVATE=
+export GOPROXY="https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror/@current/|https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror/@current/|https://depot-read-api-go.us1.ddbuild.io/magicmirror/testing/@current/"
 # END ANSIBLE MANAGED BLOCK
-
-source ~/.functions
-source ~/.commonprofile
-
-eval $(/opt/homebrew/bin/brew shellenv)
-
-# fzf installed line
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# If not running interactively, do not do anything
-# Start tmux at login
-# [[ $- != *i* ]] && return
-# don't run tmux automatically
-# [[ -z "$TMUX" ]] && exec tmux -2
-
-export FZF_DEFAULT_COMMAND=$'fd --type f --exclude \'*.pyc\' --exclude node_modules'
-
-setopt SHARE_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
-export SAVEHIST=100000
-export HISTFILE=~/.zsh_history
-
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-
-
-# zsh autocomplete uses the variable fpath
-# add custom to ~/.zsh-completion
-# COMPLETION SETTINGS
-# add custom completion scripts
-fpath=(~/.zsh-completion $fpath) 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-fi
-
-zstyle ':completion:*' menu select=2
-# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _expand _complete _ignored _approximate
-zstyle ':completion:*' matcher-list '' '' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
-zstyle :compinstall filename "$HOME/.zshrc"
-autoload -Uz compinit
-() {
-  setopt extendedglob local_options
-  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-    touch .zcompdump
-  else
-    compinit -C
-  fi
-}
-# End of lines added by compinstall
-
-autoload bashcompinit
-bashcompinit
-
-source "/opt/zen/zen_completion"
-source "/opt/zen2/zen2_completion"
-source $HOME/.zsh-completion/_az
-
-export VISUAL=nvim
-export EDITOR="$VISUAL"
-
-# source $HOME/.rvm/scripts/rvm
-alias loadrvm='[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"'
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-source $HOME/.secrets/secrets
-export PROMPT="%F{cyan}>%f "
-
-export NVIM_LISPWORDS="$HOME/.config/nvimlispwords.lua"
-
-export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
-
-# 2x ctrl-d to exit ...
-export IGNOREEOF=1
-
-# bash like ctrl-d wrapper for IGNOREEOF
-setopt ignore_eof
-function bash-ctrl-d() {
-  if [[ $CURSOR == 0 && -z $BUFFER ]]
-  then
-    [[ -z $IGNOREEOF || $IGNOREEOF == 0 ]] && exit
-    if [[ "$LASTWIDGET" == "bash-ctrl-d" ]]
-    then
-      (( --__BASH_IGNORE_EOF <= 0 )) && exit
-    else
-      (( __BASH_IGNORE_EOF = IGNOREEOF ))
-    fi
-  fi
-}
-zle -N bash-ctrl-d
-bindkey "^d" bash-ctrl-d
-bindkey -e
-
-export NNN_FIFO=/tmp/nnn.fifo
-export NNN_PLUG='p:preview-tui'
-
-# changed form echo $(brew --prefix) to speed up
-source /opt/homebrew/etc/profile.d/z.sh
-
-export LC_ALL=en_US.utf-8
-export LANG=en_US.utf-8
-
-for file in "$HOME"/.config/company/*_rc
-do
-    source $file
-done
-
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-
-# https://peterlyons.com/problog/2018/01/zsh-lazy-loading/
-##### nvm (node version manager) #####
-# placeholder nvm shell function
-# On first use, it will set nvm up properly which will replace the `nvm`
-# shell function with the real one
-#replaces 
-# --- 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# ---
-
-nvm() {
-    NVM_DIR="$HOME/.nvm"
-    export NVM_DIR
-    # shellcheck disable=SC1090
-    source "${NVM_DIR}/nvm.sh"
-    if [[ -e ~/.nvm/alias/default ]]; then
-      PATH="${PATH}:${HOME}.nvm/versions/node/$(cat ~/.nvm/alias/default)/bin"
-    fi
-    # invoke the real nvm function now
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-    nvm "$@"
-}
-
-export PATH="$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}"
-export PATH="$PATH:$(go env GOPATH)/bin"
-export PATH="$PATH:$HOME/dotfiles/language-server-protocol-commands"
-source <(kubectl completion zsh)
-# zprof
-#compdef gt
-###-begin-gt-completions-###
-#
-# yargs command completion script
-#
-# Installation: /opt/homebrew/bin/gt completion >> ~/.zshrc
-#    or /opt/homebrew/bin/gt completion >> ~/.zprofile on OSX.
-#
-_gt_yargs_completions()
-{
-  local reply
-  local si=$IFS
-  IFS=$'
-' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" /opt/homebrew/bin/gt --get-yargs-completions "${words[@]}"))
-  IFS=$si
-  _describe 'values' reply
-}
-compdef _gt_yargs_completions gt
-###-end-gt-completions-###
-
-export DD_FABRIC_DATADOG_API_KEYS_DIR="$HOME/.secrets/datadog_api"
-alias vim=nvim
-eval "$(direnv hook zsh)"
-[ -f ~/.config/gitsign/include.sh ] && source ~/.config/gitsign/include.sh
-export PATH="$HOME/tools/bin:$PATH"
-
-# Created by `pipx` on 2025-09-19 14:57:39
-export PATH="$PATH:/Users/zhiyan.foo/.local/bin"

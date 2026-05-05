@@ -47,35 +47,31 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format {async = true} end, bufopts)
 end
 
-local lspconfig = require('lspconfig')
+vim.lsp.config('*', { on_attach = on_attach })
 
--- Enable some language servers with the additional completion capabilities offered by nvim-cmp
--- { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls' }
-
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
     cmd = { 'gopls', '--remote=auto' },
-    on_attach = on_attach,
-}
+})
+vim.lsp.enable('gopls')
 
-lspconfig.rust_analyzer.setup {
+vim.lsp.config('rust_analyzer', {
     cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
-    on_attach = on_attach,
-}
+})
+vim.lsp.enable('rust_analyzer')
 
-lspconfig.pylsp.setup {
-  cmd = { 'python_lsp' },
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          ignore = {'W391', 'E302', 'E305', 'E303'},
-          maxLineLength = 100
+vim.lsp.config('pylsp', {
+    cmd = { 'python_lsp' },
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = { 'W391', 'E302', 'E305', 'E303' },
+                    maxLineLength = 100,
+                }
+            }
         }
-      }
-    }
-  },
-  on_attach = on_attach,
-}
+    },
+})
 
 
 -- lspconfig. {
