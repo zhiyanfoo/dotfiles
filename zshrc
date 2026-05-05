@@ -70,3 +70,5 @@ export GOPROXY="https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror
 
 # Initialize zsh completion (must run after fpath additions from brew, etc.)
 autoload -Uz compinit && compinit
+
+PROMPT='> '
