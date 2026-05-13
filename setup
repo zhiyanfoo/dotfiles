@@ -18,8 +18,8 @@ set -x
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew install tmux neovim deno fzf
-brew install --cask ghostty
+brew install tmux neovim deno fzf ripgrep
+brew install --cask ghostty spotify
 
 
 ###############################################################################
@@ -57,17 +57,17 @@ git config --global core.excludesfile $HOME/.global_gitignore
 ln -sf $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
 
 mkdir -p $HOME/.config/nvim/
-ln -sf $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
+ln -sfn $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
 ln -sf $HOME/dotfiles/nvim_init.lua $HOME/.config/nvim/init.lua
 
 nvim --headless +qall
 
-ln -sf $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
+ln -sfn $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
 
 # let nvim find ftplugins
 mkdir -p $HOME/.config/nvim/after
-ln -sf $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
-ln -sf $HOME/dotfiles/lua $HOME/.config/nvim/lua
+ln -sfn $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
+ln -sfn $HOME/dotfiles/lua $HOME/.config/nvim/lua
 
 
 ###############################################################################

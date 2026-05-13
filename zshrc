@@ -72,3 +72,13 @@ export GOPROXY="https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror
 autoload -Uz compinit && compinit
 
 PROMPT='> '
+source "$HOME/.config/datadog/config.sh"
+
+# BEGIN SCFW MANAGED BLOCK
+alias npm="scfw run npm"
+alias pip="scfw run pip"
+alias poetry="scfw run poetry"
+export SCFW_DD_AGENT_LOG_PORT="10365"
+export SCFW_DD_LOG_LEVEL="ALLOW"
+export SCFW_HOME="/Users/zhiyan.foo/.scfw"
+# END SCFW MANAGED BLOCK
