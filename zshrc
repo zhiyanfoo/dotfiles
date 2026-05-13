@@ -82,3 +82,5 @@ export SCFW_DD_AGENT_LOG_PORT="10365"
 export SCFW_DD_LOG_LEVEL="ALLOW"
 export SCFW_HOME="/Users/zhiyan.foo/.scfw"
 # END SCFW MANAGED BLOCK
+
+eval "$(dd-gitsign load-key)"

@@ -51,6 +51,9 @@ vim.opt.clipboard = 'unnamedplus'
 vim.cmd('syntax on')
 vim.cmd('filetype plugin indent on')
 
+vim.opt.background = 'dark'
+vim.cmd.colorscheme('habamax')
+
 -- AUTOCOMMANDS
 local augroup = vim.api.nvim_create_augroup('vimrc', { clear = true })
 
@@ -163,13 +166,24 @@ function! GitBrowse(args) abort
     if a:args.filename ==# ''
         return
     endif
-    let l:remote = trim(system('git config branch.'.a:args.branch.'.remote || echo "origin" '))
-    if a:args.range == 0
-        let l:cmd = 'git browse ' . l:remote . ' ' . a:args.filename
-    else
-        let l:cmd = 'git browse ' . l:remote . ' ' . a:args.filename . ' ' . a:args.line1 . ' ' . a:args.line2
+    let l:remote = trim(system('git config branch.'.a:args.branch.'.remote 2>/dev/null || echo origin'))
+    let l:remote_url = trim(system('git config --get remote.' . l:remote . '.url'))
+    let l:remote_url = substitute(l:remote_url, '^git@github\.com:', 'https://github.com/', '')
+    let l:remote_url = substitute(l:remote_url, '^ssh://git@github\.com/', 'https://github.com/', '')
+    let l:remote_url = substitute(l:remote_url, '\.git$', '', '')
+    let l:branch = a:args.branch
+    let l:remote_ref = trim(system('git ls-remote --heads ' . shellescape(l:remote) . ' ' . shellescape(l:branch)))
+    if l:remote_ref ==# ''
+        let l:branch = 'main'
     endif
-    execute 'silent ! ' . l:cmd | redraw!
+    let l:url = l:remote_url . '/blob/' . l:branch . '/' . a:args.filename
+    if a:args.range != 0
+        let l:url = l:url . '#L' . a:args.line1
+        if a:args.line2 != a:args.line1
+            let l:url = l:url . '-L' . a:args.line2
+        endif
+    endif
+    call system('open ' . shellescape(l:url))
 endfunction
 
 command! -range GB call GitBrowse({
