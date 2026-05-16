@@ -59,19 +59,7 @@ vim.lsp.config('rust_analyzer', {
 })
 vim.lsp.enable('rust_analyzer')
 
-vim.lsp.config('pylsp', {
-    cmd = { 'python_lsp' },
-    settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    ignore = { 'W391', 'E302', 'E305', 'E303' },
-                    maxLineLength = 100,
-                }
-            }
-        }
-    },
-})
+vim.lsp.enable('ty')
 
 
 -- lspconfig. {

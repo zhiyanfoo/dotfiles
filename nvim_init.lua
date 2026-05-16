@@ -21,6 +21,7 @@ vim.pack.add({
   'https://github.com/Shougo/ddc-matcher_head',
   'https://github.com/Shougo/ddc-sorter_rank',
   'https://github.com/Shougo/ddc-ui-native',
+  'https://github.com/neovim/nvim-lspconfig',
   -- 'https://github.com/github/copilot.vim',
 })
 
@@ -108,6 +109,11 @@ map('n', 'j', function() return vim.v.count == 0 and 'gj' or 'j' end, { expr = t
 
 map('n', '<leader>nn', ':bnext<cr>')
 map('n', '<leader>pp', ':bprevious<cr>')
+map('n', '<leader>bd', function()
+  local buf = vim.api.nvim_get_current_buf()
+  vim.cmd('bprevious')
+  vim.cmd('bdelete ' .. buf)
+end)
 
 map('n', '<leader>ht', 'ihttp://')
 

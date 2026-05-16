@@ -19,7 +19,14 @@ set -x
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 brew install tmux neovim deno fzf ripgrep
-brew install --cask ghostty spotify
+brew install --cask ghostty spotify firefox
+
+
+###############################################################################
+# language servers                                                            #
+###############################################################################
+
+brew install gopls python-lsp-server
 
 
 ###############################################################################

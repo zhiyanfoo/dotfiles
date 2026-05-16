@@ -83,4 +83,6 @@ export SCFW_DD_LOG_LEVEL="ALLOW"
 export SCFW_HOME="/Users/zhiyan.foo/.scfw"
 # END SCFW MANAGED BLOCK
 
+alias vim="nvim"
+
 eval "$(dd-gitsign load-key)"
