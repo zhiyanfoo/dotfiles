@@ -33,6 +33,17 @@ vim.g.loaded_node_provider = 0
 -- Register gotmpl filetype so gopls config doesn't warn
 vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
 
+-- Over SSH there's no X server, so xclip can't reach the host clipboard.
+-- Use OSC 52 escape sequences instead — works through the terminal.
+if vim.env.SSH_TTY then
+  local osc52 = require('vim.ui.clipboard.osc52')
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = { ['+'] = osc52.copy('+'), ['*'] = osc52.copy('*') },
+    paste = { ['+'] = osc52.paste('+'), ['*'] = osc52.paste('*') },
+  }
+end
+
 -- OPTIONS
 vim.opt.showcmd = true
 vim.opt.number = true
