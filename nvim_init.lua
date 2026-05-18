@@ -25,6 +25,14 @@ vim.pack.add({
   -- 'https://github.com/github/copilot.vim',
 })
 
+-- Disable unused language providers (silences :checkhealth warnings)
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+
+-- Register gotmpl filetype so gopls config doesn't warn
+vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
+
 -- OPTIONS
 vim.opt.showcmd = true
 vim.opt.number = true

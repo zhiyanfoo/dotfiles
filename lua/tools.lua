@@ -49,17 +49,19 @@ end
 
 vim.lsp.config('*', { on_attach = on_attach })
 
-vim.lsp.config('gopls', {
-    cmd = { 'gopls', '--remote=auto' },
-})
-vim.lsp.enable('gopls')
+if vim.fn.executable('gopls') == 1 then
+  vim.lsp.config('gopls', { cmd = { 'gopls', '--remote=auto' } })
+  vim.lsp.enable('gopls')
+end
 
-vim.lsp.config('rust_analyzer', {
-    cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
-})
-vim.lsp.enable('rust_analyzer')
+if vim.fn.executable('rustup') == 1 then
+  vim.lsp.config('rust_analyzer', { cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' } })
+  vim.lsp.enable('rust_analyzer')
+end
 
-vim.lsp.enable('ty')
+if vim.fn.executable('ty') == 1 then
+  vim.lsp.enable('ty')
+end
 
 
 -- lspconfig. {
