@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+# Ubuntu dev workstation setup — Linux counterpart to `setup`.
+# Idempotent: safe to run multiple times on the same machine.
+
+set -e
+set -x
+
+ARCH=$(uname -m)
+
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
+
+
+###############################################################################
+# apt packages                                                                #
+###############################################################################
+
+sudo apt-get update -qq
+sudo apt-get install -y \
+  git \
+  curl \
+  build-essential \
+  pipx \
+  unzip \
+  xclip
+
+# apt's python3-pynvim is 0.4.2 — too old. Replaced by pip3 install below.
+sudo apt-get remove -y python3-pynvim python3-neovim || true
+
+
+###############################################################################
+# neovim (latest stable from upstream — apt's nvim is 0.6.x)                  #
+###############################################################################
+
+case "$ARCH" in
+  x86_64)        NVIM_ASSET=nvim-linux-x86_64.tar.gz ;;
+  aarch64|arm64) NVIM_ASSET=nvim-linux-arm64.tar.gz ;;
+  *) echo "unsupported arch: $ARCH" >&2; exit 1 ;;
+esac
+
+curl -fsSL "https://github.com/neovim/neovim/releases/download/stable/${NVIM_ASSET}" -o "$TMP/nvim.tar.gz"
+sudo rm -rf /opt/nvim
+sudo mkdir -p /opt/nvim
+sudo tar -C /opt/nvim --strip-components=1 -xzf "$TMP/nvim.tar.gz"
+sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+
+
+###############################################################################
+# deno (denops requires it)                                                   #
+###############################################################################
+
+if ! [[ -x /usr/local/bin/deno ]]; then
+  case "$ARCH" in
+    x86_64)        DENO_ARCH=x86_64-unknown-linux-gnu ;;
+    aarch64|arm64) DENO_ARCH=aarch64-unknown-linux-gnu ;;
+  esac
+  curl -fsSL "https://github.com/denoland/deno/releases/latest/download/deno-${DENO_ARCH}.zip" -o "$TMP/deno.zip"
+  unzip -q "$TMP/deno.zip" -d "$TMP"
+  sudo install -m 0755 "$TMP/deno" /usr/local/bin/deno
+fi
+
+
+###############################################################################
+# language servers                                                            #
+###############################################################################
+
+# gopls (requires Go on PATH or /usr/local/go/bin/go)
+if command -v go &>/dev/null || [[ -x /usr/local/go/bin/go ]]; then
+  GO=$(command -v go || echo /usr/local/go/bin/go)
+  "$GO" install golang.org/x/tools/gopls@latest
+fi
+
+# ty (Astral Python LSP)
+if ! command -v ty &>/dev/null; then
+  pipx install ty || true
+fi
+
+
+###############################################################################
+# pynvim (Python 3 provider)                                                  #
+###############################################################################
+
+pip3 install --user --upgrade pynvim 2>/dev/null \
+  || pip3 install --user --break-system-packages --upgrade pynvim
+
+
+###############################################################################
+# config                                                                      #
+###############################################################################
+
+mkdir -p "$HOME/.config"
+
+ln -sf $HOME/dotfiles/aliases $HOME/.aliases
+ln -sf $HOME/dotfiles/bash_profile $HOME/.bash_profile
+ln -sf $HOME/dotfiles/commonprofile $HOME/.commonprofile
+ln -sf $HOME/dotfiles/functions $HOME/.functions
+ln -sf $HOME/dotfiles/vimrc $HOME/.vimrc
+
+ln -sf $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
+git config --global core.excludesfile $HOME/.global_gitignore
+
+ln -sf $HOME/dotfiles/ripgreprc $HOME/.config/ripgreprc
+
+mkdir -p $HOME/.config/nvim/
+ln -sfn $HOME/dotfiles/snippets $HOME/.config/nvim/snippets
+ln -sf $HOME/dotfiles/nvim_init.lua $HOME/.config/nvim/init.lua
+
+ln -sfn $HOME/dotfiles/zsh-completion $HOME/.zsh-completion
+
+mkdir -p $HOME/.config/nvim/after
+ln -sfn $HOME/dotfiles/ftplugin $HOME/.config/nvim/after/ftplugin
+ln -sfn $HOME/dotfiles/lua $HOME/.config/nvim/lua
+
+nvim --headless +qall
+
+
+###############################################################################
+# git                                                                         #
+###############################################################################
+
+mkdir -p $HOME/tools
+
+git config --global column.ui auto
+git config --global branch.sort -committerdate
+git config --global tag.sort version:refname
+git config --global diff.algorithm histogram
+git config --global push.autoSetupRemote true
+git config --global user.email "zhiyanfoo@gmail.com"
+git config --global user.name "Zhiyan Foo"
