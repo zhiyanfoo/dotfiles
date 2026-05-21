@@ -39,9 +39,10 @@ vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
 -- doesn't forward to Alacritty, but allow-passthrough does.
 local function osc52_send(text)
   local b64 = vim.base64.encode(text)
-  local seq = '\027Ptmux;\027\027]52;c;' .. b64 .. '\007\027\\'
-  local fd = io.open('/dev/tty', 'w')
-  if fd then fd:write(seq); fd:close() end
+  -- Shell out so the bytes reach the TTY cleanly; writing /dev/tty from
+  -- inside nvim's Lua doesn't reliably emit because nvim's TUI owns stdout.
+  local cmd = "printf '\\033Ptmux;\\033\\033]52;c;" .. b64 .. "\\007\\033\\\\' > /dev/tty"
+  vim.fn.jobstart({ 'sh', '-c', cmd }, { detach = true })
 end
 
 -- copy_path: used by :CP/:CF/:CL — direct OSC 52 since setreg('+', ...)
