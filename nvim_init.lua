@@ -188,11 +188,11 @@ vim.g.fzf_layout = { down = '~40%' }
 vim.cmd([[command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)]])
 map('n', '<c-a>', ':Ag<cr>')
 
-vim.cmd([[command! CopyFull let @+ = expand('%:p')]])
-vim.cmd([[command! CopyPath let @+ = expand('%:.')]])
-vim.cmd([[command! CP let @+ = expand('%:.')]])
-vim.cmd([[command! CF let @+ = expand('%:p')]])
-vim.cmd([[command! CL let @+ = expand('%:.') . ':' . line('.')]])
+vim.cmd([[command! CopyFull call setreg('+', expand('%:p'))]])
+vim.cmd([[command! CopyPath call setreg('+', expand('%:.'))]])
+vim.cmd([[command! CP call setreg('+', expand('%:.'))]])
+vim.cmd([[command! CF call setreg('+', expand('%:p'))]])
+vim.cmd([[command! CL call setreg('+', expand('%:.') . ':' . line('.'))]])
 
 vim.cmd([[command! Scratch lua require'tools'.makeScratch()]])
 
