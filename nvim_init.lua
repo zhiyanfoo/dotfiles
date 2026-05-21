@@ -42,7 +42,7 @@ local function osc52_send(text)
   -- Shell out so the bytes reach the TTY cleanly; writing /dev/tty from
   -- inside nvim's Lua doesn't reliably emit because nvim's TUI owns stdout.
   local cmd = "printf '\\033Ptmux;\\033\\033]52;c;" .. b64 .. "\\007\\033\\\\' > /dev/tty"
-  vim.fn.jobstart({ 'sh', '-c', cmd }, { detach = true })
+  vim.fn.system(cmd)
 end
 
 -- copy_path: used by :CP/:CF/:CL — direct OSC 52 since setreg('+', ...)
