@@ -35,14 +35,29 @@ vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
 
 -- Over SSH there's no X server, so xclip can't reach the host clipboard.
 -- Use OSC 52 escape sequences instead — works through the terminal.
+-- Wrap in tmux passthrough: the Mac-side tmux's set-clipboard intercept
+-- doesn't forward to Alacritty, but allow-passthrough does.
+local function osc52_send(text)
+  local b64 = vim.base64.encode(text)
+  local seq = '\027Ptmux;\027\027]52;c;' .. b64 .. '\007\027\\'
+  local fd = io.open('/dev/tty', 'w')
+  if fd then fd:write(seq); fd:close() end
+end
+
+-- copy_path: used by :CP/:CF/:CL — direct OSC 52 since setreg('+', ...)
+-- doesn't reliably invoke vim.g.clipboard.copy for scalar assignments.
+_G.copy_path = function(text)
+  if vim.env.SSH_TTY then
+    osc52_send(text)
+  else
+    vim.fn.setreg('+', text)
+  end
+  vim.notify('Copied: ' .. text)
+end
+
 if vim.env.SSH_TTY then
-  -- Wrap OSC 52 in tmux passthrough: the Mac-side tmux's set-clipboard
-  -- intercept doesn't forward to Alacritty, but allow-passthrough does.
   local function copy(lines, _)
-    local b64 = vim.base64.encode(table.concat(lines, '\n'))
-    local seq = '\027Ptmux;\027\027]52;c;' .. b64 .. '\007\027\\'
-    local fd = io.open('/dev/tty', 'w')
-    if fd then fd:write(seq); fd:close() end
+    osc52_send(table.concat(lines, '\n'))
   end
   local function paste()
     return { vim.fn.split(vim.fn.getreg('"'), '\n'), vim.fn.getregtype('"') }
@@ -188,11 +203,11 @@ vim.g.fzf_layout = { down = '~40%' }
 vim.cmd([[command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)]])
 map('n', '<c-a>', ':Ag<cr>')
 
-vim.cmd([[command! CopyFull call setreg('+', expand('%:p'))]])
-vim.cmd([[command! CopyPath call setreg('+', expand('%:.'))]])
-vim.cmd([[command! CP call setreg('+', expand('%:.'))]])
-vim.cmd([[command! CF call setreg('+', expand('%:p'))]])
-vim.cmd([[command! CL call setreg('+', expand('%:.') . ':' . line('.'))]])
+vim.cmd([[command! CopyFull call v:lua.copy_path(expand('%:p'))]])
+vim.cmd([[command! CopyPath call v:lua.copy_path(expand('%:.'))]])
+vim.cmd([[command! CP call v:lua.copy_path(expand('%:.'))]])
+vim.cmd([[command! CF call v:lua.copy_path(expand('%:p'))]])
+vim.cmd([[command! CL call v:lua.copy_path(expand('%:.') . ':' . line('.'))]])
 
 vim.cmd([[command! Scratch lua require'tools'.makeScratch()]])
 
