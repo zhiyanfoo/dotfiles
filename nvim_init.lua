@@ -36,11 +36,21 @@ vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
 -- Over SSH there's no X server, so xclip can't reach the host clipboard.
 -- Use OSC 52 escape sequences instead — works through the terminal.
 if vim.env.SSH_TTY then
-  local osc52 = require('vim.ui.clipboard.osc52')
+  -- Wrap OSC 52 in tmux passthrough: the Mac-side tmux's set-clipboard
+  -- intercept doesn't forward to Alacritty, but allow-passthrough does.
+  local function copy(lines, _)
+    local b64 = vim.base64.encode(table.concat(lines, '\n'))
+    local seq = '\027Ptmux;\027\027]52;c;' .. b64 .. '\007\027\\'
+    local fd = io.open('/dev/tty', 'w')
+    if fd then fd:write(seq); fd:close() end
+  end
+  local function paste()
+    return { vim.fn.split(vim.fn.getreg('"'), '\n'), vim.fn.getregtype('"') }
+  end
   vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = { ['+'] = osc52.copy('+'), ['*'] = osc52.copy('*') },
-    paste = { ['+'] = osc52.paste('+'), ['*'] = osc52.paste('*') },
+    name = 'OSC 52 (tmux passthrough)',
+    copy = { ['+'] = copy, ['*'] = copy },
+    paste = { ['+'] = paste, ['*'] = paste },
   }
 end
 
