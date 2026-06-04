@@ -174,6 +174,7 @@ alias routerip='curl checkip.amazonaws.com'
 alias aichat35='aichat --model gpt-3.5-turbo'
 alias aichat8k='aichat --model gpt-4'
 alias cy='claude --dangerously-skip-permissions --model opus'
+alias ce="codex --yolo"
 
 # alias cs343='ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.213.182.46'
 # alias stop_cs343='aws ec2 stop-instances --instance-ids i-0db50083bd302875d'
