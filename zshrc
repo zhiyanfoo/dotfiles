@@ -63,8 +63,10 @@ export HELM_DRIVER=configmap
 # https://blog.golang.org/go116-module-changes
 export GO111MODULE=auto
 # Configure Go to pull go.ddbuild.io packages.
+# GOPRIVATE must stay unset: it forces matching modules (github.com/DataDog/*)
+# off GOPROXY and into direct git, which clones the dd-source monorepo and hangs.
+# An empty value is a no-op (Go falls back to its env file); use `go env -u GOPRIVATE`.
 export GONOSUMDB=github.com/DataDog,go.ddbuild.io
-export GOPRIVATE=
 export GOPROXY="https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror/@current/|https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror/@current/|https://depot-read-api-go.us1.ddbuild.io/magicmirror/testing/@current/"
 # END ANSIBLE MANAGED BLOCK
 
