@@ -77,6 +77,31 @@ function create_session_no_editor {
     fi
 }
 
+function create_ssh_session {
+    session="$1"
+    target="$2"
+
+    if tmux has-session -t "$session" 2>/dev/null; then
+        echo "session already created"
+        return 0
+    fi
+
+    # Launch ssh as each pane's command rather than send-keys'ing it after
+    # the shell starts, which races with (slow) shell startup and can drop
+    # the keystrokes — most visibly in pane 0.
+    # ssh in, land in ~/dd on the remote, then hand off to an interactive
+    # login shell. -t forces a tty so the resulting shell is interactive.
+    remote_cmd="ssh -t $target 'cd ~/dd 2>/dev/null; exec \$SHELL -l'"
+    # Start panes in ~/dd locally — the dir we ssh out from.
+    tmux new-session -d -s "$session" -c "$HOME/dd" -n m "$remote_cmd"
+    # Make this the default command so panes/windows opened later
+    # (splits, new windows) also connect to the target automatically.
+    tmux set-option -t "$session" default-command "$remote_cmd"
+    tmux split-window -h -c "$HOME/dd" -t "$session":m
+    tmux split-window -v -c "$HOME/dd" -t "$session":m
+    tmux select-pane -L -t "$session":m
+}
+
 function search_repo() {
     open "https://github.com/search?q=org%3ADataDog+$1&type=repositories"
 }
