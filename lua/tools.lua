@@ -69,17 +69,10 @@ end
 --     on_attach = on_attach,
 -- }
 
-vim.g.diagnostics_active = true
 function _G.toggle_diagnostics()
-  if vim.g.diagnostics_active then
-    vim.g.diagnostics_active = false
-    vim.diagnostic.disable()
-  else
-    vim.g.diagnostics_active = true
-    vim.diagnostic.enable()
-  end
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end
 
-vim.api.nvim_set_keymap('n', '<leader>tt', ':call v:lua.toggle_diagnostics()<CR>',  {noremap = true, silent = true})
+vim.keymap.set('n', '<leader>tt', _G.toggle_diagnostics, {noremap = true, silent = true, desc = 'Toggle diagnostics'})
 
 return M
