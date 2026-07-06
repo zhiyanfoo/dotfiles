@@ -203,3 +203,30 @@ ansi2txt() {
         echo "$line" | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
     done
 }
+
+codexmcp() {
+    local mcp_dir="${CODEX_MCP_DIR:-$HOME/tools/mcp}"
+    local -a configs
+    local cfg config
+
+    if ! command -v jq >/dev/null 2>&1; then
+        echo "codexmcp: jq is required to read MCP JSON configs" >&2
+        return 1
+    fi
+
+    for cfg in "$mcp_dir"/*.json(N); do
+        while IFS= read -r config; do
+            configs+=(-c "$config")
+        done < <(jq -r '
+            (.mcpServers // {})
+            | to_entries[]
+            | select(.value.url != null)
+            | "mcp_servers.\(.key).url=\(.value.url | tojson)",
+              (if (.value.bearerTokenEnvVar // .value.bearer_token_env_var) then
+                "mcp_servers.\(.key).bearer_token_env_var=\((.value.bearerTokenEnvVar // .value.bearer_token_env_var) | tojson)"
+              else empty end)
+        ' "$cfg")
+    done
+
+    codex "${configs[@]}" "$@"
+}
