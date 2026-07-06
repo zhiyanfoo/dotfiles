@@ -175,7 +175,6 @@ alias aichat35='aichat --model gpt-3.5-turbo'
 alias aichat8k='aichat --model gpt-4'
 alias cy='claude --dangerously-skip-permissions --model opus'
 alias ce="codex --yolo"
-alias sshenvoy="ssh workspace-zhiyan-foo-c7gd-16xlarge-20260602-1651"
 
 # alias cs343='ssh -i ~/.ssh/zhiyanfoo-macbook-air.pem ubuntu@13.213.182.46'
 # alias stop_cs343='aws ec2 stop-instances --instance-ids i-0db50083bd302875d'

@@ -117,6 +117,18 @@ function create_ssh_session {
     tmux select-pane -L -t "$session":m
 }
 
+function sshenvoy {
+    local target="workspace-zhiyan-foo-c7gd-16xlarge-20260602-1651"
+    local screen_name="$1"
+    if [ -n "$screen_name" ]; then
+        # Attach to the named screen session, creating it if it doesn't
+        # exist yet. -R reattaches to an existing session or starts a fresh one.
+        ssh -t "$target" "screen -R $screen_name"
+    else
+        ssh "$target"
+    fi
+}
+
 function search_repo() {
     open "https://github.com/search?q=org%3ADataDog+$1&type=repositories"
 }
