@@ -84,9 +84,9 @@ function create_session_no_editor {
     if [ $? != 0 ]; then
         echo $dir
         tmux new-session -d -s "$session" -c "$dir" -n m
-        tmux split-window -h -c "$dir" -t "$session":m
         tmux split-window -v -c "$dir" -t "$session":m
-        tmux select-pane -L -t "$session":m
+        tmux split-window -h -c "$dir" -t "$session":m
+        tmux select-pane -t "$session":m.0
     else
         echo "session already created"
     fi
@@ -112,8 +112,8 @@ function create_ssh_session {
     # Make this the default command so panes/windows opened later
     # (splits, new windows) also connect to the target automatically.
     tmux set-option -t "$session" default-command "$remote_cmd"
-    tmux split-window -h -c "$HOME/dd" -t "$session":m
     tmux split-window -v -c "$HOME/dd" -t "$session":m
+    tmux split-window -h -c "$HOME/dd" -t "$session":m
     tmux select-pane -L -t "$session":m
 }
 
