@@ -2,6 +2,21 @@ function skim() {
     open -a Skim $1
 }
 
+# d6 <n> — roll n six-sided dice, printing each individual roll
+function d6() {
+    local n=$1
+    if [[ -z "$n" || ! "$n" =~ ^[0-9]+$ || "$n" -lt 1 ]]; then
+        echo "Usage: d6 <number-of-dice>  (a positive integer)" >&2
+        return 1
+    fi
+
+    local roll
+    for ((i = 0; i < n; i++)); do
+        roll=$(( (RANDOM % 6) + 1 ))
+        echo "$roll"
+    done
+}
+
 function latexme() { 
     latex $1; 
     NAME=`echo "$1" | cut -f 1 -d '.'`;
