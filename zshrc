@@ -90,3 +90,6 @@ export SCFW_HOME="/Users/zhiyan.foo/.scfw"
 alias vim="nvim"
 
 eval "$(dd-gitsign load-key)"
+
+# Trajectory - AI coding agent observability
+export PATH="/Users/zhiyan.foo/.trajectory/bin:$PATH"
