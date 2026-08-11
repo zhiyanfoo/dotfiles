@@ -73,7 +73,10 @@ export GOPROXY="https://depot-read-api-go.us1.ddbuild.io/magicmirror/magicmirror
 # END ANSIBLE MANAGED BLOCK
 
 # Initialize zsh completion (must run after fpath additions from brew, etc.)
-autoload -Uz compinit && compinit
+# Keep the dump — and compinit's atomic-write temp files — out of $HOME.
+ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+mkdir -p "${ZSH_COMPDUMP:h}"
+autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
 
 PROMPT='> '
 source "$HOME/.config/datadog/config.sh"
