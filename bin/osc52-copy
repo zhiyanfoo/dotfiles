@@ -7,24 +7,38 @@
 # don't send the sequence *through* screen -- write it straight to the tty that
 # screen itself is attached to, which screen never reads.
 #
-# Finding that tty: the screen daemon (its pid is the prefix of $STY) keeps the
+# Finding that tty: the screen daemon (its pid is the prefix of $STY) keeps each
 # attached display's tty open as an fd. Window ptys are allocated via /dev/ptmx
-# and so read back as "/dev/pts/ptmx", which makes the display the only
-# /dev/pts/N among its fds. That fd exists only while a display is attached, so
-# a detached session is a silent no-op rather than a write into a pts number the
-# kernel has since handed to someone else. With screen -x there is one such fd
-# per attached display, hence the loop.
+# and so read back as "/dev/pts/ptmx", which makes the displays the only
+# /dev/pts/N among its fds.
+#
+# Why read it fresh from /proc on every copy, rather than caching a tty: attach
+# adds an fd, detach removes it, so this always names the displays attached
+# *right now*. It needs no notion of "the current session" that could go stale
+# across a disconnect -- unlike $SSH_TTY, which a screen window inherits at
+# creation time and which still points at the original ssh pty after a reattach.
+# A detached session has no such fd, so it is a silent no-op rather than a write
+# into a pts number the kernel has since handed to someone else.
+#
+# screen cannot tell a window which display it is being viewed on (a window can
+# be on several at once), so with multiple displays attached -- e.g. screen -xRR
+# from a second machine -- this writes to all of them. Whichever terminal you
+# are actually looking at is among them, so the copy lands; the others get the
+# same clipboard content, which is harmless.
 #
 # Outside screen (plain ssh) /dev/tty is already the ssh pty, so write there.
 #
 # From there the laptop's tmux forwards the sequence to Alacritty, which honours
 # OSC 52 out of the box. That needs "set -s set-clipboard on" and *no* Ms
 # terminal-override in tmux.conf -- a malformed one-parameter Ms override makes
-# tmux drop OSC 52 silently. See the comment in the laptop's tmux.conf.
+# tmux drop OSC 52 silently, and a tmux client caches Ms at attach time, so
+# changing it needs a detach/reattach. See the comment in the laptop's tmux.conf.
 #
 # OSC52_WRAP=tmux wraps the sequence in tmux's DCS passthrough, for the case of
 # a tmux running *on this box* (which would otherwise eat the OSC itself). Not
 # the default: passthrough is capped around 12 KB of text, the raw form is not.
+#
+# OSC52_DEBUG=1 logs each call and each tty written to /tmp/osc52.log.
 set -u
 
 # A newline in the payload would end the OSC string early, and the pty line
@@ -43,6 +57,31 @@ case "${OSC52_WRAP:-none}" in
     tmux) seq="\033Ptmux;\033${seq}\033\\\\" ;;
 esac
 
+debug=${OSC52_DEBUG:-}
+log() { [ -n "$debug" ] && printf '%s %s\n' "$(date +%T)" "$1" >> /tmp/osc52.log; :; }
+log "called pid=$$ ppid=$PPID b64len=${#b64} STY=${STY:-none} args=$*"
+
+# The bytes themselves, so the write can be handed to a bounded external
+# command. Command substitution only strips trailing newlines; ESC and BEL
+# survive, and base64 output never contains NUL.
+bytes=$(printf "$seq")
+
+# A display whose terminal has gone away without detaching leaves a pty nobody
+# reads: writes fill its buffer and then block forever. That would freeze the
+# caller mid-yank, so bound every write. timeout(1) is coreutils, i.e. present
+# wherever /proc is -- the only place the loop below runs.
+#
+# A bounded write is the whole guard, deliberately: probing first for a "live"
+# display (say, a process holding the pty as controlling tty) gives false
+# negatives -- a client attached from a process without a controlling tty is
+# real and works -- and silently skipping a good display is a worse failure
+# than the half-second this costs on a stuck one.
+if command -v timeout > /dev/null 2>&1; then
+    write_tty() { timeout 0.5 sh -c 'printf %s "$1" >> "$2"' _ "$bytes" "$1" 2>/dev/null; }
+else
+    write_tty() { printf "$seq" 2>/dev/null >> "$1"; }
+fi
+
 # ${STY:-} first: under set -u a bare ${STY%%.*} aborts outside screen.
 sty="${STY:-}"
 dpid="${sty%%.*}"
@@ -50,13 +89,15 @@ if [ -n "$sty" ] && [ -d "/proc/$dpid/fd" ]; then
     for fd in /proc/"$dpid"/fd/*; do
         t=$(readlink "$fd" 2>/dev/null) || continue
         case "$t" in
-            # stderr redirected first: otherwise a failed open on the target
-            # reports to the not-yet-silenced stderr.
-            /dev/pts/[0-9]*) printf "$seq" 2>/dev/null >> "$t" ;;
+            /dev/pts/[0-9]*)
+                write_tty "$t"
+                log "  -> wrote to $t rc=$?"
+                ;;
         esac
     done
 else
     printf "$seq" 2>/dev/null >> /dev/tty
+    log "  -> wrote to /dev/tty rc=$? (no STY)"
 fi
 
 # Never fail the caller: this is fire-and-forget from a screen key binding or a
