@@ -52,10 +52,21 @@ caption always "%{= kw}%-w%{= bw}%n %t%{-}%+w %= %H"
 #
 # writebuf is needed because the paste buffer lives in screen's memory, so an
 # external process can only see it through bufferfile. `process z` puts back the
-# keystroke this binding replaces -- register z holds a space, and injecting it
-# into screen's own input queue is what ends the selection and fills the buffer.
+# keystroke this binding replaces, by injecting register z into screen's own
+# input queue -- that is what ends the selection and fills the buffer.
 # ($HOME is expanded by screen here; ~ is not.)
+#
+# Register z holds ^J, not ^M, and markkeys makes ^J a copy key: `bindkey -m`
+# installs into the keymap screen uses for copy mode *and* for its own `:`
+# command line, so a binding on ^M also swallows the Enter that submits a typed
+# command (verified: with a space in register z, `:bufferfile /tmp/x` + Enter
+# never ran). ^J still submits at that prompt, so re-injecting ^J keeps `:`
+# working; markkeys ^M=^J gives ^J the copy-mode meaning Enter had, so the
+# selection still completes. Side effect: Enter at the `:` prompt also re-ships
+# the current paste buffer to the clipboard -- harmless (a no-op if empty, and
+# otherwise just re-sends the last selection).
 bufferfile $HOME/.screen-exchange
-register z " "
+markkeys ^M=^J
+register z "\012"
 bindkey -m ^M eval "process z" "writebuf" "exec $HOME/.local/bin/osc52-copy $HOME/.screen-exchange"
 bind Y eval "writebuf" "exec $HOME/.local/bin/osc52-copy $HOME/.screen-exchange"
