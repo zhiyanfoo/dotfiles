@@ -1,0 +1,61 @@
+# ~/.screenrc — GNU screen config for the dev box.
+#
+# Topology: the laptop runs tmux (prefix `), ssh's into this box, and screen
+# runs here (prefix C-Space). screen owns its own display, so scrolled-off lines
+# never reach the outer tmux — tmux's copy-mode can only ever see screen's
+# current frame, not its history. Scrollback therefore has to live *in screen*:
+#
+#   Enter scrollback:  C-Space [   (or  C-Space Esc )
+#   Navigate (vi):     k / j,  C-u / C-d,  g / G,  / to search
+#   Exit:              Esc
+#
+# The mouse settings below give the trackpad its best shot at driving this, but
+# keyboard copy-mode is the dependable path through the nested tmux+screen stack.
+
+# Prefix key: C-Space instead of the default C-a, which readline needs for
+# start-of-line. C-Space is NUL on the wire, hence the ^@ spelling. Second char
+# is the literal-send key, so double-tapping C-Space emits a real NUL.
+escape ^@^@
+
+# Deep scrollback buffer — the default is a near-useless 100 lines.
+defscrollback 50000
+
+# Let fullscreen apps (vim, less, git log) use the alternate screen so they
+# restore the prior view on exit instead of dumping their final frame into the
+# scrollback. Keeps the scrollback buffer clean and linear.
+altscreen on
+
+# Enable mouse tracking. Combined with tmux's `mouse on` (already set in the
+# laptop tmux.conf), this is what gives the trackpad a chance of scrolling
+# screen's buffer; keyboard copy-mode above is the reliable fallback.
+mousetrack on
+defmousetrack on
+
+# 256-color terminal inside screen.
+term screen-256color
+
+# No startup splash, and don't beep on bell.
+startup_message off
+vbell on
+
+# A minimal caption so nested screen windows are distinguishable at a glance.
+# Comment out if you prefer zero chrome (matches the laptop tmux `status off`).
+caption always "%{= kw}%-w%{= bw}%n %t%{-}%+w %= %H"
+
+# Copy out to the laptop's clipboard. screen drops OSC 52 clipboard sequences
+# itself (and truncates its DCS passthrough at ~500 bytes), so bin/osc52-copy
+# writes the sequence straight to the tty this session is attached to; the
+# laptop tmux forwards it to Alacritty. See that script for the details.
+#
+# In copy mode: Space starts the selection, Enter finishes it *and* ships it.
+# Prefix Y re-sends whatever is already in screen's paste buffer.
+#
+# writebuf is needed because the paste buffer lives in screen's memory, so an
+# external process can only see it through bufferfile. `process z` puts back the
+# keystroke this binding replaces -- register z holds a space, and injecting it
+# into screen's own input queue is what ends the selection and fills the buffer.
+# ($HOME is expanded by screen here; ~ is not.)
+bufferfile $HOME/.screen-exchange
+register z " "
+bindkey -m ^M eval "process z" "writebuf" "exec $HOME/.local/bin/osc52-copy $HOME/.screen-exchange"
+bind Y eval "writebuf" "exec $HOME/.local/bin/osc52-copy $HOME/.screen-exchange"

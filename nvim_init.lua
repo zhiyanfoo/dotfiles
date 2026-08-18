@@ -33,23 +33,28 @@ vim.g.loaded_node_provider = 0
 -- Register gotmpl filetype so gopls config doesn't warn
 vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
 
--- Over SSH there's no X server, so xclip can't reach the host clipboard.
--- Use OSC 52 escape sequences instead — works through the terminal.
--- Wrap in tmux passthrough: the Mac-side tmux's set-clipboard intercept
--- doesn't forward to Alacritty, but allow-passthrough does.
+-- Over SSH there's no X server, so xclip can't reach the laptop's clipboard.
+-- Use OSC 52 escape sequences instead, sent by bin/osc52-copy -- which writes
+-- them to the tty *screen* is attached to. Emitting them from in here (with
+-- nvim_ui_send) routes them through screen, which drops OSC 52 outright and
+-- truncates its DCS passthrough at ~500 bytes, so all but tiny yanks vanished.
+local osc52_copy = vim.fn.expand('~/.local/bin/osc52-copy')
+
+-- Synchronous on purpose: with vim.system() a yank followed straight by :q can
+-- reap the child before it writes.
 local function osc52_send(text)
-  local b64 = vim.base64.encode(text)
-  -- nvim_ui_send writes through the TUI channel that owns the SSH PTY;
-  -- subprocesses lose the controlling TTY and /dev/tty writes from Lua
-  -- don't reliably reach the terminal.
-  local seq = '\027Ptmux;\027\027]52;c;' .. b64 .. '\007\027\\'
-  vim.api.nvim_ui_send(seq)
+  vim.fn.system({ osc52_copy }, text)
+end
+
+-- STY means we're in screen on the dev box; SSH_TTY, a bare ssh session.
+local function remote()
+  return vim.env.STY ~= nil or vim.env.SSH_TTY ~= nil
 end
 
 -- copy_path: used by :CP/:CF/:CL — direct OSC 52 since setreg('+', ...)
 -- doesn't reliably invoke vim.g.clipboard.copy for scalar assignments.
 _G.copy_path = function(text)
-  if vim.env.SSH_TTY then
+  if remote() then
     osc52_send(text)
   else
     vim.fn.setreg('+', text)
@@ -57,7 +62,9 @@ _G.copy_path = function(text)
   vim.notify('Copied: ' .. text)
 end
 
-if vim.env.SSH_TTY then
+if remote() then
+  -- Don't append a newline for linewise yanks: nvim already terminates the
+  -- register with a final empty element, so the concat below supplies it.
   local function copy(lines, _)
     osc52_send(table.concat(lines, '\n'))
   end
@@ -65,7 +72,7 @@ if vim.env.SSH_TTY then
     return { vim.fn.split(vim.fn.getreg('"'), '\n'), vim.fn.getregtype('"') }
   end
   vim.g.clipboard = {
-    name = 'OSC 52 (tmux passthrough)',
+    name = 'OSC 52 (display tty)',
     copy = { ['+'] = copy, ['*'] = copy },
     paste = { ['+'] = paste, ['*'] = paste },
   }

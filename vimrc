@@ -279,13 +279,13 @@ inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 nnoremap <leader>cc :cclose<CR>
 call ddc#enable()
 
-" copy current buffer path
+" copy current buffer path to the laptop clipboard (see s:Osc52Copy below)
 " https://vi.stackexchange.com/questions/3686/copy-the-full-path-of-current-buffer-to-clipboard
-command! CopyFull let @+ = expand('%:p')
-command! CopyPath let @+ = expand('%:.')
-command! CP let @+ = expand('%:.')
-command! CF let @+ = expand('%:p')
-command! CL let @+ = expand('%:.') . ':' . line('.')
+command! CopyFull call <SID>Osc52Copy(expand('%:p'))
+command! CopyPath call <SID>Osc52Copy(expand('%:.'))
+command! CP call <SID>Osc52Copy(expand('%:.'))
+command! CF call <SID>Osc52Copy(expand('%:p'))
+command! CL call <SID>Osc52Copy(expand('%:.') . ':' . line('.'))
 
 "                                                *copilot-i_<Tab>*
 " Copilot.vim uses <Tab> to accept the current suggestion.  If you have an
@@ -299,5 +299,33 @@ command! CL let @+ = expand('%:.') . ':' . line('.')
 "         let g:copilot_no_tab_map = v:true
 " From `:help copilot`
 imap <silent><script><expr> <C-I> copilot#Accept("\<CR>")
-"system clipboard
-set clipboard=unnamedplus
+" System clipboard. This vim is built -clipboard/-xterm_clipboard, so there is
+" no usable @+ register and `set clipboard=unnamedplus` did nothing. Ship yanks
+" to the laptop with OSC 52 instead, via bin/osc52-copy -- which writes the
+" sequence to the tty screen is attached to, since screen itself drops OSC 52
+" and truncates its DCS passthrough at ~500 bytes. TextYankPost is the hook
+" because without +clipboard there's no clipboard register to hang this off.
+function! s:Osc52Copy(text) abort
+  if !empty($STY) || !empty($SSH_TTY)
+    call system(expand('~/.local/bin/osc52-copy'), a:text)
+  else
+    let @+ = a:text
+  endif
+endfunction
+
+if !empty($STY) || !empty($SSH_TTY)
+  function! s:Osc52Yank() abort
+    if v:event.operator !=# 'y' | return | endif
+    if v:event.regname !=# '' && v:event.regname !=# '+' | return | endif
+    let l:text = join(v:event.regcontents, "\n")
+    " Unlike nvim, v:event.regcontents carries no trailing empty element, so a
+    " linewise yank needs its final newline added back by hand.
+    if v:event.regtype ==# 'V' | let l:text .= "\n" | endif
+    call s:Osc52Copy(l:text)
+  endfunction
+
+  augroup Osc52Yank
+    autocmd!
+    autocmd TextYankPost * call s:Osc52Yank()
+  augroup END
+endif

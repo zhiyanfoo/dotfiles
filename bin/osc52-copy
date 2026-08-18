@@ -1,0 +1,64 @@
+#!/bin/sh
+# Put stdin (or the contents of file $1) on the *laptop* clipboard, using OSC 52.
+#
+# The laptop runs tmux inside Alacritty and ssh's into this box, where screen
+# runs. screen is the problem: it parses OSC sequences itself and silently drops
+# 52, and its DCS passthrough truncates any string past ~500 bytes (MAXSTR). So
+# don't send the sequence *through* screen -- write it straight to the tty that
+# screen itself is attached to, which screen never reads.
+#
+# Finding that tty: the screen daemon (its pid is the prefix of $STY) keeps the
+# attached display's tty open as an fd. Window ptys are allocated via /dev/ptmx
+# and so read back as "/dev/pts/ptmx", which makes the display the only
+# /dev/pts/N among its fds. That fd exists only while a display is attached, so
+# a detached session is a silent no-op rather than a write into a pts number the
+# kernel has since handed to someone else. With screen -x there is one such fd
+# per attached display, hence the loop.
+#
+# Outside screen (plain ssh) /dev/tty is already the ssh pty, so write there.
+#
+# From there the laptop's tmux forwards the sequence to Alacritty, which honours
+# OSC 52 out of the box. That needs "set -s set-clipboard on" and *no* Ms
+# terminal-override in tmux.conf -- a malformed one-parameter Ms override makes
+# tmux drop OSC 52 silently. See the comment in the laptop's tmux.conf.
+#
+# OSC52_WRAP=tmux wraps the sequence in tmux's DCS passthrough, for the case of
+# a tmux running *on this box* (which would otherwise eat the OSC itself). Not
+# the default: passthrough is capped around 12 KB of text, the raw form is not.
+set -u
+
+# A newline in the payload would end the OSC string early, and the pty line
+# discipline would rewrite it to CRLF on the way out -- so strip the wrapping
+# base64 adds. (tr, not base64 -w0: macOS base64 has no -w flag.)
+if [ $# -gt 0 ]; then
+    b64=$(base64 < "$1" | tr -d '\n')
+else
+    b64=$(base64 | tr -d '\n')
+fi
+[ -n "$b64" ] || exit 0
+
+seq="\033]52;c;${b64}\a"
+# Inner ESCs are doubled inside a tmux passthrough, hence \033\033].
+case "${OSC52_WRAP:-none}" in
+    tmux) seq="\033Ptmux;\033${seq}\033\\\\" ;;
+esac
+
+# ${STY:-} first: under set -u a bare ${STY%%.*} aborts outside screen.
+sty="${STY:-}"
+dpid="${sty%%.*}"
+if [ -n "$sty" ] && [ -d "/proc/$dpid/fd" ]; then
+    for fd in /proc/"$dpid"/fd/*; do
+        t=$(readlink "$fd" 2>/dev/null) || continue
+        case "$t" in
+            # stderr redirected first: otherwise a failed open on the target
+            # reports to the not-yet-silenced stderr.
+            /dev/pts/[0-9]*) printf "$seq" 2>/dev/null >> "$t" ;;
+        esac
+    done
+else
+    printf "$seq" 2>/dev/null >> /dev/tty
+fi
+
+# Never fail the caller: this is fire-and-forget from a screen key binding or a
+# vim autocmd, and there is nothing useful either could do with an error.
+exit 0

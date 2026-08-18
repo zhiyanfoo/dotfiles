@@ -54,9 +54,14 @@ ln -sf $HOME/dotfiles/aliases $HOME/.aliases
 ln -sf $HOME/dotfiles/bash_profile $HOME/.bash_profile
 ln -sf $HOME/dotfiles/commonprofile $HOME/.commonprofile
 ln -sf $HOME/dotfiles/functions $HOME/.functions
+ln -sf $HOME/dotfiles/screenrc $HOME/.screenrc
 ln -sf $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/dotfiles/vimrc $HOME/.vimrc
 ln -sf $HOME/dotfiles/zshrc $HOME/.zshrc
+
+# osc52-copy: puts a selection on the laptop clipboard from inside screen/ssh
+mkdir -p "$HOME/.local/bin"
+ln -sf $HOME/dotfiles/bin/osc52-copy $HOME/.local/bin/osc52-copy
 
 ln -sf $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
 git config --global core.excludesfile $HOME/.global_gitignore
