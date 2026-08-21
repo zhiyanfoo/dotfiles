@@ -33,6 +33,22 @@ vim.g.loaded_node_provider = 0
 -- Register gotmpl filetype so gopls config doesn't warn
 vim.filetype.add({ extension = { gotmpl = 'gotmpl' } })
 
+-- Stop nvim probing the terminal for OSC 52 support (`:h clipboard-osc52`).
+-- The probe is an XTGETTCAP DCS -- ESC P + q 4D73 ESC \ , 4D73 being hex for the
+-- `Ms` capability. screen's DCS handling is passthrough: it strips the wrapper
+-- and writes the payload to the display as plain text, so `+q4D73` appears as
+-- garbage on the terminal. It lands straight on the display, bypassing screen's
+-- window buffer, so screen never knows to repaint over it.
+--
+-- Nothing is lost by turning it off: the detected provider is only used when no
+-- clipboard tool is found *and* 'clipboard' is unset, and both are set below.
+-- Inside screen the detection can't work anyway (no reply comes back, and screen
+-- drops OSC 52 regardless -- which is why osc52-copy writes to the display tty).
+-- Must be set early, before the TUI would send the query.
+local termfeatures = vim.g.termfeatures or {}
+termfeatures.osc52 = false
+vim.g.termfeatures = termfeatures
+
 -- Over SSH there's no X server, so xclip can't reach the laptop's clipboard.
 -- Use OSC 52 escape sequences instead, sent by bin/osc52-copy -- which writes
 -- them to the tty *screen* is attached to. Emitting them from in here (with
