@@ -2,19 +2,19 @@ function skim() {
     open -a Skim $1
 }
 
-# d6 <n> — roll n six-sided dice, printing each individual roll
-function d6() {
+# roll <n> — roll n six-sided dice, printing the rolls on a single line
+function roll() {
     local n=$1
     if [[ -z "$n" || ! "$n" =~ ^[0-9]+$ || "$n" -lt 1 ]]; then
-        echo "Usage: d6 <number-of-dice>  (a positive integer)" >&2
+        echo "Usage: roll <number-of-dice>  (a positive integer)" >&2
         return 1
     fi
 
-    local roll
+    local rolls=()
     for ((i = 0; i < n; i++)); do
-        roll=$(( (RANDOM % 6) + 1 ))
-        echo "$roll"
+        rolls+=( $(( (RANDOM % 6) + 1 )) )
     done
+    echo "${rolls[@]}"
 }
 
 function latexme() { 
