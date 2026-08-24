@@ -63,6 +63,9 @@ ln -sf $HOME/dotfiles/zshrc $HOME/.zshrc
 mkdir -p "$HOME/.local/bin"
 ln -sf $HOME/dotfiles/bin/osc52-copy $HOME/.local/bin/osc52-copy
 
+# dot2text: renders a CNAB workflow DOT graph as plaintext deploy stages
+ln -sf $HOME/dotfiles/bin/dot2text $HOME/.local/bin/dot2text
+
 ln -sf $HOME/dotfiles/global_gitignore $HOME/.global_gitignore
 git config --global core.excludesfile $HOME/.global_gitignore
 

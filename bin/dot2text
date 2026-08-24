@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""Render a CNAB workflow DOT graph as plaintext execution stages.
+
+Reads DOT on stdin (or from a file argument) and prints the nodes grouped into
+dependency levels, so the deploy order and what runs in parallel are readable
+in a terminal.
+"""
+import re
+import sys
+from collections import defaultdict
+
+NODE_RE = re.compile(r'^(?P<id>\w+)\s*\[.*?label="(?P<label>[^"]*)".*?(?:tooltip="(?P<tip>[^"]*)")?\]')
+EDGE_RE = re.compile(r'^(?P<src>\w+)\s*->\s*(?P<dst>\w+)')
+SUBGRAPH_RE = re.compile(r'^subgraph\s+(?P<id>\w+)\s*\{')
+LABEL_RE = re.compile(r'^label\s*=\s*"(?P<label>[^"]*)"')
+
+
+def parse(text):
+    """Parse DOT text into (graph_label, nodes, cluster_of_node, edges)."""
+    graph_label = ""
+    nodes = {}
+    cluster_of = {}
+    edges = []
+    stack = []
+    labels = {}
+
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+
+        m = SUBGRAPH_RE.match(line)
+        if m:
+            stack.append(m.group("id"))
+            continue
+        if line == "}":
+            if stack:
+                stack.pop()
+            continue
+
+        m = LABEL_RE.match(line)
+        if m:
+            if stack:
+                labels[stack[-1]] = m.group("label")
+            elif not graph_label:
+                graph_label = m.group("label")
+            continue
+
+        m = EDGE_RE.match(line)
+        if m:
+            edges.append((m.group("src"), m.group("dst")))
+            continue
+
+        m = NODE_RE.match(line)
+        if m and m.group("id") not in ("graph", "node", "edge"):
+            nodes[m.group("id")] = (m.group("label"), m.group("tip") or "")
+            cluster_of[m.group("id")] = tuple(stack)
+
+    return graph_label, nodes, cluster_of, edges, labels
+
+
+def levels(nodes, edges):
+    """Assign each node a level = longest dependency path from a root."""
+    preds = defaultdict(set)
+    succs = defaultdict(set)
+    for src, dst in edges:
+        if src in nodes and dst in nodes:
+            preds[dst].add(src)
+            succs[src].add(dst)
+
+    level = {}
+    pending = set(nodes)
+    while pending:
+        progressed = False
+        for n in sorted(pending):
+            if all(p in level for p in preds[n]):
+                level[n] = 1 + max((level[p] for p in preds[n]), default=-1)
+                pending.discard(n)
+                progressed = True
+        if not progressed:  # cycle: place the rest at the end
+            for n in sorted(pending):
+                level[n] = max(level.values(), default=0) + 1
+            break
+    return level
+
+
+def shorten(name, base):
+    """Strip boilerplate prefixes/suffixes shared with the graph's own name."""
+    name = re.sub(r"\.workflow$", "", name)
+    name = re.sub(r"^(cluster|wf)-", "", name)
+    if base:
+        name = name.replace(base + "-", "").replace("-" + base, "")
+    return name or "-"
+
+
+def common_prefix(paths):
+    """Return the cluster path prefix shared by every group in a stage."""
+    if not paths:
+        return ()
+    shared = paths[0]
+    for path in paths[1:]:
+        keep = 0
+        for a, b in zip(shared, path):
+            if a != b:
+                break
+            keep += 1
+        shared = shared[:keep]
+    return shared
+
+
+def main():
+    text = open(sys.argv[1]).read() if len(sys.argv) > 1 else sys.stdin.read()
+    graph_label, nodes, cluster_of, edges, labels = parse(text)
+    if not nodes:
+        print("dot2text: no nodes found -- is this a CNAB workflow DOT graph?", file=sys.stderr)
+        return 1
+
+    base = re.sub(r"-\d+\.workflow$", "", graph_label)
+    lvl = levels(nodes, edges)
+
+    print(graph_label or "workflow")
+    print("=" * len(graph_label or "workflow"))
+    print(f"{len(nodes)} steps, {len(set(cluster_of.values()))} groups, "
+          f"{max(lvl.values()) + 1} sequential stages\n")
+
+    by_level = defaultdict(list)
+    for n, l in lvl.items():
+        by_level[l].append(n)
+
+    for l in sorted(by_level):
+        members = by_level[l]
+        parallel = " (in parallel)" if len(members) > 1 else ""
+        print(f"STAGE {l + 1}{parallel}")
+
+        grouped = defaultdict(list)
+        for n in members:
+            grouped[cluster_of[n]].append(n)
+
+        shared = common_prefix(list(grouped))
+        if shared:
+            print("  in " + " / ".join(shorten(labels.get(c, c), base) for c in shared))
+
+        for path in sorted(grouped, key=lambda p: [labels.get(c, c) for c in p]):
+            tail = path[len(shared):]
+            if tail:
+                trail = " / ".join(shorten(labels.get(c, c), base) for c in tail)
+                print(f"  [{trail}]")
+                indent = "    "
+            else:
+                indent = "  "
+            for n in sorted(grouped[path], key=lambda x: nodes[x][0]):
+                label, tip = nodes[n]
+                _, _, rest = label.rpartition("::")
+                rest = (rest or label).split(".service-discovery.")[0]
+                kind = tip or label.split("/")[0]
+                print(f"{indent}{kind:<12} {rest}")
+        print()
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

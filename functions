@@ -242,3 +242,59 @@ codexmcp() {
 
     codex "${configs[@]}" "$@"
 }
+
+# Render a Bazel CNAB deploy workflow as plaintext deploy stages (default) or SVG.
+# Usage: renderwf [--svg] <target|name> [image_tag]
+#   renderwf fabric-control-plane-prod-us5.prod.dog-0
+#   renderwf --svg //k8s:fabric-control-plane-prod-us5.prod.dog-0.render_workflow v1.1
+renderwf() {
+    local as_svg=0
+    if [[ "$1" == "--svg" || "$1" == "-s" ]]; then
+        as_svg=1
+        shift
+    fi
+
+    local target="$1"
+    local tag="${2:-${RENDERWF_IMAGE_TAG:-v1.1}}"
+
+    if [ -z "$target" ]; then
+        echo "renderwf: usage: renderwf [--svg] <target|name> [image_tag]" >&2
+        return 1
+    fi
+
+    [[ "$target" == //* ]] || target="//k8s:$target"
+    [[ "$target" == *.render_workflow ]] || target="$target.render_workflow"
+
+    local out="${TMPDIR:-/tmp}/renderwf-${${target#//}//[^a-zA-Z0-9._-]/_}"
+    if ! bzl run "$target" --define image_tag="$tag" 2>/dev/null >"$out.dot"; then
+        echo "renderwf: bzl run $target failed" >&2
+        return 1
+    fi
+
+    if [ "$as_svg" -eq 0 ]; then
+        local script="${DOT2TEXT:-$(command -v dot2text)}"
+        [ -n "$script" ] || script="$HOME/dotfiles/bin/dot2text"
+        if [ ! -x "$script" ]; then
+            echo "renderwf: dot2text not found -- run ~/dotfiles/setup (or set DOT2TEXT)" >&2
+            return 1
+        fi
+        "$script" "$out.dot"
+        return $?
+    fi
+
+    if ! command -v dot >/dev/null 2>&1; then
+        echo "renderwf: graphviz is required for --svg (brew install graphviz)" >&2
+        return 1
+    fi
+    if ! dot -Tsvg "$out.dot" -o "$out.svg"; then
+        echo "renderwf: graphviz failed to render $out.dot" >&2
+        return 1
+    fi
+
+    echo "$out.svg"
+    if command -v open >/dev/null 2>&1; then
+        open "$out.svg"
+    elif command -v xdg-open >/dev/null 2>&1; then
+        xdg-open "$out.svg"
+    fi
+}
