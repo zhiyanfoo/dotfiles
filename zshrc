@@ -96,3 +96,6 @@ eval "$(dd-gitsign load-key)"
 
 # Trajectory - AI coding agent observability
 export PATH="/Users/zhiyan.foo/.trajectory/bin:$PATH"
+
+# Machine-local overrides (company config, per-host tweaks). Not tracked here.
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
